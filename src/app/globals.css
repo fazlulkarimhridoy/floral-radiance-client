@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+
+.dancing-style {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.scroll-down {
+	header {
+		transform: translate3d(0, -100%, 0);
+	}
+}
+
+.scroll-up {
+	header {
+		filter: drop-shadow(0 -10px 20px rgb(170, 170, 170));
+	}
+}
