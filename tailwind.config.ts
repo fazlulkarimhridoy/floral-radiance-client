@@ -8,6 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        appear: {
+          '0%': { top: '-60px' },
+          '100%': { top: '0px' },
+        }
+      },
+      animation: {
+        appear: 'appear 1s ease-in-out',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
