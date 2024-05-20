@@ -1,8 +1,9 @@
+import CustomerReviews from "@/components/pages/Home/CustomerReviews";
 
 const Home = () => {
   return (
     <div>
-      <h3 className="text-center  font-bold  text-gray-600 h-[1000px]"></h3>
+      <CustomerReviews></CustomerReviews>
     </div>
   );
 };

@@ -6,9 +6,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 .font-poppins{
 	font-family: "Poppins", sans-serif;
 }
+
+.great-vibes-regular {
+	font-family: "Great Vibes", cursive;
+	font-weight: 400;
+	font-style: normal;
+  }
+
+
 
 .dancing-style {
   font-family: "Dancing Script", cursive;
@@ -26,4 +36,25 @@
 	header {
 		filter: drop-shadow(0 -10px 20px rgb(170, 170, 170));
 	}
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-prev:focus,
+.ant-carousel .slick-prev:hover {
+  left: 10px;
+  z-index: 2;
+  color: black;
+}
+
+.ant-carousel .slick-next,
+.ant-carousel .slick-next:focus,
+.ant-carousel .slick-next:hover {
+  right: 10px;
+  z-index: 2;
+  color: black;
+}
+
+.ant-carousel .slick-dots li button{
+	color: black;
+	background-color: #e60544;
 }
