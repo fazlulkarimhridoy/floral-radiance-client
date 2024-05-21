@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body>
+      <body className="scroll-container">
         <Navbar />
         <div>{children}</div>
         <Footer />
