@@ -7,7 +7,7 @@ const Home = () => {
     <div>
       <OfferSection />
       <FeaturedProducts />
-      <CustomerReviews />
+      <CustomerReviews img={""} review={""} name={""} />
     </div>
   );
 };
