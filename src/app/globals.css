@@ -1,8 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
+@layer utilities {
+  .social-media-icon-style {
+    @apply text-white border-2 w-10 flex justify-center p-2 rounded-full cursor-pointer hover:bg-pink-600 hover:border-pink-600 transition-all;
+  }
+
+  .link-style {
+    @apply cursor-pointer hover:text-pink-600 hover:translate-x-1 transition-all;
+  }
+}
+
+/* disable scroll bar */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* animation for product add to cart */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+
+.great-vibes-regular {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 
 .dancing-style {
   font-family: "Dancing Script", cursive;
@@ -11,13 +46,34 @@
 }
 
 .scroll-down {
-	header {
-		transform: translate3d(0, -100%, 0);
-	}
+  header {
+    transform: translate3d(0, -100%, 0);
+  }
 }
 
 .scroll-up {
-	header {
-		filter: drop-shadow(0 -10px 20px rgb(170, 170, 170));
-	}
+  header {
+    filter: drop-shadow(0 -10px 20px rgb(170, 170, 170));
+  }
+}
+
+.ant-carousel .slick-prev,
+.ant-carousel .slick-prev:focus,
+.ant-carousel .slick-prev:hover {
+  left: 10px;
+  z-index: 2;
+  color: black;
+}
+
+.ant-carousel .slick-next,
+.ant-carousel .slick-next:focus,
+.ant-carousel .slick-next:hover {
+  right: 10px;
+  z-index: 2;
+  color: black;
+}
+
+.ant-carousel .slick-dots li button {
+  color: black;
+  background-color: #e60544;
 }
