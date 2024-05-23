@@ -1,8 +1,13 @@
+import CustomerReviews from "@/components/pages/Home/CustomerReviews";
+import FeaturedProducts from "@/components/pages/Home/FeaturedProducts";
+import OfferSection from "@/components/pages/Home/OfferSection";
 
 const Home = () => {
   return (
     <div>
-      <h3 className="text-center  font-bold  text-gray-600 h-[1000px]"></h3>
+      <OfferSection />
+      <FeaturedProducts />
+      <CustomerReviews img={""} review={""} name={""} />
     </div>
   );
 };

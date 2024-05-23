@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body>
-          <Navbar />
-        <div className="min-h-screen">{children}</div>
+      <body className="scroll-container">
+        <Navbar />
+        <div>{children}</div>
         <Footer />
       </body>
     </html>
