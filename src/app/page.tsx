@@ -9,7 +9,7 @@ const Home = () => {
       <OfferSection />
       <FeaturedProducts />
       <Banner></Banner>
-      <CustomerReviews img={""} review={""} name={""} />
+      <CustomerReviews/>
     </div>
   );
 };
