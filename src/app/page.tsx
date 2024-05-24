@@ -6,9 +6,9 @@ import OfferSection from "@/components/pages/Home/OfferSection";
 const Home = () => {
   return (
     <div>
+      <Banner></Banner>
       <OfferSection />
       <FeaturedProducts />
-      <Banner></Banner>
       <CustomerReviews/>
     </div>
   );

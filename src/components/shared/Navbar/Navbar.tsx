@@ -38,7 +38,7 @@ const Navbar = () => {
       className={
         showNavbar
           ? "bg-pink-400 sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
-          : "bg-transparent"
+          : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
       }
     >
       <div className="flex items-center justify-between px-2 md:px-8 py-2 font-semibold">
