@@ -37,7 +37,7 @@ const Navbar = () => {
     <motion.div
       className={
         showNavbar
-          ? "bg-pink-400 sticky top-0 z-50 ease-in duration-300 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
+          ? "bg-pink-400 sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
           : "bg-transparent"
       }
     >
