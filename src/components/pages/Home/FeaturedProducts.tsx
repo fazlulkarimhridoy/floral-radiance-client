@@ -6,11 +6,11 @@ import Flower2 from "../../../assets/vas-flowers/2.jpg"
 import { Flex, Rate } from "antd";
 import { useState } from "react";
 
-const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+const desc: string[] = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 const FeaturedProducts = () => {
-    const [value, setValue] = useState(3);
-    const [showAddToCart, setShowAddToCart] = useState(false);
+    const [value, setValue] = useState<number>(3);
+    const [showAddToCart, setShowAddToCart] = useState<boolean>(false);
 
     // Function to handle mouse enter event
     const handleMouseEnter = () => {
