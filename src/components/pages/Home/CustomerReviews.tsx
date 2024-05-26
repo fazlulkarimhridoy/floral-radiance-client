@@ -2,11 +2,11 @@ import { Carousel } from "antd";
 import Review from "./Review";
 
 // Define the type for the component props
-interface CustomerReviewsProps {
-  img: string;
-  review: string;
-  name: string;
-}
+// interface CustomerReviewsProps {
+//   img: string;
+//   review: string;
+//   name: string;
+// }
 
 const contentStyle: React.CSSProperties = {
   margin: 0,
@@ -18,11 +18,7 @@ const contentStyle: React.CSSProperties = {
 };
 
 // Type the props in the functional component
-const CustomerReviews: React.FC<CustomerReviewsProps> = ({
-  img,
-  review,
-  name,
-}) => {
+const CustomerReviews = () => {
   return (
     <div className="customer-review bg-[#f7dfe6]">
       <header className="p-4">
