@@ -1,0 +1,62 @@
+[
+    {
+        "product_id": "FL001",
+        "images": [
+            "https://images.unsplash.com/photo-1523694576729-dc99e9c0f9b4?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1523693916903-027d144a2b7d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
+        "product_name": "Elegant Rose Bouquet",
+        "price": 29.99,
+        "discount_price": 24.99,
+        "description": "A beautiful bouquet of fresh red roses, perfect for any occasion.",
+        "rating": 4.7
+    },
+    {
+        "product_id": "FL002",
+        "images": [
+            "https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
+        "product_name": "Sunshine Sunflowers",
+        "price": 19.99,
+        "discount_price": 15.99,
+        "description": "Brighten someone's day with these cheerful sunflowers.",
+        "rating": 4.5
+    },
+    {
+        "product_id": "FL003",
+        "images": [
+            "https://images.unsplash.com/photo-1583228858294-6745cb25969e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1602136303098-f5aa2b9c9df9?q=80&w=1518&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
+        "product_name": "Mixed Seasonal Flowers",
+        "price": 39.99,
+        "discount_price": 34.99,
+        "description": "A vibrant mix of seasonal flowers arranged beautifully.",
+        "rating": 4.8
+    },
+    {
+        "product_id": "FL004",
+        "images": [
+            "https://images.unsplash.com/photo-1494337095615-b5f370aad75f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://example.com/images/flower4_2.jpg"
+        ],
+        "product_name": "Lily Elegance",
+        "price": 25.99,
+        "discount_price": 22.99,
+        "description": "Elegant lilies that add a touch of sophistication to any setting.",
+        "rating": 4.6
+    },
+    {
+        "product_id": "FL005",
+        "images": [
+            "https://images.unsplash.com/photo-1601884928885-92a922f7962f?q=80&w=1563&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1592309487290-2cf1e17b4623?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
+        "product_name": "Orchid Delight",
+        "price": 49.99,
+        "discount_price": 44.99,
+        "description": "Exquisite orchids that make a stunning gift or decor piece.",
+        "rating": 4.9
+    }
+]
