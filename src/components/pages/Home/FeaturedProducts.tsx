@@ -65,7 +65,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -107,7 +107,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -149,7 +149,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -191,7 +191,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -233,7 +233,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -275,7 +275,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -317,7 +317,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}
@@ -359,7 +359,7 @@ const FeaturedProducts = () => {
                             </p>
                         )}
                         {showAddToCart && (
-                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer">
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600">
                                 Add to Cart
                             </p>
                         )}

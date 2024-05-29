@@ -11,7 +11,7 @@ const Home = () => {
       <OfferSection />
       <FeaturedProducts />
       <Gallery />
-      <CustomerReviews/>
+      <CustomerReviews />
     </div>
   );
 };
