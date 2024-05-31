@@ -1,0 +1,98 @@
+[
+    {
+        "product_id": "FL001",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146686/1_t6onpg.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/2_x1oyzx.jpg"
+        ],
+        "product_name": "Elegant Rose Bouquet",
+        "price": 29.99,
+        "discount_price": 24.99,
+        "description": "A beautiful bouquet of fresh red roses, perfect for any occasion.",
+        "rating": 4
+    },
+    {
+        "product_id": "FL002",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/5_qbadg1.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/6_anj86y.jpg"
+        ],
+        "product_name": "Sunshine Sunflowers",
+        "price": 19.99,
+        "discount_price": 15.99,
+        "description": "Brighten someone's day with these cheerful sunflowers.",
+        "rating": 2
+    },
+    {
+        "product_id": "FL003",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146703/7_szhxl1.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/8_dimqgj.jpg"
+        ],
+        "product_name": "Mixed Seasonal Flowers",
+        "price": 39.99,
+        "discount_price": 34.99,
+        "description": "A vibrant mix of seasonal flowers arranged beautifully.",
+        "rating": 5
+    },
+    {
+        "product_id": "FL004",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/3_ken9bo.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/4_crkqyh.jpg"
+        ],
+        "product_name": "Lily Elegance",
+        "price": 25.99,
+        "discount_price": 22.99,
+        "description": "Elegant lilies that add a touch of sophistication to any setting.",
+        "rating": 3
+    },
+    {
+        "product_id": "FL005",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/3_ken9bo.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/4_crkqyh.jpg"
+        ],
+        "product_name": "Orchid Delight",
+        "price": 49.99,
+        "discount_price": 44.99,
+        "description": "Exquisite orchids that make a stunning gift or decor piece.",
+        "rating": 5
+    },
+    {
+        "product_id": "FL006",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/2_x1oyzx.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146686/1_t6onpg.jpg"
+        ],
+        "product_name": "Flowers daisy pink stick",
+        "price": 49.99,
+        "discount_price": 44.99,
+        "description": "Exquisite orchids that make a stunning gift or decor piece.",
+        "rating": 1
+    },
+    {
+        "product_id": "FL007",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/9_zq39kj.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/2_x1oyzx.jpg"
+        ],
+        "product_name": "Orchid Delight",
+        "price": 49.99,
+        "discount_price": 44.99,
+        "description": "Exquisite orchids that make a stunning gift or decor piece.",
+        "rating": 5
+    },
+    {
+        "product_id": "FL008",
+        "images": [
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/6_anj86y.jpg",
+            "https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146702/5_qbadg1.jpg"
+        ],
+        "product_name": "Orchid Delight",
+        "price": 49.99,
+        "discount_price": 44.99,
+        "description": "Exquisite orchids that make a stunning gift or decor piece.",
+        "rating": 2
+    }
+]
