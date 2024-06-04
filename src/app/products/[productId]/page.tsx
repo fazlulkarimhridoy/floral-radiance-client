@@ -1,4 +1,5 @@
 "use client"
+import ProductImage from '@/components/pages/DetailsPage/productImage';
 import { useEffect, useState } from 'react';
 
 interface singleProductData {
@@ -29,12 +30,17 @@ const Page = ({params} : {params: {productId:string}}) => {
 
     console.log(singleProduct);
     console.log(products);
-
+    // console.log();
    
 
     return (
         <div>
             <h1 className='text-4xl'>details about</h1>
+            <div>
+                <ProductImage src={singleProduct?.images}></ProductImage>
+
+            </div>
+            
         </div>
     );
 }
