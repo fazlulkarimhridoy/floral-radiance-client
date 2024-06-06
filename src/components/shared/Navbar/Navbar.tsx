@@ -59,7 +59,7 @@ const Navbar = () => {
               Home
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              Shop
+              
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
               Pages

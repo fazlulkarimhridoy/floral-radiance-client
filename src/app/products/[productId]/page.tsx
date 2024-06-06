@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 interface singleProductData {
     product_id : string
+    images : Array<string>
 }
 
 const Page = ({params} : {params: {productId:string}}) => {
@@ -30,14 +31,14 @@ const Page = ({params} : {params: {productId:string}}) => {
 
     console.log(singleProduct);
     console.log(products);
-    // console.log();
-   
-
+    console.log((singleProduct : singleProductData) => singleProduct.images);
+    
+    
     return (
         <div>
             <h1 className='text-4xl'>details about</h1>
             <div>
-                <ProductImage src={singleProduct?.images}></ProductImage>
+                <ProductImage src={(singleProduct : singleProductData) => ?.images[0]}></ProductImage>
 
             </div>
             
