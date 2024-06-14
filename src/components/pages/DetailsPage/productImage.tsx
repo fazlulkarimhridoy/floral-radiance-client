@@ -3,25 +3,26 @@
 import React from "react";
 import { Image } from "antd";
 
-interface srcType{
-  src : string
+interface SrcType {
+  srcList: string[];
 }
 
-const ProductImage : React.FC<srcType> = ({src}) => {
+const ProductImage: React.FC<SrcType> = ({ srcList }) => {
+  console.log(srcList);
+  if (!srcList || srcList.length === 0) {
+    return <p>No images available</p>;
+  }
 
-    return (
-      <div>
-        <Image
-          alt="flower"
-          width={200}
-          src={src}
-        />
-      </div>
-    );
-
-
-  
-
+  return (
+    <div>
+      <Image
+        alt="product"
+        width={200}
+        src={srcList[0]}
+      />
+    </div>
+  );
 };
 
 export default ProductImage;
+

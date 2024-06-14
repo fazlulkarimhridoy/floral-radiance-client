@@ -2,46 +2,39 @@
 import ProductImage from '@/components/pages/DetailsPage/productImage';
 import { useEffect, useState } from 'react';
 
-interface singleProductData {
-    product_id : string
-    images : Array<string>
+interface SingleProductData {
+    product_id: string;
+    images: string[];
 }
 
-const Page = ({params} : {params: {productId:string}}) => {
-    const [products, setProducts] = useState([]);
-    const [singleProduct,setSingleProduct] = useState()
+const Page = ({ params }: { params: { productId: string } }) => {
+    const [products, setProducts] = useState<SingleProductData[]>([]);
+    const [singleProduct, setSingleProduct] = useState<SingleProductData | undefined>();
 
     useEffect(() => {
         fetch('/productData/productData.json')
-          .then(response => response.json())
-          .then(data => setProducts(data))
-          .catch(error => console.error('Error fetching products:', error));
-          
-      }, []);
-    
+            .then(response => response.json())
+            .then(data => setProducts(data))
+            .catch(error => console.error('Error fetching products:', error));
+    }, []);
+
     useEffect(() => {
-        if(products.length > 0){
-            const singleProduct = products.find( (p : singleProductData) => p.product_id === params.productId)
-            setSingleProduct(singleProduct)
+        if (products.length > 0) {
+            const foundProduct = products.find((p: SingleProductData) => p.product_id === params.productId);
+            setSingleProduct(foundProduct);
         }
-        console.log(singleProduct);
-    },[products , params.productId , singleProduct])
-   
-
-
-    console.log(singleProduct);
-    console.log(products);
-    console.log((singleProduct : singleProductData) => singleProduct.images);
-    
-    
-    return (
+    }, [products, params.productId]);
+    // console.log(typeof(singleProduct?.images));
+    return ( 
         <div>
-            <h1 className='text-4xl'>details about</h1>
-            <div>
-                <ProductImage src={(singleProduct : singleProductData) => ?.images[0]}></ProductImage>
-
-            </div>
-            
+            <h1 className='text-4xl'>Details about product</h1>
+            {singleProduct ? (
+                <div>
+                    <ProductImage srcList={singleProduct.images} />
+                </div>
+            ) : (
+                <p>Loading product details...</p>
+            )}
         </div>
     );
 }
