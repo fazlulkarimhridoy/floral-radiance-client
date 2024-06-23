@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,6 +16,10 @@
 
   .link-style {
     @apply cursor-pointer hover:text-pink-600 hover:translate-x-1 transition-all;
+  }
+
+  .sideBar-navLink{
+    @apply cursor-pointer hover:text-[#333] hover:font-semibold transition-all ease-linear hover:border-r-2 border-[#333] px-2
   }
 }
 
@@ -31,6 +39,14 @@
 
 .font-poppins {
   font-family: "Poppins", sans-serif;
+}
+
+.font-dm{
+  font-family: "DM Sans", sans-serif;
+}
+
+.font-roboto{
+  font-family: "Roboto", sans-serif;
 }
 
 .great-vibes-regular {
@@ -145,8 +161,8 @@
 
 .carousel-button {
   position: absolute;
-  top: 80%;
-  right:10%;
+  top: 86%;
+  right:5%;
   transform: translateY(-50%);
   background-color: #463b3e;
   color: white;
@@ -158,10 +174,4 @@
   border-radius: 40px;
 }
 
-.carousel-button.left {
 
-}
-
-.carousel-button.right {
- 
-}

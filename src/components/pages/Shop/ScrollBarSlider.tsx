@@ -1,9 +1,13 @@
-'use client';
+"use client";
+import { Divider } from "antd";
 import React, { useRef, useState, useEffect } from "react";
 import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
 
 const ButtonGroup: React.FC = () => {
   const [activeButton, setActiveButton] = useState<number | null>(null);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+  });
   const [tags] = useState<string[]>([
     "greetings",
     "congratulation",
@@ -22,38 +26,50 @@ const ButtonGroup: React.FC = () => {
   const scrollBar = useRef<HTMLDivElement>(null);
   const leftArrow = useRef<HTMLDivElement>(null);
   const rightArrow = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+      });
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   useEffect(() => {
     const manageIcons = () => {
       if (scrollBar.current) {
         if (scrollBar.current.scrollLeft >= 20) {
-          leftArrow.current?.classList.remove('hidden');
+          leftArrow.current?.classList.remove("hidden");
         } else {
-          leftArrow.current?.classList.add('hidden');
+          leftArrow.current?.classList.add("hidden");
         }
 
-        let maxScroll = scrollBar.current?.scrollWidth - scrollBar.current?.clientWidth - 20
+        let maxScroll =
+          scrollBar.current?.scrollWidth - scrollBar.current?.clientWidth - 20;
 
-        if(scrollBar.current.scrollLeft > maxScroll){
-          rightArrow.current?.classList.add('hidden')
-        }
-        else{
-          rightArrow.current?.classList.remove('hidden')
+        if (scrollBar.current.scrollLeft > maxScroll) {
+          rightArrow.current?.classList.add("hidden");
+        } else {
+          rightArrow.current?.classList.remove("hidden");
         }
       }
-
-      
     };
 
     manageIcons(); // Initial check when the component mounts
 
     if (scrollBar.current) {
-      scrollBar.current.addEventListener('scroll', manageIcons);
+      scrollBar.current.addEventListener("scroll", manageIcons);
     }
 
     return () => {
       if (scrollBar.current) {
-        scrollBar.current.removeEventListener('scroll', manageIcons);
+        scrollBar.current.removeEventListener("scroll", manageIcons);
       }
     };
   }, []);
@@ -75,7 +91,7 @@ const ButtonGroup: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center scrollbar-container overflow-hidden relative ">
+    windowSize.width <= 375 ? 'ad' : (<div className="flex items-center scrollbar-container overflow-hidden relative ">
       <div
         onClick={handleLeftScroll}
         ref={leftArrow}
@@ -103,8 +119,9 @@ const ButtonGroup: React.FC = () => {
       >
         <FaAngleRight />
       </div>
-    </div>
+    </div> )
   );
 };
 
 export default ButtonGroup;
+

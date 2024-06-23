@@ -29,23 +29,21 @@ const Page = () => {
   console.log(products);
 
   const images = [
-    'https://images.pexels.com/photos/931147/pexels-photo-931147.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/1484657/pexels-photo-1484657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    'https://images.pexels.com/photos/931162/pexels-photo-931162.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    '/images/flowerVector.png',  '/images/floweOne.jpeg','/images/flowerTwo.jpeg', '/images/flowerThree.jpeg'
   ];
 
   return (
-    <div className="flex gap-4 ">
+    <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px]">
       {/* <h1 className="text-xl"> All Products</h1> */}
       <div className="border-r-2 ">
           <SideBarMenu></SideBarMenu>
       </div>
-      <div className=" space-y-4">
-        <div className="flex gap-4 items-center">
+      <div className=" space-y-4 flex flex-col">
+        <div className="flex flex-col lg:flex-row  gap-4 lg:items-center">
           <Search></Search>
           <ButtonGroup></ButtonGroup>
         </div>
-        <div className=""><Banner images={images}></Banner></div>
+        <div className="max-w-[1090px]"><Banner images={images}></Banner></div>
         
       </div>
     </div>
