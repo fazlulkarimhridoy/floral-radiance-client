@@ -71,25 +71,22 @@ const FeaturedProducts = () => {
                         onMouseLeave={() => handleMouseLeave(item.id)}
                     >
                         <div className="relative h-[270px] w-[270px]">
-                            {typeof item.images === "string" &&
-                                JSON.parse(item.images).map(
-                                    (imageUrl: any, index: any) => (
-                                        <Image
-                                            key={index}
-                                            src={imageUrl}
-                                            alt={`Image ${index}`}
-                                            width={600}
-                                            height={600}
-                                            className={`absolute inset-0 object-cover ${
-                                                index === 0
-                                                    ? "opacity-100"
-                                                    : "opacity-0"
-                                            } group-hover:opacity-${
-                                                index === 0 ? "0" : "100"
-                                            }`}
-                                        />
-                                    )
-                                )}
+                            {item?.images?.map((imageUrl: any, index: any) => (
+                                <Image
+                                    key={index}
+                                    src={imageUrl}
+                                    alt={`Image ${index}`}
+                                    width={600}
+                                    height={600}
+                                    className={`absolute inset-0 object-cover ${
+                                        index === 0
+                                            ? "opacity-100"
+                                            : "opacity-0"
+                                    } group-hover:opacity-${
+                                        index === 0 ? "0" : "100"
+                                    }`}
+                                />
+                            ))}
 
                             {/* <Image
                                 src={JSON.parse(item.images[0])}
