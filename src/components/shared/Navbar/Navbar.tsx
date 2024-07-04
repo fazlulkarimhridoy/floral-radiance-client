@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button, Drawer } from "antd";
+import Link from "next/link";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -59,7 +60,7 @@ const Navbar = () => {
               Home
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              Shop
+              <Link href={'/products'}>Shop</Link>
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
               Pages
