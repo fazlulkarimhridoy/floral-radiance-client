@@ -1,5 +1,5 @@
 "use client"
-import ProductImage from '@/components/pages/DetailsPage/productImage';
+import ProductImage from '@/components/pages/DetailsPage/ProductImage';
 import { useEffect, useState } from 'react';
 
 interface SingleProductData {
