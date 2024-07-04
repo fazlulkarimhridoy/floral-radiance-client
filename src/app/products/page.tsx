@@ -27,7 +27,6 @@ const Page = () => {
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  console.log(products);
 
   const images = [
     '/images/flowerVector.png',  '/images/floweOne.jpeg','/images/flowerTwo.jpeg', '/images/flowerThree.jpeg'
