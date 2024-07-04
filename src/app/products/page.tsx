@@ -33,17 +33,17 @@ const Page = () => {
   ];
 
   return (
-    <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px]">
+    <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px] mx-auto px-2">
       {/* <h1 className="text-xl"> All Products</h1> */}
       <div className="border-r-2 ">
           <SideBarMenu></SideBarMenu>
       </div>
       <div className=" space-y-4 flex flex-col h-screen overflow-scroll">
-        <div className="flex flex-col lg:flex-row  gap-4 lg:items-center">
+        <div className="flex flex-col md:flex-row  gap-4 md:items-center">
           <Search></Search>
           <ButtonGroup></ButtonGroup>
         </div>
-        <div className="max-w-[1090px]"><Banner images={images}></Banner></div>
+        <div className="w-full"><Banner images={images}></Banner></div>
         <div className="bg-[#f4f4f4]">
             <AllProducts/>
         </div>

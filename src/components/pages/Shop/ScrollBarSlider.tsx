@@ -6,7 +6,7 @@ import { FaChevronLeft, FaAngleRight } from "react-icons/fa6";
 const ButtonGroup: React.FC = () => {
   const [activeButton, setActiveButton] = useState<number | null>(null);
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
+    width: 0,
   });
   const [tags] = useState<string[]>([
     "greetings",
@@ -27,7 +27,6 @@ const ButtonGroup: React.FC = () => {
   const leftArrow = useRef<HTMLDivElement>(null);
   const rightArrow = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
@@ -90,8 +89,25 @@ const ButtonGroup: React.FC = () => {
     }
   };
 
-  return (
-    windowSize.width <= 375 ? 'ad' : (<div className="flex items-center scrollbar-container overflow-hidden relative ">
+  return windowSize.width <= 375 ? (
+    <div
+      ref={scrollBar}
+      className="button-group flex text-nowrap overflow-x-scroll "
+    >
+      {tags.map((tag, idx) => {
+        return (
+          <button
+            key={idx}
+            className={activeButton === idx ? "active" : ""}
+            onClick={() => handleClick(idx)}
+          >
+            {tag}
+          </button>
+        );
+      })}
+    </div>
+  ) : (
+    <div className="flex items-center w-full lg:scrollbar-container overflow-hidden relative  ">
       <div
         onClick={handleLeftScroll}
         ref={leftArrow}
@@ -99,7 +115,10 @@ const ButtonGroup: React.FC = () => {
       >
         <FaChevronLeft />
       </div>
-      <div ref={scrollBar} className="button-group flex text-nowrap overflow-x-scroll ">
+      <div
+        ref={scrollBar}
+        className="button-group flex text-nowrap overflow-x-scroll "
+      >
         {tags.map((tag, idx) => {
           return (
             <button
@@ -119,9 +138,8 @@ const ButtonGroup: React.FC = () => {
       >
         <FaAngleRight />
       </div>
-    </div> )
+    </div>
   );
 };
 
 export default ButtonGroup;
-
