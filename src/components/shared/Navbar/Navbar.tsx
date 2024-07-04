@@ -42,7 +42,7 @@ const Navbar = () => {
           : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
       }
     >
-      <div className="flex items-center justify-between px-2 md:px-8 py-2 font-semibold">
+      <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
         <div className="flex items-center">
           <Image
             width={120}
