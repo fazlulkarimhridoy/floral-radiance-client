@@ -1,5 +1,6 @@
 "use client";
 
+import AllProducts from "@/components/pages/Shop/AllProducts";
 import Banner from "@/components/pages/Shop/Banner";
 import ButtonGroup from "@/components/pages/Shop/ScrollBarSlider";
 import Search from "@/components/pages/Shop/Search";
@@ -38,12 +39,16 @@ const Page = () => {
       <div className="border-r-2 ">
           <SideBarMenu></SideBarMenu>
       </div>
-      <div className=" space-y-4 flex flex-col">
+      <div className=" space-y-4 flex flex-col h-screen overflow-scroll">
         <div className="flex flex-col lg:flex-row  gap-4 lg:items-center">
           <Search></Search>
           <ButtonGroup></ButtonGroup>
         </div>
         <div className="max-w-[1090px]"><Banner images={images}></Banner></div>
+        <div className="bg-[#f4f4f4]">
+            <AllProducts/>
+        </div>
+        
         
       </div>
     </div>
