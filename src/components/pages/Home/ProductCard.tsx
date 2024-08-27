@@ -2,6 +2,7 @@ import { Flex } from "antd";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Rate } from "antd";
+import Link from "next/link";
 
 interface Item {
   id: number;
@@ -85,9 +86,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
             <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
               Add to Cart
             </p>
-            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-              View details
-            </p>
+            <Link href={`products/${item.id}`}>
+              <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+                View details
+              </p>
+            </Link>
           </div>
         )}
       </div>

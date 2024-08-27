@@ -9,6 +9,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  box-sizing: border-box;
+}
+
+.webkit-center{
+  text-align: -webkit-center;
+}
+
 @layer utilities {
   .social-media-icon-style {
     @apply text-white border-2 w-10 flex justify-center p-2 rounded-full cursor-pointer hover:bg-pink-600 hover:border-pink-600 transition-all;
@@ -19,7 +27,11 @@
   }
 
   .sideBar-navLink{
-    @apply cursor-pointer hover:text-[#333] hover:font-semibold transition-all ease-linear hover:border-r-2 border-[#333] px-2
+    @apply cursor-pointer hover:text-[#333] hover:font-semibold transition-all ease-linear hover:border-r-2 border-[#333] px-2 hover:bg-[#f4f4f4] py-4
+  }
+
+  .btn-purple{
+    @apply rounded-lg px-8 py-2 bg-[#f472b6] text-white hover:scale-105 transition-all text-xl font-bold text-center 
   }
 }
 
