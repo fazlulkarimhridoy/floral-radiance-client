@@ -51,7 +51,9 @@ const Navbar = () => {
             alt="logo"
             className="bg-none w-[80px]"
           />
-          <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">Floral Radiance</p>
+          <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+            Floral Radiance
+          </p>
         </div>
 
         <div className="mr-10 hidden lg:block">
@@ -60,7 +62,7 @@ const Navbar = () => {
               Home
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              <Link href={'/products'}>Shop</Link>
+              <Link href={"/products"}>Shop</Link>
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
               Pages
@@ -75,13 +77,16 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-6">
-          <button>
-            <ShoppingCartOutlined className="text-2xl font-bold hover:text-pink-600 transition-colors" />
-          </button>
+          <Link href={"/cart"}>
+            <button>
+              <ShoppingCartOutlined className="text-2xl font-bold hover:text-pink-600 transition-colors" />
+            </button>
+          </Link>
+
           {/* Hamburger menu */}
           <div className="lg:hidden block">
             <MenuOutlined onClick={showDrawer} />
-            <Drawer width={240}  title="" onClose={onClose} open={open}>
+            <Drawer width={240} title="" onClose={onClose} open={open}>
               <ul className="text-lg space-y-2 font-poppins font-medium">
                 <li className="hover:text-pink-600 cursor-pointer transition-colors">
                   Home
