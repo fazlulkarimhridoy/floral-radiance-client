@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button } from "antd";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
+import Link from "next/link";
 
 interface ProductType {
   id: number;
@@ -26,24 +27,21 @@ interface SingleProductData {
 const Page = ({ params }: { params: { productId: string } }) => {
   console.log(params.productId);
 
-
   const [activeButton, setActiveButton] = useState<number | null>(null);
   // const [quantity, setQuantity] = useState(10)
-  const [price, setPrice] = useState(250)
+  const [price, setPrice] = useState(250);
 
-  const handlePrice = (quantity: number ) => {
-    if (price > 0){
-      setPrice(0)
+  const handlePrice = (quantity: number) => {
+    if (price > 0) {
+      setPrice(0);
     }
-    setPrice(quantity*250)
-  }
+    setPrice(quantity * 250);
+  };
 
   const handleClick = (buttonIndex: number): void => {
     setActiveButton(buttonIndex);
-    handlePrice(buttonIndex)
+    handlePrice(buttonIndex);
   };
-
- 
 
   //Fetching all product data
 
@@ -62,12 +60,14 @@ const Page = ({ params }: { params: { productId: string } }) => {
   console.log(featuredProducts);
 
   // Funtion for finding the selected product
-  const findProduct = (item) => {
+  const findProduct = (item: Array<any>) => {
     return Number(params.productId) === item.id;
   };
 
   //single product data
-  const singleProduct = featuredProducts.find(findProduct);
+  const singleProduct = featuredProducts?.find(findProduct);
+
+  console.log(singleProduct);
 
   return (
     <div className=" lg:p-4">
@@ -89,23 +89,54 @@ const Page = ({ params }: { params: { productId: string } }) => {
             <div className="space-y-4 max-w-[400px] ">
               <h1 className="text-xl font-dm font-semibold">Quantity:</h1>
               <div className="grid grid-cols-2 gap-2 lg:flex lg:flex-row justify-between ">
-              
-                <button onClick={() => handleClick(1)} className={`  ${activeButton === 1 ? 'border-2 border-pink-950 border-spacing-4 btn-purple ' : 'border-none btn-purple'}`} >10</button>
-                
-               
-                <button onClick={() => handleClick(2)} className={` btn-purple ${activeButton === 2 ? 'border-2 border-black border-spacing-4' : 'border-none'}`}>20</button>
-                <button onClick={() => handleClick(3)} className={` btn-purple ${activeButton === 3 ? 'border-2 border-black border-spacing-4' : 'border-none'}`}>50</button>
+                <button
+                  onClick={() => handleClick(1)}
+                  className={`  ${
+                    activeButton === 1
+                      ? "border-2 border-pink-950 border-spacing-4 btn-purple "
+                      : "border-none btn-purple"
+                  }`}
+                >
+                  10
+                </button>
+
+                <button
+                  onClick={() => handleClick(2)}
+                  className={` btn-purple ${
+                    activeButton === 2
+                      ? "border-2 border-black border-spacing-4"
+                      : "border-none"
+                  }`}
+                >
+                  20
+                </button>
+                <button
+                  onClick={() => handleClick(3)}
+                  className={` btn-purple ${
+                    activeButton === 3
+                      ? "border-2 border-black border-spacing-4"
+                      : "border-none"
+                  }`}
+                >
+                  50
+                </button>
                 <button className="btn-purple text-xl webkit-center">
                   <FaPlus />
                 </button>
               </div>
               <div className="flex justify-between gap-2">
                 <div className="border-2 border-[#f635bf] flex-1  text-center rounded-lg py-4 text-[#184364] font-bold text-xl flex justify-center items-center">
-                  {price} <span> <TbCurrencyTaka /></span>
+                  {price}{" "}
+                  <span>
+                    {" "}
+                    <TbCurrencyTaka />
+                  </span>
                 </div>
-                <button className="border-2 flex-shrink-0 border-[#f635bf] rounded-lg text-[#f635bf] hover:bg-[#f635bf] hover:text-white px-2 font-bold">
-                  Purchase
-                </button>
+                <Link href={`/purchaseOrder`} className="border-2 flex-shrink-0 border-[#f635bf] rounded-lg text-[#f635bf] hover:bg-[#f635bf] hover:text-white px-2 font-bold flex items-center">
+                  <button className="">
+                    Purchase
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,16 +1,21 @@
+"use client"
+
 import { Flex } from "antd";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Rate } from "antd";
 import Link from "next/link";
+import { CartContext } from "@/context/CartContext";
 
 interface Item {
   id: number;
+  product_id: number;
   images: string[];
   product_name: string;
-  rating: number;
-  discount_price: number;
   price: number;
+  discount_price: number;
+  description: string;
+  rating: number;
 }
 
 interface ProductCardProps {
@@ -19,9 +24,20 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
+  console.log(item);
+
+
   const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
     {}
   );
+
+  const cartContext = useContext(CartContext);
+
+  if (!cartContext) {
+    return null;
+  }
+
+  const { addToCart } = cartContext;
 
   // Function to handle mouse enter event for a specific product
   const handleMouseEnter = (productId: number) => {
@@ -83,7 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
         )}
         {hoverStates[item.id] && (
           <div className="flex">
-            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+            <p onClick={() => {addToCart(item)}} className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
               Add to Cart
             </p>
             <Link href={`products/${item.id}`}>

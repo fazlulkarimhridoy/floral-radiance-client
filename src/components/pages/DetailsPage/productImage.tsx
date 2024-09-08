@@ -14,8 +14,9 @@ const ProductImage: React.FC<SrcType> = ({ srcList }) => {
     return <p>No images available</p>;
   }
 
-  console.log(srcList[3]);
+  console.log(srcList.length)
 
+  // const images = typeof srcList === "string" ? JSON.parse(item.images) : [];
   return (
     <div className=" space-y-4">
       <div className="border-4 border-[#f472b6] p-2 rounded-xl">
