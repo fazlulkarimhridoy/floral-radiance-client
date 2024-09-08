@@ -16,7 +16,7 @@ datasource db {
 model Products {
   id Int @id @default(autoincrement())
   product_id String @unique @db.VarChar(255)
-  images String? @db.LongText
+  images Json?
   product_name String @db.VarChar(255)
   price Int
   discount_price Int?
