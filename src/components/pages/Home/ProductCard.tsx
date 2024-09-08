@@ -19,8 +19,8 @@ interface Item {
 }
 
 interface ProductCardProps {
-  item: Item;
-  desc: string[];
+    item: Item;
+    desc: string[];
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
@@ -39,56 +39,56 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
 
   const { addToCart } = cartContext;
 
-  // Function to handle mouse enter event for a specific product
-  const handleMouseEnter = (productId: number) => {
-    setHoverStates((prevStates) => ({
-      ...prevStates,
-      [productId]: true,
-    }));
-  };
+    // Function to handle mouse enter event for a specific product
+    const handleMouseEnter = (productId: number) => {
+        setHoverStates((prevStates) => ({
+            ...prevStates,
+            [productId]: true,
+        }));
+    };
 
-  // Function to handle mouse leave event for a specific product
-  const handleMouseLeave = (productId: number) => {
-    setHoverStates((prevStates) => ({
-      ...prevStates,
-      [productId]: false,
-    }));
-  };
+    // Function to handle mouse leave event for a specific product
+    const handleMouseLeave = (productId: number) => {
+        setHoverStates((prevStates) => ({
+            ...prevStates,
+            [productId]: false,
+        }));
+    };
 
-  // const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
+    // const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
 
-  return (
-    <div
-      key={item.id}
-      className="group h-[400px] w-[300px] rounded-2xl border-2 p-2  hover:shadow-lg hover:transition-all hover:duration-400"
-      onMouseEnter={() => handleMouseEnter(item.id)}
-      onMouseLeave={() => handleMouseLeave(item.id)}
-    >
-      <div className="relative h-[270px] w-[260px] mx-auto">
-        {item?.images.map((imageUrl: string, index: number) => (
-          <Image
-            key={index}
-            src={imageUrl}
-            alt={`Image ${index}`}
-            width={500}
-            height={500}
-            className={`absolute inset-0 object-cover ${
-              index === 0 ? "opacity-100" : "opacity-0"
-            } group-hover:opacity-${index === 0 ? "0" : "100"}`}
-          />
-        ))}
-      </div>
+    return (
+        <div
+            key={item.id}
+            className="group h-[400px] w-[300px] rounded-2xl border-2 p-2  hover:shadow-lg hover:transition-all hover:duration-400"
+            onMouseEnter={() => handleMouseEnter(item.id)}
+            onMouseLeave={() => handleMouseLeave(item.id)}
+        >
+            <div className="relative h-[270px] w-[260px] mx-auto">
+                {item?.images.map((imageUrl: string, index: number) => (
+                    <Image
+                        key={index}
+                        src={imageUrl}
+                        alt={`Image ${index}`}
+                        width={500}
+                        height={500}
+                        className={`absolute inset-0 object-cover ${
+                            index === 0 ? "opacity-100" : "opacity-0"
+                        } group-hover:opacity-${index === 0 ? "0" : "100"}`}
+                    />
+                ))}
+            </div>
 
-      {/* Product details */}
-      <div className="text-center my-2">
-        <h3 className="text-lg font-semibold">{item?.product_name}</h3>
-        <Flex gap="middle" vertical className="mt-2">
-          <Rate
-            className="text-base text-pink-600"
-            tooltips={desc}
-            value={item?.rating}
-          />
-        </Flex>
+            {/* Product details */}
+            <div className="text-center my-2">
+                <h3 className="text-lg font-semibold">{item?.product_name}</h3>
+                <Flex gap="middle" vertical className="mt-2">
+                    <Rate
+                        className="text-base text-pink-600"
+                        tooltips={desc}
+                        value={item?.rating}
+                    />
+                </Flex>
 
         {/* Render the price or Add to Cart based on hover */}
         {!hoverStates[item.id] && (
