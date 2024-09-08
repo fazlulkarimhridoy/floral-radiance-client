@@ -1,5 +1,5 @@
 "use client";
-import ProductImage from "@/components/pages/DetailsPage/ProductImage";
+import ProductImage from "@/components/pages/DetailsPage/productImage";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -60,13 +60,12 @@ const Page = ({ params }: { params: { productId: string } }) => {
   console.log(featuredProducts);
 
   // Funtion for finding the selected product
-  const findProduct = (item: Array<any>) => {
+  const findProduct = (item: ProductType) => {
     return Number(params.productId) === item.id;
   };
 
   //single product data
   const singleProduct = featuredProducts?.find(findProduct);
-
   console.log(singleProduct);
 
   return (
