@@ -14,17 +14,17 @@ datasource db {
 
 // customer model
 model Customer {
-  id          Int      @id @default(autoincrement())
-  customer_id String   @unique @db.VarChar(255)
-  firstName   String
-  lastName    String
-  email       String   @unique
-  phone       String   @unique
-  address     String
-  city        String
-  state       String
-  zipCode     String
-  createdAt   DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  customerId String   @unique @db.VarChar(255)
+  firstName  String
+  lastName   String
+  email      String   @unique
+  phone      String   @unique
+  address    String
+  city       String
+  state      String
+  zipCode    String
+  createdAt  DateTime @default(now())
 
   // orders Order[]
   // reviews Review[]
@@ -35,12 +35,12 @@ model Customer {
 // product model
 model Product {
   id             Int       @id @default(autoincrement())
-  product_id     String    @unique @db.VarChar(255)
+  productId      String    @unique @db.VarChar(255)
   images         Json?
   product_name   String    @db.VarChar(255)
   price          Int
   discount_price Int?
-  stock          Int?       @default(0)
+  stock          Int?      @default(0)
   category       String?
   description    String?   @db.LongText
   rating         Int?
