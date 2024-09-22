@@ -6,7 +6,7 @@ export async function GET(req: any) {
         let { searchParams }: any = new URL(req.url);
         let id = parseInt(searchParams.get("id"));
         const prisma = new PrismaClient();
-        const products = await prisma.products.findUnique({
+        const products = await prisma.product.findUnique({
             where: {
                 id: id,
             },
