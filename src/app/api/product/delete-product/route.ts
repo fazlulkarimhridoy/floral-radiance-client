@@ -1,12 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function POST(req: any) {
+export async function DELETE(req: Request) {
     try {
+        let { searchParams }: any = new URL(req.url);
+        let id = parseInt(searchParams.get("id"));
         const prisma = new PrismaClient();
-        const categoryData = await req.json();
-        const result = await prisma.category.create({
-            data: categoryData,
+        const result = await prisma.product.delete({
+            where: {
+                id: id,
+            },
         });
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {
