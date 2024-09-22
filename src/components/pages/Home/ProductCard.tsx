@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Flex } from "antd";
 import Image from "next/image";
@@ -8,14 +8,14 @@ import Link from "next/link";
 import { CartContext } from "@/context/CartContext";
 
 interface Item {
-  id: number;
-  product_id: number;
-  images: string[];
-  product_name: string;
-  price: number;
-  discount_price: number;
-  description: string;
-  rating: number;
+    id: number;
+    product_id: number;
+    images: string[];
+    product_name: string;
+    price: number;
+    discount_price: number;
+    description: string;
+    rating: number;
 }
 
 interface ProductCardProps {
@@ -24,20 +24,19 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
-  console.log(item);
+    console.log(item);
 
+    const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
+        {}
+    );
 
-  const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
-    {}
-  );
+    const cartContext = useContext(CartContext);
 
-  const cartContext = useContext(CartContext);
+    if (!cartContext) {
+        return null;
+    }
 
-  if (!cartContext) {
-    return null;
-  }
-
-  const { addToCart } = cartContext;
+    const { addToCart } = cartContext;
 
     // Function to handle mouse enter event for a specific product
     const handleMouseEnter = (productId: number) => {
@@ -90,28 +89,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
                     />
                 </Flex>
 
-        {/* Render the price or Add to Cart based on hover */}
-        {!hoverStates[item.id] && (
-          <p className="font-medium flex items-center justify-center gap-2 mt-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-            <span>${item?.discount_price}</span>
-            <span className="line-through text-gray-400">${item?.price}</span>
-          </p>
-        )}
-        {hoverStates[item.id] && (
-          <div className="flex">
-            <p onClick={() => {addToCart(item)}} className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-              Add to Cart
-            </p>
-            <Link href={`products/${item.id}`}>
-              <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-                View details
-              </p>
-            </Link>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+                {/* Render the price or Add to Cart based on hover */}
+                {!hoverStates[item.id] && (
+                    <p className="font-medium flex items-center justify-center gap-2 mt-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+                        <span>${item?.discount_price}</span>
+                        <span className="line-through text-gray-400">
+                            ${item?.price}
+                        </span>
+                    </p>
+                )}
+                {hoverStates[item.id] && (
+                    <div className="flex">
+                        <p
+                            onClick={() => {
+                                addToCart(item);
+                            }}
+                            className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1"
+                        >
+                            Add to Cart
+                        </p>
+                        <Link href={`products/${item.id}`}>
+                            <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+                                View details
+                            </p>
+                        </Link>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default ProductCard;
