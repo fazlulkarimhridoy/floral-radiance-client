@@ -2,14 +2,28 @@
 
 import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button, Drawer } from "antd";
 import Link from "next/link";
+import { CartContext } from "@/context/CartContext";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false);
   const [open, setOpen] = useState(false);
+  const cartContext = useContext(CartContext);
+  useEffect(() => {
+    window.addEventListener("scroll", changeBackground);
+    return () => {
+      window.removeEventListener("scroll", changeBackground);
+    };
+  }, []);
+  
+  if (!cartContext) {
+    return null;
+  }
+
+  const { cart } = cartContext;
 
   const showDrawer = () => {
     setOpen(true);
@@ -27,12 +41,7 @@ const Navbar = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", changeBackground);
-    return () => {
-      window.removeEventListener("scroll", changeBackground);
-    };
-  }, []);
+
 
   return (
     <motion.div
@@ -59,7 +68,7 @@ const Navbar = () => {
         <div className="mr-10 hidden lg:block">
           <ul className="flex text-lg gap-4 font-poppins">
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              Home
+            <Link href={"/"}>Home</Link>
             </li>
             <li className="hover:text-pink-600 cursor-pointer transition-colors">
               <Link href={"/products"}>Shop</Link>
@@ -76,11 +85,12 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="flex gap-6">
-          <Link href={"/cart"}>
+        <div className="flex gap-6 ">
+          <Link className="relative" href={"/cart"}>
             <button>
-              <ShoppingCartOutlined className="text-2xl font-bold hover:text-pink-600 transition-colors" />
+              <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
             </button>
+            <p className= "absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">{cart.length}</p> 
           </Link>
 
           {/* Hamburger menu */}
@@ -89,10 +99,11 @@ const Navbar = () => {
             <Drawer width={240} title="" onClose={onClose} open={open}>
               <ul className="text-lg space-y-2 font-poppins font-medium">
                 <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  Home
+                  <Link href={"/"}>Home</Link>
                 </li>
+                
                 <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  Shop
+                  <Link href={"/products"}>Shop</Link>
                 </li>
                 <li className="hover:text-pink-600 cursor-pointer transition-colors">
                   Pages
