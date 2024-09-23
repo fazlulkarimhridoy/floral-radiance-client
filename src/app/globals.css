@@ -24,6 +24,10 @@
   font-style: normal;
 }
 
+.text-fade-black{
+  color: #3d4349;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

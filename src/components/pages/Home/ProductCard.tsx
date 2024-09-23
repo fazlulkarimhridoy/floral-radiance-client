@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
     }));
   };
 
-  // const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
+  const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
 
   return (
     <div
@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
       onMouseLeave={() => handleMouseLeave(item.id)}
     >
       <div className="relative h-[270px] w-[260px] mx-auto">
-        {item?.images.map((imageUrl: string, index: number) => (
+        {images.map((imageUrl: string, index: number) => (
           <Image
             key={index}
             src={imageUrl}

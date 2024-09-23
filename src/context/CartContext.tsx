@@ -29,6 +29,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     console.log(cart);
   };
 
+
   const removeFromCart = (productId: number) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
@@ -43,5 +44,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     </CartContext.Provider>
   );
 };
+
+// Save in local storage 
 
 
