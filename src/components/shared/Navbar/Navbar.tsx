@@ -76,7 +76,7 @@ const Navbar = () => {
                             Contact Us
                         </li>
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            <Link href="/admin">Dashboard</Link>
+                            <Link href="/admin/dashboard">Dashboard</Link>
                         </li>
                     </ul>
                 </div>

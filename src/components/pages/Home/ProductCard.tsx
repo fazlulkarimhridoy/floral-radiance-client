@@ -24,7 +24,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
-    console.log(item);
+    console.log(item?.images);
 
     const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
         {}
@@ -64,18 +64,24 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
             onMouseLeave={() => handleMouseLeave(item.id)}
         >
             <div className="relative h-[270px] w-[260px] mx-auto">
-                {item?.images.map((imageUrl: string, index: number) => (
-                    <Image
-                        key={index}
-                        src={imageUrl}
-                        alt={`Image ${index}`}
-                        width={500}
-                        height={500}
-                        className={`absolute inset-0 object-cover ${
-                            index === 0 ? "opacity-100" : "opacity-0"
-                        } group-hover:opacity-${index === 0 ? "0" : "100"}`}
-                    />
-                ))}
+                {item?.images &&
+                    item?.images?.map((imageUrl: string, index: number) => {
+                        // checking if image url start with http or not
+                        return (
+                            <Image
+                                key={index}
+                                src={imageUrl}
+                                alt={`Image ${index}`}
+                                width={500}
+                                height={500}
+                                className={`absolute inset-0 object-cover ${
+                                    index === 0 ? "opacity-100" : "opacity-0"
+                                } group-hover:opacity-${
+                                    index === 0 ? "0" : "100"
+                                }`}
+                            />
+                        );
+                    })}
             </div>
 
             {/* Product details */}
@@ -90,15 +96,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
                 </Flex>
 
                 {/* Render the price or Add to Cart based on hover */}
-                {!hoverStates[item.id] && (
-                    <p className="font-medium flex items-center justify-center gap-2 mt-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+                {!hoverStates[item?.id] && (
+                    <p className="font-medium flex items-center justify-center gap-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
                         <span>${item?.discount_price}</span>
                         <span className="line-through text-gray-400">
                             ${item?.price}
                         </span>
                     </p>
                 )}
-                {hoverStates[item.id] && (
+                {hoverStates[item?.id] && (
                     <div className="flex">
                         <p
                             onClick={() => {
@@ -108,7 +114,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
                         >
                             Add to Cart
                         </p>
-                        <Link href={`products/${item.id}`}>
+                        <Link href={`products/${item?.id}`}>
                             <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
                                 View details
                             </p>
