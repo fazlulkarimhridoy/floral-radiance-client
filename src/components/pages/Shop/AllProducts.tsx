@@ -28,6 +28,8 @@ const AllProducts = () => {
         refetchOnWindowFocus: false,
     });
 
+    console.log(featuredProducts);
+
     return (
         <div className="flex flex-wrap justify-center gap-10 mt-20">
         {featuredProducts?.map((item) => (

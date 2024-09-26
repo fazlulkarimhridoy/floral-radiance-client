@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `product` MODIFY `updated_at` TIMESTAMP(0) NULL DEFAULT CURRENT_TIMESTAMP(0);

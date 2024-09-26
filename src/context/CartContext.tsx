@@ -13,13 +13,13 @@ interface ProductType {
 }
 
 interface CartContextType {
-  cart: ProductType[];
-  addToCart: (product:ProductType ) => void;
-  removeFromCart: (productId: number) => void;
-  calculateTotal: () => number;
+    cart: ProductType[];
+    addToCart: (product: ProductType) => void;
+    removeFromCart: (productId: number) => void;
+    calculateTotal: () => number;
 }
 
-export const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<ProductType[]>([]);
@@ -43,9 +43,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
 
-  const removeFromCart = (productId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  };
+    const removeFromCart = (productId: number) => {
+        setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    };
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price, 0);
