@@ -1,7 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React from "react";
-import ProductCard from "../Home/ProductCard";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
