@@ -28,24 +28,14 @@ const Navbar = () => {
     const showDrawer = () => {
         setOpen(true);
     };
-    const showDrawer = () => {
-        setOpen(true);
-    };
+
 
     const onClose = () => {
         setOpen(false);
     };
-    const onClose = () => {
-        setOpen(false);
-    };
 
-    const changeBackground = () => {
-        if (window.scrollY >= 120) {
-            setShowNavbar(true);
-        } else {
-            setShowNavbar(false);
-        }
-    };
+
+
     const changeBackground = () => {
         if (window.scrollY >= 120) {
             setShowNavbar(true);

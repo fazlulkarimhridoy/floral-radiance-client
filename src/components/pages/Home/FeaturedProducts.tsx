@@ -52,6 +52,8 @@ const FeaturedProducts = () => {
         retry: 2,
         refetchOnWindowFocus: false,
     });
+    
+    console.log(featuredProducts);
 
     return (
         <div className="max-w-[76%] mx-auto my-20">

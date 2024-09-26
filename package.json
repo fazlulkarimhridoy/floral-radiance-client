@@ -16,7 +16,7 @@
     "axios": "^1.7.2",
     "framer-motion": "^11.2.4",
     "mysql2": "^3.10.1",
-    "next": "14.2.3",
+    "next": "^14.2.13",
     "react": "^18",
     "react-dom": "^18",
     "react-headroom": "^3.2.1",
