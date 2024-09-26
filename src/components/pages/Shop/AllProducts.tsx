@@ -2,6 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import ProductCard from "../Home/ProductCard";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React from "react";
+import ProductCard from "../Home/ProductCard";
 
 interface ProductType {
   id: number;
@@ -23,7 +27,6 @@ const AllProducts = () => {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
       );
-      console.log(res.data);
       return res.data.data;
     },
     retry: 2,

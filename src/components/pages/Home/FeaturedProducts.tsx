@@ -64,9 +64,10 @@ const FeaturedProducts = () => {
                 </h1>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
-                {featuredProducts?.length > 0 && featuredProducts?.map((item) => (
-                    <ProductCard key={item?.id} item={item} desc={desc} />
-                ))}
+                {featuredProducts.length > 0 &&
+                    featuredProducts?.map((item) => (
+                        <ProductCard key={item.id} item={item} desc={desc} />
+                    ))}
             </div>
         </div>
     );

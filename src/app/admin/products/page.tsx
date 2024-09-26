@@ -1,6 +1,6 @@
 "use client";
 
-// import ProductRow from "@/components/dashboard/ProductRow";
+import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
