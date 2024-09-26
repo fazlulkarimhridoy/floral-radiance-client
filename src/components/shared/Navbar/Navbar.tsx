@@ -25,65 +25,69 @@ const Navbar = () => {
 
   const { cart } = cartContext;
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+    const showDrawer = () => {
+        setOpen(true);
+    };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+    const onClose = () => {
+        setOpen(false);
+    };
 
-  const changeBackground = () => {
-    if (window.scrollY >= 120) {
-      setShowNavbar(true);
-    } else {
-      setShowNavbar(false);
-    }
-  };
+    const changeBackground = () => {
+        if (window.scrollY >= 120) {
+            setShowNavbar(true);
+        } else {
+            setShowNavbar(false);
+        }
+    };
 
 
 
-  return (
-    <motion.div
-      className={
-        showNavbar
-          ? "bg-pink-400 sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
-          : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
-      }
-    >
-      <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
-        <div className="flex items-center">
-          <Image
-            width={120}
-            height={120}
-            src="/Images/logo.png"
-            alt="logo"
-            className="bg-none w-[80px]"
-          />
-          <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
-            Floral Radiance
-          </p>
-        </div>
-
-        <div className="mr-10 hidden lg:block">
-          <ul className="flex text-lg gap-4 font-poppins">
-            <li className="hover:text-pink-600 cursor-pointer transition-colors">
-            <Link href={"/"}>Home</Link>
-            </li>
-            <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              <Link href={"/products"}>Shop</Link>
-            </li>
-            <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              Pages
-            </li>
-            <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              About Us
-            </li>
-            <li className="hover:text-pink-600 cursor-pointer transition-colors">
-              Contact Us
-            </li>
-          </ul>
-        </div>
+    return (
+        <motion.div
+            className={
+                showNavbar
+                    ? "bg-pink-400 sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
+                    : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
+            }
+        >
+            <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
+                <Link href="/">
+                    <div className="flex items-center">
+                        <Image
+                            width={120}
+                            height={120}
+                            src="/Images/logo.png"
+                            alt="logo"
+                            className="bg-none w-[80px]"
+                        />
+                        <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+                            Floral Radiance
+                        </p>
+                    </div>
+                </Link>
+                <div className="mr-10 hidden lg:block">
+                    <ul className="flex text-lg gap-4 font-poppins">
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            <Link href="/">Home</Link>
+                        </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            <Link href={"/products"}>Shop</Link>
+                        </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            Pages
+                        </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            About Us
+                        </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            Contact Us
+                        </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            <Link href="/admin/dashboard">Dashboard</Link>
+                        </li>
+                    </ul>
+                </div>
 
         <div className="flex gap-6 ">
           <Link className="relative" href={"/cart"}>
