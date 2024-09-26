@@ -54,7 +54,7 @@ const Cart: React.FC = () => {
           <Table dataSource={cart} columns={columns} />
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <ShipmentCalculator/>
-            <CartTotal show={true}/>
+            {cart.length > 0 && <CartTotal show={true}/>} 
           </div>
        
     </div>

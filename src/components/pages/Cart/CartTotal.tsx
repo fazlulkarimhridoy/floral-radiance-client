@@ -16,7 +16,7 @@ const CartTotal: React.FC<CartTotalProps> = ({ show }) => {
     return null;
   }
 
-  const { calculateTotal } = cartContext;
+  const { cart, calculateTotal } = cartContext;
 
   const total = calculateTotal()
 
