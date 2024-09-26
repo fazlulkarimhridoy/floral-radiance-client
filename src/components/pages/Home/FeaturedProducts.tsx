@@ -41,13 +41,15 @@ const FeaturedProducts = () => {
         }));
     };
 
+
+    // fetch all products from server
     const { data: featuredProducts = [] } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],
         queryFn: async () => {
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
             );
-            return res.data.data;
+            return res?.data?.data;
         },
         retry: 2,
         refetchOnWindowFocus: false,
@@ -64,7 +66,7 @@ const FeaturedProducts = () => {
                 </h1>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
-                {featuredProducts.length > 0 &&
+                {featuredProducts?.length > 0 &&
                     featuredProducts?.map((item) => (
                         <ProductCard key={item.id} item={item} desc={desc} />
                     ))}
