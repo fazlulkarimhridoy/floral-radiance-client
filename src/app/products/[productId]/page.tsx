@@ -61,7 +61,7 @@ const Page = ({ params }: { params: { productId: string } }) => {
 
   // Funtion for finding the selected product
   const findProduct = (item: Array<any>) => {
-    return Number(params.productId) === item.id;
+    return Number(params.productId) === item?.id;
   };
 
   //single product data
