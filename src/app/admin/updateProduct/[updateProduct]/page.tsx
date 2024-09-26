@@ -16,6 +16,7 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 // types
@@ -59,6 +60,8 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const router = useRouter();
+    const { push } = router;
 
     // get id from url param
     const idString = params?.updateProduct;
@@ -98,6 +101,16 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details?id=${id}`
             );
+            // converting image url's to file type for default display
+            const imageList = res?.data?.data?.images.map(
+                (imageUrl: string, index: number) => ({
+                    uid: String(index), // Unique identifier for each file
+                    name: `image-${index}`, // Name of the image
+                    status: "done", // Upload status
+                    thumbUrl: imageUrl, // The actual URL for the image
+                })
+            );
+            setFileList(imageList);
             return res?.data?.data;
         },
         retry: 2,
@@ -108,15 +121,18 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
     ) => {
-        const thumbUrlsArray = fileList.map((file) => file.thumbUrl);
-        const product_name = values.product_name;
-        const price = values.price;
-        const discount_price = values.discounted_price;
-        const stock = values.stock;
-        const category = values.category;
-        const description = values.description;
-        const rating = values.rating;
-        const productId = values.productId;
+        const thumbUrlsArray = fileList?.map((file) => file?.thumbUrl);
+        const product_name =
+            values.product_name || singleProductDetails?.product_name;
+        const price = values.price || singleProductDetails?.price;
+        const discount_price =
+            values.discount_price || singleProductDetails?.discount_price;
+        const stock = values.stock || singleProductDetails?.stock;
+        const category = values.category || singleProductDetails?.category;
+        const description =
+            values.description || singleProductDetails?.description;
+        const rating = values.rating || singleProductDetails?.rating;
+        const productId = values.productId || singleProductDetails?.productId;
         const images = thumbUrlsArray;
 
         const productUpdateData = {
@@ -130,12 +146,10 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
             productId,
             images,
         };
-
-        console.log(productUpdateData);
-
+        // updating product on server
         await axios
-            .put(
-                `http://localhost:3001/api/product/update-product?id=${id}`,
+            .patch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product?id=${id}`,
                 productUpdateData,
                 {
                     headers: {
@@ -144,8 +158,11 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                 }
             )
             .then((data) => {
+                console.log(data);
                 if (data.data.status == "success") {
                     alert("Product updated successfully");
+                    // go back to product list
+                    push("/admin/products");
                 }
             })
             .catch((error) => {
@@ -189,15 +206,13 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             className="w-full"
                             label="Product Name"
                             required
+                            name="product_name"
+                            initialValue={singleProductDetails?.product_name}
                         >
                             <Input
-                                defaultValue={
-                                    singleProductDetails?.product_name || null
-                                }
                                 className="w-full"
                                 placeholder="Enter product name..."
                                 size="large"
-                                name="product_name"
                             />
                         </Form.Item>
                     </div>
@@ -208,30 +223,26 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             className="w-full"
                             label="Price"
                             required
+                            name="price"
+                            initialValue={singleProductDetails?.price}
                         >
                             <InputNumber
                                 className="w-full"
                                 placeholder="Enter price..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.price || null
-                                }
-                                name="price"
                             />
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Discounted Price"
                             required
+                            name="discount_price"
+                            initialValue={singleProductDetails?.discount_price}
                         >
                             <InputNumber
                                 className="w-full"
                                 placeholder="Enter discounted..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.discount_price || null
-                                }
-                                name="discount_price"
                             />
                         </Form.Item>
                     </div>
@@ -242,30 +253,26 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             className="w-full"
                             label="Stock"
                             required
+                            name="stock"
+                            initialValue={singleProductDetails?.stock}
                         >
                             <InputNumber
                                 className="w-full"
                                 placeholder="Enter stock..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.stock || null
-                                }
-                                name="stock"
                             />
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Category"
                             required
+                            name="category"
+                            initialValue={singleProductDetails?.category}
                         >
                             <Input
                                 className="w-full"
                                 placeholder="Enter product category..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.category || null
-                                }
-                                name="category"
                             />
                         </Form.Item>
                     </div>
@@ -276,30 +283,27 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             className="w-full"
                             label="Rating"
                             required
+                            name="rating"
+                            initialValue={singleProductDetails?.rating}
                         >
                             <InputNumber
                                 className="w-full"
                                 placeholder="Enter rating (1~5)"
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.rating || null
-                                }
-                                name="rating"
                             />
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Id"
                             required
+                            name="productId"
+                            initialValue={singleProductDetails?.productId}
                         >
                             <InputNumber
                                 className="w-full"
                                 placeholder="Enter product id..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.productId || null
-                                }
-                                name="productId"
+                                disabled
                             />
                         </Form.Item>
                     </div>
@@ -310,16 +314,14 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             className="w-full"
                             label="Product Description"
                             required
+                            name="description"
+                            initialValue={singleProductDetails?.description}
                         >
                             <TextArea
                                 rows={4}
                                 className="w-full"
                                 placeholder="Enter product description..."
                                 size="large"
-                                defaultValue={
-                                    singleProductDetails?.description || null
-                                }
-                                name="description"
                             />
                         </Form.Item>
                     </div>
@@ -338,7 +340,9 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                                 onPreview={handlePreview}
                                 onChange={handleChange}
                             >
-                                {fileList.length >= 8 ? null : uploadButton}
+                                {fileList && fileList.length >= 8
+                                    ? null
+                                    : uploadButton}
                             </Upload>
                             {previewImage && (
                                 <Image

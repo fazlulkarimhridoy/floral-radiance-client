@@ -24,12 +24,10 @@ const ProductRow = ({
     productData,
     index,
     handleDeleteProduct,
-    handleUpdateProduct,
 }: {
     productData: ProductType;
     index: number;
     handleDeleteProduct: Function;
-    handleUpdateProduct: Function;
 }) => {
     const {
         id,

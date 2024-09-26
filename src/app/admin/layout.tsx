@@ -6,7 +6,9 @@ import React from "react";
 import {
     FaClipboardList,
     FaHome,
+    FaListUl,
     FaPlus,
+    FaRegPlusSquare,
     FaShoppingCart,
     FaSignOutAlt,
     FaUserFriends,
@@ -14,6 +16,7 @@ import {
 import { RxDashboard } from "react-icons/rx";
 import "@/styles/adminlayout.css";
 import { usePathname } from "next/navigation";
+import { TbCategoryPlus } from "react-icons/tb";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
@@ -36,7 +39,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/orders" ? "active" : ""}
                 >
                     <FaShoppingCart />
-                    All Orders
+                    Orders
                 </Link>
             </li>
             <li>
@@ -45,7 +48,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/customers" ? "active" : ""}
                 >
                     <FaUserFriends />
-                    All Customers
+                    Customers
                 </Link>
             </li>
             <li>
@@ -54,7 +57,16 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/products" ? "active" : ""}
                 >
                     <FaClipboardList />
-                    All Products
+                    Products
+                </Link>
+            </li>
+            <li>
+                <Link
+                    href="/admin/categories"
+                    className={pathname === "/admin/categories" ? "active" : ""}
+                >
+                    <FaListUl />
+                    Categories
                 </Link>
             </li>
             <li>
@@ -62,8 +74,19 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     href="/admin/addProduct"
                     className={pathname === "/admin/addProduct" ? "active" : ""}
                 >
-                    <FaPlus />
-                    Add Products
+                    <FaRegPlusSquare />
+                    Add Product
+                </Link>
+            </li>
+            <li>
+                <Link
+                    href="/admin/addCategory"
+                    className={
+                        pathname === "/admin/addCategory" ? "active" : ""
+                    }
+                >
+                    <TbCategoryPlus />
+                    Add Category
                 </Link>
             </li>
             <li>
@@ -112,10 +135,28 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </li>
             <li>
                 <Link
+                    href="/admin/categories"
+                    className={pathname === "/admin/categories" ? "active" : ""}
+                >
+                    <FaListUl />
+                </Link>
+            </li>
+            <li>
+                <Link
                     href="/admin/addProduct"
                     className={pathname === "/admin/addProduct" ? "active" : ""}
                 >
-                    <FaPlus />
+                    <FaRegPlusSquare />
+                </Link>
+            </li>
+            <li>
+                <Link
+                    href="/admin/addCategory"
+                    className={
+                        pathname === "/admin/addCategory" ? "active" : ""
+                    }
+                >
+                    <TbCategoryPlus />
                 </Link>
             </li>
             <li>
@@ -135,7 +176,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <Image
                                 width={500}
                                 height={500}
-                                src="https://res.cloudinary.com/dmit5qbfo/image/upload/v1727095701/User_vi1xus.png"
+                                src="https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/9_zq39kj.jpg"
                                 alt="user_photo"
                                 className="w-12 h-12 rounded-full bg-gray-500"
                             />
@@ -156,7 +197,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         <div className="divide-y divide-gray-300">
                             <ul
                                 id="link1"
-                                className="menu menu-vertical px-1 gap-2 text-gray-500"
+                                className="menu menu-vertical text-[16px] px-1 gap-2 text-gray-500"
                             >
                                 {links}
                             </ul>
@@ -199,7 +240,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="flex justify-center md:hidden w-full bottom-0 sticky bg-blue-200">
                 <ul
                     id="link1"
-                    className="menu menu-horizontal text-[22px] px-1 gap-2 text-gray-500"
+                    style={{ scrollbarWidth: "none" }}
+                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-1 gap-2 text-gray-500 whitespace-nowrap"
                 >
                     {linksForMobile}
                 </ul>

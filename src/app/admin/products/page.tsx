@@ -3,7 +3,6 @@
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import React from "react";
 
 interface ProductType {
@@ -22,8 +21,8 @@ interface ProductType {
 }
 
 const Products = () => {
-    const router = useRouter();
-    const { push } = router;
+
+    // fetch all product from server
     const {
         data: allProducts = [],
         isLoading,
@@ -55,11 +54,6 @@ const Products = () => {
                     console.log(data);
                 });
         }
-    };
-
-    // handle update product
-    const handleUpdateProduct = (id: ProductType) => {
-        push(`/admin/updateProduct/${id}`);
     };
 
     // checking if loading
@@ -108,7 +102,6 @@ const Products = () => {
                                     index={index}
                                     productData={data}
                                     handleDeleteProduct={handleDeleteProduct}
-                                    handleUpdateProduct={handleUpdateProduct}
                                 ></ProductRow>
                             ))}
                     </tbody>

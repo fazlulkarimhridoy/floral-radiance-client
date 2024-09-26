@@ -37,10 +37,10 @@ model Product {
   product_name   String      @db.VarChar(255)
   price          Int
   discount_price Int?
-  stock          Int?        @default(0)
+  stock          Int         @default(0)
   category       String?
-  description    String?     @db.LongText
-  rating         Int?
+  description    String      @db.LongText
+  rating         Int         @default(0)
   created_at     DateTime?   @default(now()) @db.Timestamp(0)
   updated_at     DateTime?   @default(now()) @updatedAt @db.Timestamp(0)
   Category       Category?   @relation(fields: [categoryId], references: [id])
