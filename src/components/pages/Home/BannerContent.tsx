@@ -13,13 +13,13 @@ const BannerContent = () => {
               <p className="text-5xl playfair font-bold text-[#194363]">
                 We make gifting and celebrating better.
               </p>
-              {/* <button className="group relative inline-block overflow-hidden border border-pink-600 px-8 py-3 focus:outline-none focus:ring ">
-              <span className="absolute inset-y-0 left-0 w-[2px] bg-pink-600 transition-all group-hover:w-full group-active:bg-indigo-500"></span>
+              <button className="group relative inline-block overflow-hidden border border-[#194464] px-8 py-3 focus:outline-none focus:ring rounded-xl">
+              <span className="absolute inset-y-0 left-0 w-[2px] bg-[#194464] transition-all group-hover:w-full group-active:bg-indigo-500"></span>
 
-              <span className="relative text-sm font-medium text-pink-600 transition-colors group-hover:text-white">
+              <span className="relative text-sm font-medium text-[#194464] transition-colors group-hover:text-white">
                 Shop Now
               </span>
-            </button> */}
+            </button>
             </div>
             <div>
               <Image

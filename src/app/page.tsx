@@ -7,6 +7,8 @@ import FeaturedProducts from "@/components/pages/Home/FeaturedProducts";
 import Gallery from "@/components/pages/Home/Gallery";
 import HowItWorks from "@/components/pages/Home/HowItWorks";
 import OfferSection from "@/components/pages/Home/OfferSection";
+import GetBouquet from "@/components/pages/Home/GetBouquet";
+import NewFooter from "@/components/pages/Home/NewFooter";
 
 const Home = () => {
   const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
@@ -14,11 +16,18 @@ const Home = () => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
-        setBgColor(""); // Change color when scrolled past 100px
-      } else {
-        setBgColor("bg-[#b8cedc]"); // Default background color
+        setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
       }
+
+     if (window.scrollY > 500){
+        setBgColor("bg-white"); // Default background color
+      }
+    if(window.scrollY > 2100){
+      setBgColor("bg-[#b8cedc]");
+    }
     };
+
+    console.log(window.scrollY);
 
     // Add event listener for scroll
     window.addEventListener("scroll", handleScroll);
@@ -30,9 +39,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className={`${bgColor} transition-colors duration-300`}>
+    <div className={`${bgColor} transition-colors duration-300 space-y-36`}>
       <Banner></Banner>
       <HowItWorks/>
+      <GetBouquet/>
+      <NewFooter/>
     </div>
   );
 };

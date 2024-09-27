@@ -7,7 +7,7 @@ const HowItWorks = () => {
       <h1 className="playfair text-5xl font-bold text-[#333333] text-center mx-auto max-w-[600px] my-8">
         How Our Flower Bouquet Service Works
       </h1>
-      <div className="grid  grid-cols-1 md:grid-cols-3 md:grid-rows-3 p-2 md:p-0 md:w-[70%] mx-auto gap-4 m-10">
+      <div className="grid  grid-cols-1 md:grid-cols-3 md:grid-rows-3 p-2 md:p-0 md:w-[90%] lg:w-[70%] mx-auto gap-4 m-10">
         <div className=" md:row-span-2  bg-[#c3b2e8] rounded-xl p-4 flex flex-col gap-2 justify-center items-center text-center">
           <Image
             className="rounded-full bg-none"
