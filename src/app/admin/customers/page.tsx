@@ -2,27 +2,35 @@
 
 import CustomerRow from "@/components/dashboard/CustomerRow";
 import { useQuery } from "@tanstack/react-query";
+import { Input, message } from "antd";
+import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
-interface CustomerType {
+type CustomerType = {
     id: number;
     customerId: number;
-    firstName: string;
-    lastName: string;
+    name: string;
     email: string;
     phone: string;
     address: string;
     city: string;
     state: string;
     zipCode: string;
-}
+};
+
+const { Search } = Input;
 
 const Products = () => {
+    // states and calls
+    const [searchText, setSearchText] = useState(null || "");
+
     // fetch all customers
     const {
         data: allCustomers = [],
         isLoading,
+        isPending,
+        isFetching,
         refetch,
     } = useQuery<CustomerType[]>({
         queryKey: ["allCustomers"],
@@ -47,54 +55,90 @@ const Products = () => {
                     `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer?id=${id}`
                 )
                 .then((data) => {
+                    message.success("Successfully deleted");
                     refetch();
                     console.log(data);
                 });
         }
     };
 
+    // Handle product filter for search
+    const filteredCustomers = allCustomers?.filter((customer) => {
+        if (searchText) {
+            const searchString = searchText.toLowerCase();
+
+            // Check product name, category (strings), and productId (number)
+            return (
+                customer?.name?.toLowerCase()?.includes(searchString) ||
+                customer?.email?.toLowerCase()?.includes(searchString) ||
+                customer?.phone
+                    ?.toString()
+                    ?.toLowerCase()
+                    ?.includes(searchString) ||
+                customer?.customerId
+                    ?.toString()
+                    ?.toLowerCase()
+                    ?.includes(searchString)
+            );
+        }
+        return true; // If no searchText, return all products
+    });
+
+    // handle search filed value
+    const onSearch: SearchProps["onSearch"] = (value) => {
+        setSearchText(value);
+        console.log(filteredCustomers);
+    };
+
     // checking if loading
-    if (isLoading) {
+    if (isLoading || isPending || isFetching) {
         return (
-            <div className="flex justify-center mt-28 mb-28 lg:mt-80 lg:mb-60">
-                <progress className="progress w-56 bg-blue-200 h-2 lg:h-8 lg:w-80"></progress>
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
             </div>
         );
     }
 
     return (
-        <>
+        <div className="sticky top-0">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
                     Manage Customer
                 </h3>
+                <div className="mt-5 w-full xl:w-1/2 mx-auto">
+                    <Search
+                        placeholder="search customers...."
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onSearch={onSearch}
+                    />
+                </div>
             </div>
-            <div className="overflow-x-auto bg-blue-50 pt-4 mb-5 md:mb-0">
+            <div
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
+            >
                 <table className="table">
                     {/* head */}
                     <thead>
                         <tr>
-                            <th className="hidden md:table-cell">Index</th>
-                            <th className="hidden md:table-cell">
-                                Customer Id
-                            </th>
-                            <th>First name</th>
-                            <th className="hidden md:table-cell">Last name</th>
-                            <th className="hidden md:table-cell">
-                                Email Address
-                            </th>
+                            <th>#</th>
+                            <th>Customer Id</th>
+                            <th>Name</th>
+                            <th>Email Address</th>
                             <th>Phone</th>
-                            <th className="hidden md:table-cell">Address</th>
-                            <th className="hidden md:table-cell">City</th>
-                            <th className="hidden md:table-cell">State</th>
-                            <th className="hidden md:table-cell">Zip code</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zip code</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* rows */}
                         {allCustomers.length > 0 &&
-                            allCustomers?.map((data, index) => (
+                            filteredCustomers?.map((data, index) => (
                                 <CustomerRow
                                     key={data.id}
                                     index={index}
@@ -105,7 +149,7 @@ const Products = () => {
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     );
 };
 

@@ -1,5 +1,8 @@
 "use client";
-import React, { createContext, useState, ReactNode } from "react";
+import React, { createContext, useState, ReactNode, useEffect } from 'react';
+import { message } from 'antd';
+import Swal from 'sweetalert2'
+
 
 interface ProductType {
     id: number;
@@ -22,26 +25,52 @@ interface CartContextType {
 export const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-    const [cart, setCart] = useState<ProductType[]>([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
-    const addToCart = (product: ProductType) => {
-        setCart((prevCart) => [...prevCart, product]);
-        console.log(cart);
-    };
+  const info = () => {
+    messageApi.info('Added to the cart');
+  }; 
+
+
+  const [cart, setCart] = useState<ProductType[]>([]);
+
+    // Save cart items to localStorage whenever the cart updates
+    useEffect(() => {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
+
+      // Retrieve cart items from localStorage when the component mounts
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  const addToCart = (product: ProductType) => {
+    setCart((prevCart) => [...prevCart, product]);
+    Swal.fire("Added to the cart!");
+    console.log(cart);
+  };
+
 
     const removeFromCart = (productId: number) => {
         setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
     };
 
-    const calculateTotal = () => {
-        return cart.reduce((total, item) => total + item.price, 0);
-    };
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + item.price, 0);
+  };
 
-    return (
-        <CartContext.Provider
-            value={{ cart, addToCart, removeFromCart, calculateTotal }}
-        >
-            {children}
-        </CartContext.Provider>
-    );
+
+
+  return (
+    <CartContext.Provider value={{ cart,addToCart, removeFromCart, calculateTotal }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
+
+// Save in local storage 
+
+

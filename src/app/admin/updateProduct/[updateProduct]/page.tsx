@@ -10,6 +10,8 @@ import {
     Image,
     Input,
     InputNumber,
+    message,
+    Select,
     Upload,
     UploadFile,
     UploadProps,
@@ -17,10 +19,11 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+
+const { Option } = Select;
 
 // types
-type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 type FieldType = {
     product_name: string;
     price: number;
@@ -46,14 +49,11 @@ type SingleProductDetails = {
     images: JSON;
 };
 
-// make file from images
-const getBase64 = (file: FileType): Promise<string> =>
-    new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = (error) => reject(error);
-    });
+type CategoryType = {
+    id: number;
+    name: string;
+    description: string;
+};
 
 const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     // states and props
@@ -66,16 +66,6 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     // get id from url param
     const idString = params?.updateProduct;
     const id = Number(idString);
-
-    // preview image
-    const handlePreview = async (file: UploadFile) => {
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as FileType);
-        }
-
-        setPreviewImage(file.url || (file.preview as string));
-        setPreviewOpen(true);
-    };
 
     // file upload changes
     const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
@@ -115,6 +105,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
         },
         retry: 2,
         refetchOnWindowFocus: false,
+        enabled: id ? true : false,
     });
 
     // function for form submission on finish
@@ -160,7 +151,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
             .then((data) => {
                 console.log(data);
                 if (data.data.status == "success") {
-                    alert("Product updated successfully");
+                    message.success("Product updated successfully");
                     // go back to product list
                     push("/admin/products");
                 }
@@ -177,11 +168,26 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
         console.log("Failed:", errorInfo);
     };
 
+    // fetch category from server
+    const { data: allCategories = [], isLoading: isCategoryLoading } = useQuery<
+        CategoryType[]
+    >({
+        queryKey: ["allCategories"],
+        queryFn: async () => {
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
+            );
+            return res.data.data;
+        },
+        retry: 2,
+        refetchOnWindowFocus: false,
+    });
+
     // checking if loading
-    if (isLoading || isPending || isFetching) {
+    if (isLoading || isPending || isFetching || isCategoryLoading) {
         return (
-            <div className="flex justify-center mt-28 mb-28 lg:mt-80 lg:mb-60">
-                <progress className="progress w-56 bg-blue-200 h-2 lg:h-8 lg:w-80"></progress>
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
             </div>
         );
     }
@@ -193,7 +199,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                     Update Product
                 </h3>
             </div>
-            <div className="mt-5 w-[95%] md:w-[65%] mx-auto relative">
+            <div className="mt-5 w-[90%] 2xl:w-[65%] mx-auto relative">
                 <Form
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -205,9 +211,14 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Name"
-                            required
                             name="product_name"
                             initialValue={singleProductDetails?.product_name}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter name!",
+                                },
+                            ]}
                         >
                             <Input
                                 className="w-full"
@@ -218,13 +229,18 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                     </div>
 
                     {/* price & discounted price */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex items-center gap-2 md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Price"
-                            required
                             name="price"
                             initialValue={singleProductDetails?.price}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter price!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -235,9 +251,14 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Discounted Price"
-                            required
                             name="discount_price"
                             initialValue={singleProductDetails?.discount_price}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter discounted price!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -248,13 +269,18 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                     </div>
 
                     {/* stock & category */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex flex-col md:flex-row items-center md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Stock"
-                            required
                             name="stock"
                             initialValue={singleProductDetails?.stock}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter stock!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -262,29 +288,51 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                                 size="large"
                             />
                         </Form.Item>
+
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Category"
-                            required
                             name="category"
                             initialValue={singleProductDetails?.category}
+                            hasFeedback
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please select category!",
+                                },
+                            ]}
                         >
-                            <Input
+                            <Select
                                 className="w-full"
-                                placeholder="Enter product category..."
+                                placeholder="Select category..."
                                 size="large"
-                            />
+                            >
+                                {allCategories?.length > 0 &&
+                                    allCategories?.map((item) => (
+                                        <Option
+                                            key={item?.id}
+                                            value={item?.name}
+                                        >
+                                            {item?.name}
+                                        </Option>
+                                    ))}
+                            </Select>
                         </Form.Item>
                     </div>
 
                     {/* rating & product id */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex items-center gap-2 md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Rating"
-                            required
                             name="rating"
                             initialValue={singleProductDetails?.rating}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter rating!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -295,9 +343,14 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Id"
-                            required
                             name="productId"
                             initialValue={singleProductDetails?.productId}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter product id!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -313,9 +366,14 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Description"
-                            required
                             name="description"
                             initialValue={singleProductDetails?.description}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter description!",
+                                },
+                            ]}
                         >
                             <TextArea
                                 rows={4}
@@ -337,7 +395,6 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
                             <Upload
                                 listType="picture-card"
                                 fileList={fileList}
-                                onPreview={handlePreview}
                                 onChange={handleChange}
                             >
                                 {fileList && fileList.length >= 8
