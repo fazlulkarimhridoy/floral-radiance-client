@@ -51,6 +51,7 @@ model Product {
 // category model
 model Category {
   id          Int     @id @default(autoincrement())
+  categoryId  Int     @unique
   name        String
   description String?
 

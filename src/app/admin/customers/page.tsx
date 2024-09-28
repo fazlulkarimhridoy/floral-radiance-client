@@ -7,7 +7,7 @@ import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
 
-interface CustomerType {
+type CustomerType = {
     id: number;
     customerId: number;
     name: string;
@@ -17,7 +17,7 @@ interface CustomerType {
     city: string;
     state: string;
     zipCode: string;
-}
+};
 
 const { Search } = Input;
 
