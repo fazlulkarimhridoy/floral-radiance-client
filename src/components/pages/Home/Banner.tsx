@@ -5,14 +5,7 @@ import BannerContent from "@/components/pages/Home/BannerContent";
 const Banner = () => {
   return (
     <div className="">
-      <Carousel arrows>
-          <div className="h-[650px]"><BannerContent/></div>
-          <div><BannerContent/></div>
-          <div><BannerContent/></div>
-          <div><BannerContent/></div>
-          <div><BannerContent/></div>
-          
-      </Carousel>
+      <BannerContent/>
     </div>
   );
 };
