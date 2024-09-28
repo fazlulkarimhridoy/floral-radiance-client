@@ -1,5 +1,8 @@
 "use client";
 import React, { createContext, useState, ReactNode, useEffect } from 'react';
+import { message } from 'antd';
+import Swal from 'sweetalert2'
+
 
 interface ProductType {
     id: number;
@@ -22,6 +25,13 @@ interface CartContextType {
 export const CartContext = createContext<CartContextType | null>(null);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const info = () => {
+    messageApi.info('Added to the cart');
+  }; 
+
+
   const [cart, setCart] = useState<ProductType[]>([]);
 
     // Save cart items to localStorage whenever the cart updates
@@ -39,6 +49,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: ProductType) => {
     setCart((prevCart) => [...prevCart, product]);
+    Swal.fire("Added to the cart!");
     console.log(cart);
   };
 
