@@ -43,13 +43,15 @@ const FeaturedProducts = () => {
     }));
   };
 
+
+    // fetch all products from server
   // const { data: featuredProducts = [] } = useQuery<ProductType[]>({
   //     queryKey: ["featuredProducts"],
   //     queryFn: async () => {
   //         const res = await axios.get(
   //             `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
   //         );
-  //         return res.data.data;
+  //         return res?.data?.data;
   //     },
   //     retry: 2,
   //     refetchOnWindowFocus: false,
