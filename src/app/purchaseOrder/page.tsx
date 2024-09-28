@@ -1,7 +1,8 @@
 "use client";
 
 // import { Image   } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { Input } from "antd";
 import { FaMobileAlt } from "react-icons/fa";
@@ -14,7 +15,13 @@ import { FaCalendar } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
 import { FaMoneyBillWave } from "react-icons/fa";
+import { Table, Tag } from "antd";
+import CartTotal from "@/components/pages/Cart/CartTotal";
+import { Dropdown} from 'antd';
+import { FaAngleDown } from "react-icons/fa";
+
 import Image from "next/image";
+import { CartContext } from "@/context/CartContext";
 
 interface FormData {
   mobileNumber: string;
@@ -26,6 +33,10 @@ interface FormData {
 }
 
 const Page = () => {
+  const cartContext = useContext(CartContext);
+
+  const [showData,setShowData] = useState(false)
+
   const [formData, setFormData] = useState<FormData>({
     mobileNumber: "",
     deliveryAddress: " ",
@@ -34,6 +45,41 @@ const Page = () => {
     suggetion: "",
     cashOnDelivery: false,
   });
+
+  if (!cartContext) {
+    return null;
+  }
+
+  const { cart, removeFromCart, calculateTotal } = cartContext;
+
+  const columns = [
+    {
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
+    },
+    {
+      title: "Product info",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (record: any) => (
+        <Space size="middle">
+          <a onClick={() => removeFromCart(record.id)}>
+            <FaRegTrashAlt />
+          </a>
+        </Space>
+      ),
+    },
+  ];
 
   const onChangeDate: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
@@ -65,36 +111,54 @@ const Page = () => {
 
   return (
     <div className="bg-[#f2f6f9] p-4 space-y-4">
-      <h1 className="text-4xl font-outfit text-center font-semibold">Place your order</h1>
-      <div className=" w-full lg:w-[80%]  p-2 font-outfit space-y-4 gap-4 bg-white rounded-xl box-shadow flex relative">
-        <div className="">
+      <h1 className="text-4xl font-outfit text-center font-semibold">
+        Place your order
+      </h1>
+      <div className=" w-full p-0  font-outfit space-y-4 gap-4 bg-white rounded-xl box-shadow flex flex-col md:flex-row-reverse relative ">
+        <div>
           {/* Product information */}
-          <section className="flex  gap-4  w-full  mx-auto p-4 ">
-            <Image
-              src={`/Images/productImage.jpg`}
-              width={100}
-              height={100}
-              alt="flower image"
-              className="w-[200px] rounded-xl "
-            />
-            {/* product data */}
-            <div className="w-[40%]">
-              <h1 className="text-4xl font-outfit text-[#3d4349]">Red Rose</h1>
-              <h1 className="text-xl font-outfit text-[#3d4349]">
-                Quantity: 250
-              </h1>
-              <h3 className="text-[#7a71b1] font-outfit text-xl font-bold flex  items-center">
-                Price: 550 <TbCurrencyTaka />
-              </h3>
-              <h3 className="text-xl font-outfit text-[#3d4349]">
-                Details : Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Dolores corporis voluptas, dicta totam exercitationem
-                reprehenderit laboriosam pe
-              </h3>
-            </div>
-          </section>
+          <div onClick={() => setShowData(!showData)} className="p-2 flex justify-between items-center transition-all">Show order summary <FaAngleDown /> </div>
+          {showData && <Table dataSource={cart} columns={columns} />}
+          <CartTotal show={false}></CartTotal>
+        </div>
+        <div className="md:border-r-2 md:border-black">
           {/* Submit Form Section */}
           <form className=" p-4 space-y-8">
+            {/*Customer name */}
+            <div className="flex flex-col md:flex-row gap-2">
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor=""
+                  className="text-xl flex gap-2 items-center text-[#3d4349]"
+                >
+                  {" "}
+                  First Name:
+                </label>
+                <Input
+                  required
+                  type="string"
+                  maxLength={100}
+                  placeholder="first name"
+                  className="w-[300px]"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor=""
+                  className="text-xl flex gap-2 items-center text-[#3d4349]"
+                >
+                  {" "}
+                  Last Name:
+                </label>
+                <Input
+                  required
+                  type="string"
+                  maxLength={100}
+                  placeholder="last name"
+                  className="w-[300px]"
+                />
+              </div>
+            </div>
             {/*Customer mobile number */}
             <div className="flex flex-col gap-2">
               <label
@@ -109,7 +173,7 @@ const Page = () => {
                 type="number"
                 maxLength={11}
                 placeholder="017XXXXXXXX"
-                className="w-[300px]"
+                className=""
               />
             </div>
             {/* Delivery address */}
@@ -126,11 +190,11 @@ const Page = () => {
                 type="string"
                 maxLength={100}
                 placeholder="address"
-                className="w-[300px]"
+                className=""
               />
             </div>
             {/* delivery date and time */}
-            <div className="flex gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor=""
@@ -157,7 +221,7 @@ const Page = () => {
               </div>
             </div>
             {/* Customer Notes for gifts */}
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col gap-4 ">
               <div>
                 <label
                   htmlFor=""
@@ -167,7 +231,7 @@ const Page = () => {
                   <GiNotebook /> Any notes for this gift:
                 </label>
                 <TextArea
-                  className="w-[620px]"
+                  className="w-full"
                   showCount
                   maxLength={100}
                   onChange={onChangeNote}
@@ -175,26 +239,29 @@ const Page = () => {
                   style={{ height: 120, resize: "none" }}
                 />
               </div>
-              {/* Buttons for payment method */}
-              <div className="flex flex-col gap-4">
-                <button className="bg-[#7a71b1] px-3 py-1 text-white text-xl rounded-md flex items-center gap-2 w-56">
-                  <FaMoneyBillWave />
-                  Cash on Delivery
-                </button>
-                <button className="bg-[#7a71b1] px-3 py-1 text-white text-xl rounded-md flex items-center gap-2 w-56">
-                  Advance Payment
-                </button>
-              </div>
+            </div>
+            {/* Buttons for payment method */}
+            <div className="flex flex-col gap-4">
+              <button className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 w-full text-[#7a71b1]">
+                <FaMoneyBillWave />
+                Cash on Delivery
+              </button>
+              <button className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 text-[#7a71b1]">
+                Advance Payment
+              </button>
+              <button className="bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 text-white text-xl rounded-md flex items-center justify-center gap-2 text-center">
+                Complete order
+              </button>
             </div>
           </form>
         </div>
-        <Image
+        {/* <Image
           className="absolute -right-80"
           width={600}
           height={700}
           src="/Icon/artOne.png"
           alt="artImage"
-        />
+        /> */}
       </div>
     </div>
   );
