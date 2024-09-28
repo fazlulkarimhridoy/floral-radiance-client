@@ -168,7 +168,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     );
     return (
         <div className="relative">
-            <div className="flex">
+            <div className="flex relative">
                 {/* dashboard sidebar */}
                 <div className="hidden lg:flex">
                     <div className="h-screen p-3 space-y-2 w-60 bg-blue-200 text-gray-800 sticky top-0">
@@ -218,20 +218,18 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
                 {/* dashboard content */}
                 <div
-                    style={{
-                        scrollbarWidth: "none",
-                        msOverflowStyle: "none",
-                    }}
-                    className="flex-1 bg-blue-50 min-h-screen p-2 md:p-8 lg:p-12 lg:mb-0"
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                    className="flex-1 flex-nowrap overflow-x-scroll scroll-smooth bg-blue-50 h-screen p-2 md:p-8 lg:p-12 lg:mb-0"
                 >
                     {children}
                 </div>
             </div>
             {/* for medium devices */}
-            <div className="hidden md:flex md:justify-center lg:hidden absolute bottom-0 bg-blue-200">
+            <div className="hidden md:flex md:justify-center lg:hidden w-full bottom-0 sticky bg-blue-200">
                 <ul
                     id="link1"
-                    className="menu menu-horizontal px-1 gap-1 text-gray-500"
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal px-1 gap-1 text-gray-500"
                 >
                     {links}
                 </ul>
@@ -240,7 +238,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="flex justify-center md:hidden w-full bottom-0 sticky bg-blue-200">
                 <ul
                     id="link1"
-                    style={{ scrollbarWidth: "none" }}
+                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                     className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-1 gap-2 text-gray-500 whitespace-nowrap"
                 >
                     {linksForMobile}

@@ -4,8 +4,7 @@ import { FaTrash } from "react-icons/fa";
 interface CustomerType {
     id: number;
     customerId: number;
-    firstName: string;
-    lastName: string;
+    name: string;
     email: string;
     phone: string;
     address: string;
@@ -26,8 +25,7 @@ const CustomerRow = ({
     const {
         id,
         customerId,
-        firstName,
-        lastName,
+        name,
         email,
         phone,
         address,
@@ -38,20 +36,17 @@ const CustomerRow = ({
 
     return (
         <tr>
-            <th className="hidden md:table-cell">{index + 1}</th>
-            <th className="hidden md:table-cell">{customerId}</th>
+            <th>{index + 1}</th>
+            <th>{customerId}</th>
             <td>
-                <div className="text-gray-600 font-bold">{firstName}</div>
+                <div className="text-gray-600 font-bold">{name}</div>
             </td>
-            <td className="hidden md:table-cell">
-                <div className="text-gray-600 font-bold">{lastName}</div>
-            </td>
-            <td className="hidden md:table-cell">{email}</td>
-            <td className="hidden md:table-cell">{phone}</td>
-            <td className="hidden md:table-cell">{address}</td>
-            <td className="hidden md:table-cell">{city}</td>
-            <td className="hidden md:table-cell">{state}</td>
-            <td className="hidden md:table-cell">{zipCode}</td>
+            <td>{email}</td>
+            <td>{phone}</td>
+            <td>{address}</td>
+            <td>{city}</td>
+            <td>{state}</td>
+            <td>{zipCode}</td>
             <td>
                 <Button
                     onClick={() => handleDeleteProduct(id)}

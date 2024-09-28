@@ -1,14 +1,18 @@
 "use client";
 
 import { PlusOutlined } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
 import {
     Button,
     Form,
+    FormInstance,
     FormProps,
     GetProp,
     Image,
     Input,
     InputNumber,
+    message,
+    Select,
     Upload,
     UploadFile,
     UploadProps,
@@ -17,6 +21,9 @@ import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import React, { useState } from "react";
 
+const { Option } = Select;
+
+// types
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 type FieldType = {
     product_name: string;
@@ -30,6 +37,13 @@ type FieldType = {
     images: JSON;
 };
 
+type CategoryType = {
+    id: number;
+    name: string;
+    description: string;
+};
+
+// base64 encoding
 const getBase64 = (file: FileType): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -39,10 +53,13 @@ const getBase64 = (file: FileType): Promise<string> =>
     });
 
 const AddProduct = () => {
+    // states and calls
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const formRef = React.useRef<FormInstance<FieldType>>(null);
 
+    // handle preview
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj as FileType);
@@ -52,9 +69,11 @@ const AddProduct = () => {
         setPreviewOpen(true);
     };
 
+    // handle file change
     const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
         setFileList(newFileList);
 
+    // image upload button
     const uploadButton = (
         <button style={{ border: 0, background: "none" }} type="button">
             <PlusOutlined />
@@ -62,6 +81,7 @@ const AddProduct = () => {
         </button>
     );
 
+    // handle form submission finish
     const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
         const thumbUrlsArray = fileList.map((file) => file.thumbUrl);
         const product_name = values.product_name;
@@ -100,7 +120,10 @@ const AddProduct = () => {
             )
             .then((data) => {
                 if (data.data.status == "success") {
-                    alert("Product added successfully");
+                    message.success("Product added successfully");
+                    // clear form values
+                    formRef.current?.resetFields();
+                    setFileList([]);
                 }
             })
             .catch((error) => {
@@ -108,11 +131,39 @@ const AddProduct = () => {
             });
     };
 
+    // handle form submission failure
     const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
         errorInfo
     ) => {
         console.log("Failed:", errorInfo);
     };
+
+    // fetch category from server
+    const {
+        data: allCategories = [],
+        isLoading,
+        isPending,
+        isFetching,
+    } = useQuery<CategoryType[]>({
+        queryKey: ["allCategories"],
+        queryFn: async () => {
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
+            );
+            return res.data.data;
+        },
+        retry: 2,
+        refetchOnWindowFocus: false,
+    });
+
+    // checking if loading
+    if (isLoading || isPending || isFetching) {
+        return (
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -121,21 +172,27 @@ const AddProduct = () => {
                     Add Product
                 </h3>
             </div>
-            <div className="mt-5 w-[95%] md:w-[65%] mx-auto relative">
+            <div className="mt-5 w-[90%] 2xl:w-[65%] mx-auto relative">
                 <Form
                     initialValues={{ remember: false }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
                     layout="vertical"
+                    ref={formRef}
                 >
                     {/* product name */}
                     <div className="flex items-center gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Name"
-                            required
                             name="product_name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter name!",
+                                },
+                            ]}
                         >
                             <Input
                                 className="w-full"
@@ -146,12 +203,17 @@ const AddProduct = () => {
                     </div>
 
                     {/* price & discounted price */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex items-center gap-2 md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Price"
-                            required
                             name="price"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter price!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -162,8 +224,13 @@ const AddProduct = () => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Discounted Price"
-                            required
                             name="discounted_price"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter discounted price!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -174,12 +241,17 @@ const AddProduct = () => {
                     </div>
 
                     {/* stock & category */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex flex-col md:flex-row items-center md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Stock"
-                            required
                             name="stock"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter stock!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -190,24 +262,45 @@ const AddProduct = () => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Category"
-                            required
                             name="category"
+                            hasFeedback
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please select category!",
+                                },
+                            ]}
                         >
-                            <Input
+                            <Select
                                 className="w-full"
-                                placeholder="Enter product category..."
+                                placeholder="Select category..."
                                 size="large"
-                            />
+                            >
+                                {allCategories?.length > 0 &&
+                                    allCategories?.map((item) => (
+                                        <Option
+                                            key={item?.id}
+                                            value={item?.name}
+                                        >
+                                            {item?.name}
+                                        </Option>
+                                    ))}
+                            </Select>
                         </Form.Item>
                     </div>
 
                     {/* rating & product id */}
-                    <div className="flex items-center gap-10">
+                    <div className="flex items-center gap-2 md:gap-10">
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Rating"
-                            required
                             name="rating"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter rating!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -218,8 +311,13 @@ const AddProduct = () => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Id"
-                            required
                             name="productId"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter product id!",
+                                },
+                            ]}
                         >
                             <InputNumber
                                 className="w-full"
@@ -234,8 +332,13 @@ const AddProduct = () => {
                         <Form.Item<FieldType>
                             className="w-full"
                             label="Product Description"
-                            required
                             name="description"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please enter description!",
+                                },
+                            ]}
                         >
                             <TextArea
                                 rows={4}
@@ -280,7 +383,7 @@ const AddProduct = () => {
                     </div>
 
                     {/* submit button */}
-                    <div className="absolute right-0 w-full md:w-[25%]">
+                    <div className="absolute right-0 w-full md:w-[50%] lg:w-[25%]">
                         <Form.Item className="w-full">
                             <Button
                                 className="w-full"

@@ -16,8 +16,7 @@ datasource db {
 model Customer {
   id         Int      @id @default(autoincrement())
   customerId Int      @unique
-  firstName  String
-  lastName   String
+  name       String
   email      String   @unique
   phone      String   @unique
   address    String
@@ -52,6 +51,7 @@ model Product {
 // category model
 model Category {
   id          Int     @id @default(autoincrement())
+  categoryId  Int     @unique
   name        String
   description String?
 
