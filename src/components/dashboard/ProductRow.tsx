@@ -45,8 +45,8 @@ const ProductRow = ({
 
     return (
         <tr>
-            <th className="hidden md:table-cell">{index + 1}</th>
-            <th className="hidden md:table-cell">{productId}</th>
+            <th>{index + 1}</th>
+            <th>{productId}</th>
             <td>
                 <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -67,16 +67,16 @@ const ProductRow = ({
                     </div>
                 </div>
             </td>
-            <td className="hidden md:table-cell">
+            <td>
                 <div className="text-gray-600 font-bold">{price}</div>
             </td>
-            <td className="hidden md:table-cell">
+            <td>
                 <div className="text-gray-600 font-bold">{discount_price}</div>
             </td>
-            <td className="hidden md:table-cell">
-                <Flex gap="middle" vertical className="mt-2">
+            <td>
+                <Flex gap="middle" className="mt-2">
                     <Rate
-                        className="text-base text-pink-600"
+                        className="flex items-center justify-center text-base text-pink-600"
                         tooltips={desc}
                         value={rating}
                     />
@@ -85,7 +85,7 @@ const ProductRow = ({
             <td>
                 <div>{stock}</div>
             </td>
-            <td className="hidden md:table-cell">
+            <td>
                 <div className="text-gray-600 font-bold">
                     {typeof created_at === "string"
                         ? new Date(created_at).toLocaleDateString("en-US", {
@@ -96,7 +96,7 @@ const ProductRow = ({
                         : "Invalid date"}
                 </div>
             </td>
-            <td className="hidden md:table-cell">
+            <td>
                 <div className="text-gray-600 font-bold">
                     {typeof created_at === "string"
                         ? new Date(updated_at).toLocaleDateString("en-US", {
@@ -107,7 +107,7 @@ const ProductRow = ({
                         : "Invalid date"}
                 </div>
             </td>
-            <td className="hidden md:table-cell">
+            <td>
                 <Link href={`/products/${id}`}>
                     <Button className="btn btn-circle btn-outline btn-sm">
                         <FaEye></FaEye>
