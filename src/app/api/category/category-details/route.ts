@@ -10,7 +10,15 @@ export async function GET(req: Request) {
             where: {
                 name: name,
             },
+            include: {
+                products: {
+                    select: {
+                        id: true,
+                    },
+                },
+            },
         });
+        console.log(result?.products);
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {
         return NextResponse.json({ status: "fail", data: error });
