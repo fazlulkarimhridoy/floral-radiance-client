@@ -58,10 +58,10 @@ const Page = ({ params }: { params: { productId: string } }) => {
 
     console.log(featuredProducts);
 
-  // Funtion for finding the selected product
-  const findProduct = (item: Array<any>) => {
-    return Number(params.productId) === item?.id;
-  };
+    // Funtion for finding the selected product
+    const findProduct = (item: ProductType) => {
+        return Number(params.productId) === item?.id;
+    };
 
     //single product data
     const singleProduct = featuredProducts?.find(findProduct);

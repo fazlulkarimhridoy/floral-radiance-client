@@ -11,6 +11,9 @@ export async function GET() {
                 payment: true,
                 shipping: true,
             },
+            orderBy: {
+                id: "desc",
+            },
         });
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {
