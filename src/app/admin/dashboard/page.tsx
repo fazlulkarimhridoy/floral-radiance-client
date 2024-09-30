@@ -4,14 +4,63 @@ import { useQuery } from "@tanstack/react-query";
 import { Col, Row, Statistic, StatisticProps } from "antd";
 import axios from "axios";
 import CountUp from "react-countup";
-import { BarChart, Bar, ResponsiveContainer } from "recharts";
+import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
 const formatter: StatisticProps["formatter"] = (value) => (
     <CountUp end={value as number} separator="," />
 );
 
-// chart data
-const barData = [
+// Define the type for the data array
+interface DataItem {
+    name: string;
+    uv: number;
+    pv: number;
+    amt: number;
+}
+
+const barData: DataItem[] = [
+    {
+        name: "Page A",
+        uv: 4000,
+        pv: 2400,
+        amt: 2400,
+    },
+    {
+        name: "Page B",
+        uv: 3000,
+        pv: 1398,
+        amt: 2210,
+    },
+    {
+        name: "Page C",
+        uv: 2000,
+        pv: 9800,
+        amt: 2290,
+    },
+    {
+        name: "Page D",
+        uv: 2780,
+        pv: 3908,
+        amt: 2000,
+    },
+    {
+        name: "Page E",
+        uv: 1890,
+        pv: 4800,
+        amt: 2181,
+    },
+    {
+        name: "Page F",
+        uv: 2390,
+        pv: 3800,
+        amt: 2500,
+    },
+    {
+        name: "Page G",
+        uv: 3490,
+        pv: 4300,
+        amt: 2100,
+    },
     {
         name: "Page A",
         uv: 4000,
@@ -68,7 +117,6 @@ type statistic = {
         _count: number;
     };
 };
-
 
 const AdminDashboard = () => {
     // fetch order statistics
@@ -151,12 +199,11 @@ const AdminDashboard = () => {
                 </Row>
             </div>
             {/* chartbar */}
-            <div>
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart width={150} height={40} data={barData as any}>
-                        <Bar dataKey="uv" fill="#8884d8" />
-                    </BarChart>
-                </ResponsiveContainer>
+            <div className="mt-20">
+                <BarChart width={1600} height={500} data={barData}>
+                    <Bar dataKey="uv" fill="#8884d8" />
+                </BarChart>
+                <p className="text-center text-lg font-semibold mt-5">Order and Customer Data Graph</p>
             </div>
         </div>
     );
