@@ -33,7 +33,7 @@ const Page = () => {
   ];
 
   return (
-    <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px] mx-auto px-2">
+    <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px] mx-auto px-2 no-scrollbar">
       {/* <h1 className="text-xl"> All Products</h1> */}
       <div className="border-r-2 ">
           <SideBarMenu></SideBarMenu>

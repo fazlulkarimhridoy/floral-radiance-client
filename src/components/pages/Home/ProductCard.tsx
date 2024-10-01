@@ -127,14 +127,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
     //         )}
     //     </div>
     // </div>
-    <div className=" w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl bg-[#b8cedc]">
-      <div className="bg-white rounded-xl">
+    <div className=" w-full md:w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl  amoled-shadow  bg-white lg:bg-none">
+      <div className=" rounded-xl">
               <Image
                 src={'/Images/red-rose.png'}
                 alt={`Image`}
                 width={120}
                 height={100}
-                className={`bg-white w-full p-4 rounded-xl`}
+                className={` w-full p-4 rounded-xl`}
               />
       </div>
       <div className=" border-[#194464] flex flex-col gap-2">

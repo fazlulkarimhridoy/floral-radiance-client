@@ -12,16 +12,11 @@ import NewFooter from "@/components/pages/Home/NewFooter";
 
 const Home = () => {
   const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
-  const [width, setWidth] = useState(window.innerWidth);
+ 
   
   useEffect(() => {
 
-    // Function to update the width state
-    const handleResize = () => setWidth(window.innerWidth);
-
-    // Add event listener to listen for window resize
-    window.addEventListener('resize', handleResize);
-
+ 
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
@@ -31,11 +26,10 @@ const Home = () => {
         setBgColor("bg-white"); // Default background color
       }
 
-
-    if(width <= 375 && window.scrollY > 3200){
-      setBgColor('bg-[#b8cedc]')
-    }
-    
+     if (window.scrollY > 3300){
+        setBgColor("bg-[#b8cedc]"); // Default background color
+      }
+      console.log(window.scrollY);
     };
 
     // Add event listener for scroll
@@ -44,9 +38,8 @@ const Home = () => {
     // Clean up event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener('resize', handleResize);
     };
-  }, [width]);
+  }, []);
 
   return (
     <div className={`${bgColor} transition-colors duration-300 `}>

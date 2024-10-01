@@ -120,7 +120,7 @@ const ButtonGroup: React.FC = () => {
       </div>
       <div
         ref={scrollBar}
-        className="button-group flex text-nowrap overflow-x-scroll "
+        className="button-group flex text-nowrap overflow-x-scroll no-scrollbar"
       >
         {tags.map((tag, idx) => {
           return (
