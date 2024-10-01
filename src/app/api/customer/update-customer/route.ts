@@ -7,8 +7,7 @@ export async function PUT(req: Request) {
 
         const {
             id,
-            firstName,
-            lastName,
+            name,
             email,
             phone,
             address,
@@ -21,8 +20,7 @@ export async function PUT(req: Request) {
                 id: id,
             },
             data: {
-                firstName,
-                lastName,
+                name,
                 email,
                 phone,
                 address,

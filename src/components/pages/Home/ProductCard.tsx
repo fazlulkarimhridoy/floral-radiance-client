@@ -7,97 +7,95 @@ import { Rate } from "antd";
 import Link from "next/link";
 import { CartContext } from "@/context/CartContext";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { message } from 'antd';
+import { message } from "antd";
 
 interface Item {
-  id: number;
-  product_id: number;
-  images: string[];
-  product_name: string;
-  price: number;
-  discount_price: number;
-  description: string;
-  rating: number;
+    id: number;
+    product_id: number;
+    images: string[];
+    product_name: string;
+    price: number;
+    discount_price: number;
+    description: string;
+    rating: number;
 }
 
 interface ProductCardProps {
-  item: Item;
-  desc: string[];
+    item: Item;
+    desc: string[];
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
-  console.log(item?.images);
+    console.log(item?.images);
 
-  const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
-    {}
-  );
+    const [hoverStates, setHoverStates] = useState<{ [key: number]: boolean }>(
+        {}
+    );
 
+    const cartContext = useContext(CartContext);
 
+    if (!cartContext) {
+        return null;
+    }
 
-  const cartContext = useContext(CartContext);
+    const { addToCart } = cartContext;
 
-  if (!cartContext) {
-    return null;
-  }
+    // Function to handle mouse enter event for a specific product
+    const handleMouseEnter = (productId: number) => {
+        setHoverStates((prevStates) => ({
+            ...prevStates,
+            [productId]: true,
+        }));
+    };
 
-  const { addToCart } = cartContext;
+    // Function to handle mouse leave event for a specific product
+    const handleMouseLeave = (productId: number) => {
+        setHoverStates((prevStates) => ({
+            ...prevStates,
+            [productId]: false,
+        }));
+    };
 
-  // Function to handle mouse enter event for a specific product
-  const handleMouseEnter = (productId: number) => {
-    setHoverStates((prevStates) => ({
-      ...prevStates,
-      [productId]: true,
-    }));
-  };
+    // const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
 
-  // Function to handle mouse leave event for a specific product
-  const handleMouseLeave = (productId: number) => {
-    setHoverStates((prevStates) => ({
-      ...prevStates,
-      [productId]: false,
-    }));
-  };
+    return (
+        // <div
+        //     key={item.id}
+        //     className="group h-[400px] w-[300px] rounded-2xl border-2 p-2  hover:shadow-lg hover:transition-all hover:duration-400"
+        //     onMouseEnter={() => handleMouseEnter(item.id)}
+        //     onMouseLeave={() => handleMouseLeave(item.id)}
+        // >
+        //     <div className="relative h-[270px] w-[260px] mx-auto">
+        //         {item?.images &&
+        //             item?.images?.map((imageUrl: string, index: number) => {
+        //                 // checking if image url start with http or not
+        //                 return (
+        //                     <Image
+        //                         key={index}
+        //                         src={imageUrl}
+        //                         alt={`Image ${index}`}
+        //                         width={500}
+        //                         height={500}
+        //                         className={`absolute inset-0 object-cover ${
+        //                             index === 0 ? "opacity-100" : "opacity-0"
+        //                         } group-hover:opacity-${
+        //                             index === 0 ? "0" : "100"
+        //                         }`}
+        //                     />
+        //                 );
+        //             })}
+        //     </div>
 
-  // const images = typeof item?.images === "string" ? JSON.parse(item?.images) : [];
-
-  return (
-    // <div
-    //     key={item.id}
-    //     className="group h-[400px] w-[300px] rounded-2xl border-2 p-2  hover:shadow-lg hover:transition-all hover:duration-400"
-    //     onMouseEnter={() => handleMouseEnter(item.id)}
-    //     onMouseLeave={() => handleMouseLeave(item.id)}
-    // >
-    //     <div className="relative h-[270px] w-[260px] mx-auto">
-    //         {item?.images &&
-    //             item?.images?.map((imageUrl: string, index: number) => {
-    //                 // checking if image url start with http or not
-    //                 return (
-    //                     <Image
-    //                         key={index}
-    //                         src={imageUrl}
-    //                         alt={`Image ${index}`}
-    //                         width={500}
-    //                         height={500}
-    //                         className={`absolute inset-0 object-cover ${
-    //                             index === 0 ? "opacity-100" : "opacity-0"
-    //                         } group-hover:opacity-${
-    //                             index === 0 ? "0" : "100"
-    //                         }`}
-    //                     />
-    //                 );
-    //             })}
-    //     </div>
-
-    //     {/* Product details */}
-    //     <div className="text-center my-2">
-    //         <h3 className="text-lg font-semibold">{item?.product_name}</h3>
-    //         <Flex gap="middle" vertical className="mt-2">
-    //             <Rate
-    //                 className="text-base text-pink-600"
-    //                 tooltips={desc}
-    //                 value={item?.rating}
-    //             />
-    //         </Flex>
+        //     {/* Product details */}
+        //     <div className="text-center my-2">
+        //         <h3 className="text-lg font-semibold">{item?.product_name}</h3>
+        //         <Flex gap="middle" vertical className="mt-2">
+        //             <Rate
+        //                 className="text-base text-pink-600"
+        //                 tooltips={desc}
+        //                 value={item?.rating}
+        //             />
+        //         </Flex>
 
     //         {/* Render the price or Add to Cart based on hover */}
     //         {!hoverStates[item?.id] && (

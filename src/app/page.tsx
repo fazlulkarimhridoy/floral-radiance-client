@@ -18,11 +18,11 @@ const Home = () => {
 
  
     const handleScroll = () => {
-      if (window.scrollY > 300) {
+      if (window?.scrollY > 300) {
         setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
       }
 
-     if (window.scrollY > 500){
+     if (window?.scrollY > 500){
         setBgColor("bg-white"); // Default background color
       }
 
@@ -33,7 +33,7 @@ const Home = () => {
     };
 
     // Add event listener for scroll
-    window.addEventListener("scroll", handleScroll);
+    window?.addEventListener("scroll", handleScroll);
 
     // Clean up event listener on component unmount
     return () => {

@@ -13,6 +13,9 @@ export async function GET(req: Request) {
             include: {
                 customer: true,
             },
+            orderBy: {
+                id: "desc",
+            },
         });
         return NextResponse.json({ status: "success", data: reviews });
     } catch (error) {

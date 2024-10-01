@@ -2,8 +2,10 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
+import { Input, message } from "antd";
+import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 interface ProductType {
     id: number;
@@ -20,12 +22,18 @@ interface ProductType {
     category: string;
 }
 
+const { Search } = Input;
+
 const Products = () => {
+    // states and calls
+    const [searchText, setSearchText] = useState(null || "");
 
     // fetch all product from server
     const {
         data: allProducts = [],
         isLoading,
+        isPending,
+        isFetching,
         refetch,
     } = useQuery<ProductType[]>({
         queryKey: ["allProducts"],
@@ -50,17 +58,41 @@ const Products = () => {
                     `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product?id=${id}`
                 )
                 .then((data) => {
+                    message.success("Successfully deleted");
                     refetch();
                     console.log(data);
                 });
         }
     };
 
+    // Handle product filter for search
+    const filteredProducts = allProducts?.filter((product) => {
+        if (searchText) {
+            const searchString = searchText.toLowerCase();
+
+            // Check product name, category (strings), and productId (number)
+            return (
+                product?.product_name?.toLowerCase()?.includes(searchString) ||
+                product?.category?.toLowerCase()?.includes(searchString) ||
+                product?.productId
+                    ?.toString()
+                    ?.toLowerCase()
+                    ?.includes(searchString)
+            );
+        }
+        return true; // If no searchText, return all products
+    });
+
+    // handle search filed value
+    const onSearch: SearchProps["onSearch"] = (value) => {
+        setSearchText(value);
+    };
+
     // checking if loading
-    if (isLoading) {
+    if (isLoading || isPending || isFetching) {
         return (
-            <div className="flex justify-center mt-28 mb-28 lg:mt-80 lg:mb-60">
-                <progress className="progress w-56 bg-blue-200 h-2 lg:h-8 lg:w-80"></progress>
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
             </div>
         );
     }
@@ -71,32 +103,39 @@ const Products = () => {
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
                     Manage Products
                 </h3>
+                <div className="mt-5 w-full xl:w-1/2 mx-auto">
+                    <Search
+                        placeholder="search products..."
+                        allowClear
+                        enterButton="Search"
+                        size="large"
+                        onSearch={onSearch}
+                    />
+                </div>
             </div>
             <div className="overflow-x-auto scroll-smooth bg-blue-50 pt-4 mb-5 md:mb-0">
                 <table className="table">
                     {/* head */}
                     <thead>
                         <tr>
-                            <th className="hidden md:table-cell">Index</th>
-                            <th className="hidden md:table-cell">Product Id</th>
+                            <th>#</th>
+                            <th>Product Id</th>
                             <th>Product & image</th>
-                            <th className="hidden md:table-cell">Price</th>
-                            <th className="hidden md:table-cell">
-                                Offer Price
-                            </th>
-                            <th className="hidden md:table-cell">Rating</th>
+                            <th>Price</th>
+                            <th>Offer Price</th>
+                            <th>Rating</th>
                             <th>Stock</th>
-                            <th className="hidden md:table-cell">Created At</th>
-                            <th className="hidden md:table-cell">Updated At</th>
-                            <th className="hidden md:table-cell">View</th>
-                            <th className="hidden md:table-cell">Edit</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>View</th>
+                            <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allProducts.length > 0 &&
-                            allProducts?.map((data, index) => (
+                        {allProducts?.length > 0 &&
+                            filteredProducts?.map((data, index) => (
                                 <ProductRow
                                     key={data.id}
                                     index={index}
