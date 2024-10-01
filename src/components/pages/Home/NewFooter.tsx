@@ -1,21 +1,28 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 
 const NewFooter = () => {
   return (
-    <div className="pb-10">
+    <div className="pb-10 px-4">
       <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 md:w-[90%] lg:w-[70%] mx-auto  gap-4">
         <div className=" row-span-2 bg-white rounded-xl">
           <p className="playfair text-[#184363] font-bold text-4xl p-4">
             Crafted with love, delivered with care.
           </p>
           <div className="flex items-center">
-            <Image src={'/Images/logo.png'} alt = 'logo' width={100} height={100}/>
-            <p className="font-outfit text-[#184363] text-xl font-bold">Floral radiance</p>
+            <Image
+              src={"/Images/logo.png"}
+              alt="logo"
+              width={100}
+              height={100}
+            />
+            <p className="font-outfit text-[#184363] text-xl font-bold">
+              Floral radiance
+            </p>
           </div>
-          
         </div>
         <div className="bg-white rounded-xl">
           <p className="playfair text-[#184363] font-bold text-4xl p-4">
@@ -37,12 +44,17 @@ const NewFooter = () => {
           </ul>
         </div>
         <div className="bg-white rounded-xl flex flex-col md:flex-row items-center">
-          <a className="text-[#184363] font-bold text-lg p-4 underline" href="">
-            Terms of use
-          </a>
-          <a className="text-[#184363] font-bold text-lg p-4 underline" href="">
-            Privacy policy
-          </a>
+          <Link href={"privacypolicy"}>
+            <p className="text-[#184363] font-bold text-base p-4 underline">
+              Delivery policy
+            </p>
+          </Link>
+
+          <Link href={"privacypolicy"}>
+            <p className="text-[#184363] text-base font-bold text-lg p-4 underline">
+              Privacy policy
+            </p>
+          </Link>
         </div>
       </div>
     </div>

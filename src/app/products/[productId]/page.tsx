@@ -1,11 +1,12 @@
 "use client";
-import ProductImage from "@/components/pages/DetailsPage/productImage";
+// import ProductImage from "@/components/pages/DetailsPage/productImage";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
+import ProductImage from "@/components/pages/DetailsPage/ProductImage";
 
 interface ProductType {
     id: number;

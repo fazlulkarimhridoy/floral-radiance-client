@@ -97,68 +97,56 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, desc }) => {
         //             />
         //         </Flex>
 
-        //         {/* Render the price or Add to Cart based on hover */}
-        //         {!hoverStates[item?.id] && (
-        //             <p className="font-medium flex items-center justify-center gap-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-        //                 <span>${item?.discount_price}</span>
-        //                 <span className="line-through text-gray-400">
-        //                     ${item?.price}
-        //                 </span>
-        //             </p>
-        //         )}
-        //         {hoverStates[item?.id] && (
-        //             <div className="flex">
-        //                 <p
-        //                     onClick={() => {
-        //                         addToCart(item);
-        //                     }}
-        //                     className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1"
-        //                 >
-        //                     Add to Cart
-        //                 </p>
-        //                 <Link href={`products/${item?.id}`}>
-        //                     <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
-        //                         View details
-        //                     </p>
-        //                 </Link>
-        //             </div>
-        //         )}
-        //     </div>
-        // </div>
-        <div className=" w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl bg-[#b8cedc]">
-            <div className="bg-white rounded-xl">
-                <Image
-                    src={"/Images/red-rose.png"}
-                    alt={`Image`}
-                    width={120}
-                    height={100}
-                    className={`bg-white w-full p-4 rounded-xl`}
-                />
-            </div>
-            <div className=" border-[#194464] flex flex-col gap-2">
-                <p className="font-outfit text-base font-bold text-[#194464]">
-                    {item.product_name}
-                </p>
-                <p className="font-outfit text-sm text-[#194464]">
-                    {item.description}
-                </p>
-                <div className="flex items-center justify-center text-center">
-                    <p className="text-lg font-outfit font-bold">
-                        Price: {item.price}
-                    </p>{" "}
-                    <FaBangladeshiTakaSign className="text-sm" />
-                </div>
-            </div>
-            <div>
-                <button
-                    onClick={() => addToCart(item)}
-                    className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center"
-                >
-                    Add to cart
-                </button>
-            </div>
-        </div>
-    );
+    //         {/* Render the price or Add to Cart based on hover */}
+    //         {!hoverStates[item?.id] && (
+    //             <p className="font-medium flex items-center justify-center gap-2 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+    //                 <span>${item?.discount_price}</span>
+    //                 <span className="line-through text-gray-400">
+    //                     ${item?.price}
+    //                 </span>
+    //             </p>
+    //         )}
+    //         {hoverStates[item?.id] && (
+    //             <div className="flex">
+    //                 <p
+    //                     onClick={() => {
+    //                         addToCart(item);
+    //                     }}
+    //                     className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1"
+    //                 >
+    //                     Add to Cart
+    //                 </p>
+    //                 <Link href={`products/${item?.id}`}>
+    //                     <p className="font-medium flex items-center justify-center gap-2 mt-2 animate-fade-in cursor-pointer hover:text-pink-600 border-2 w-32 mx-auto rounded-2xl border-[#f472b6] py-1">
+    //                         View details
+    //                     </p>
+    //                 </Link>
+    //             </div>
+    //         )}
+    //     </div>
+    // </div>
+    <div className=" w-full md:w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl  amoled-shadow  bg-white lg:bg-none">
+      <div className=" rounded-xl">
+              <Image
+                src={'/Images/red-rose.png'}
+                alt={`Image`}
+                width={120}
+                height={100}
+                className={` w-full p-4 rounded-xl`}
+              />
+      </div>
+      <div className=" border-[#194464] flex flex-col gap-2">
+        <p className="font-outfit text-base font-bold text-[#194464]">{item.product_name}</p>
+        <p className="font-outfit text-sm text-[#194464]">{item.description}</p>
+        <div className="flex items-center justify-center text-center"><p className="text-lg font-outfit font-bold">Price:  {item.price}</p> <FaBangladeshiTakaSign className="text-sm" /></div>
+      </div>
+      <div>
+        <button onClick={ () => addToCart(item)} className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center">
+            Add to cart
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ProductCard;

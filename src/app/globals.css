@@ -12,6 +12,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 *{
   box-sizing: border-box;
 }
@@ -61,6 +63,15 @@ input::-webkit-inner-spin-button {
 
   .btn-purple{
     @apply rounded-lg px-8 py-2 bg-[#f472b6] text-white hover:scale-105 transition-all text-xl font-bold text-center 
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge, and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 }
 
@@ -213,6 +224,10 @@ input::-webkit-inner-spin-button {
   display: flex;
   gap: 20px;
   border-radius: 40px;
+}
+
+.amoled-shadow{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 
