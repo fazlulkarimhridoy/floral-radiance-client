@@ -1,9 +1,8 @@
 "use client";
 
-import CategoryRow from "@/components/dashboard/CategoryRow";
 import OrderRow from "@/components/dashboard/OrderRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input, message } from "antd";
+import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
