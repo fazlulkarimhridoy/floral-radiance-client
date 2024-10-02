@@ -142,8 +142,6 @@ const AddProduct = () => {
     const {
         data: allCategories = [],
         isLoading,
-        isPending,
-        isFetching,
     } = useQuery<CategoryType[]>({
         queryKey: ["allCategories"],
         queryFn: async () => {
@@ -157,7 +155,7 @@ const AddProduct = () => {
     });
 
     // checking if loading
-    if (isLoading || isPending || isFetching) {
+    if (isLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>

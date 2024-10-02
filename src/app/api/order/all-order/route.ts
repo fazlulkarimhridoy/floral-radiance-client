@@ -6,10 +6,7 @@ export async function GET() {
         const prisma = new PrismaClient();
         const result = await prisma.order.findMany({
             include: {
-                items: true,
                 customer: true,
-                payment: true,
-                shipping: true,
             },
             orderBy: {
                 id: "desc",

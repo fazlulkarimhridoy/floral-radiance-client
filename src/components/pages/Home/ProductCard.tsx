@@ -42,25 +42,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
         // Use functional state update to ensure you're working with the latest state
         setCardData((prevCardData) => {
             const itemExists = prevCardData.some((item) => item.id === id);
-
             // If item is already in the cart, just return the previous state
             if (itemExists) {
                 return prevCardData;
             }
-
             // Add new item to the cart if it's not already there
             const updatedCart = [
                 ...prevCardData,
                 { id, product_name, images, price },
             ];
-
             // Update localStorage with the updated cart array
             localStorage.setItem("cartItem", JSON.stringify(updatedCart));
-
             return updatedCart; // Return the new state for the next render
         });
     };
-
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
         // Store the entire updated cart into localStorage

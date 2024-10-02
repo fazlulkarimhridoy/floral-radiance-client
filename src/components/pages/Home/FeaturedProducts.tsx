@@ -43,7 +43,7 @@ const FeaturedProducts = () => {
     }
 
     return (
-        <div className="max-w-[76%] mx-auto my-20">
+        <div className="max-w-[70%] mx-auto my-20">
             <div className="">
                 <h3 className="text-center italic font-medium">
                     Wonderful gifts

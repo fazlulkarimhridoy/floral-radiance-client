@@ -118,7 +118,7 @@ const Page = () => {
     // handle cash on delivery
     const handleCashOnDeliveryChange = () => {
         setCashOnDelivery(true);
-        console.log(cashOnDelivery);
+        console.log("cash on delivery", cashOnDelivery);
     };
     // handle email
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +160,7 @@ const Page = () => {
                 throw new Error("Failed to create customer.");
             }
 
-            console.log("customer",customerResponse);
+            console.log("customer", customerResponse);
             const customerId = customerResponse.data.data.id;
 
             // Create order
@@ -177,9 +177,7 @@ const Page = () => {
                         quantity: 1,
                         price: item.price,
                     })),
-                    paymentMethod: cashOnDelivery
-                        ? "CASH_ON_DELIVERY"
-                        : "ADVANCE_PAYMENT",
+                    paymentMethod: cashOnDelivery ? "CASHON" : "BKASH",
                     // note,
                 }
             );
