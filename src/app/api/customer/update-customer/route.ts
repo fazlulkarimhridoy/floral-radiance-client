@@ -11,9 +11,6 @@ export async function PUT(req: Request) {
             email,
             phone,
             address,
-            city,
-            state,
-            zipCode,
         } = await req.json();
         const result = await prisma.customer.update({
             where: {
@@ -24,9 +21,6 @@ export async function PUT(req: Request) {
                 email,
                 phone,
                 address,
-                city,
-                state,
-                zipCode,
             },
         });
         return NextResponse.json({ status: "success", data: result });

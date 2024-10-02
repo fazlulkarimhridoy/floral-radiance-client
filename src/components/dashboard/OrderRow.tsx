@@ -13,6 +13,7 @@ type OrderType = {
     paymentMethod: string;
     items: string[];
     customer: string;
+    productId: number;
 };
 const OrderRow = ({
     categoryData,
@@ -33,12 +34,14 @@ const OrderRow = ({
         customer,
     } = categoryData;
 
+    // const parsedItems = JSON.parse(items);
+
     console.log(customer);
     return (
         <tr>
             <th>{index + 1}</th>
             <th>{customerId}</th>
-            <th>{items[0].productId}</th>
+            <th>All Items</th>
             <td>{totalPrice}</td>
             <td>{paymentMethod}</td>
             <td>{deliveryDate}</td>
