@@ -13,7 +13,6 @@ type OrderType = {
     paymentMethod: string;
     items: string[];
     customer: string;
-    productId: number;
 };
 const OrderRow = ({
     categoryData,

@@ -2,7 +2,7 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -132,7 +132,7 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allProducts?.length > 0 &&
+                        {allProducts?.length > 0 ? (
                             filteredProducts?.map((data, index) => (
                                 <ProductRow
                                     key={data.id}
@@ -140,7 +140,10 @@ const Products = () => {
                                     productData={data}
                                     handleDeleteProduct={handleDeleteProduct}
                                 ></ProductRow>
-                            ))}
+                            ))
+                        ) : (
+                            <Empty description="No customer found!" />
+                        )}
                     </tbody>
                 </table>
             </div>

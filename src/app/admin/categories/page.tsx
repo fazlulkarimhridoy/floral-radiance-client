@@ -2,7 +2,7 @@
 
 import CategoryRow from "@/components/dashboard/CategoryRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -121,7 +121,7 @@ const Categories = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allCategories.length > 0 &&
+                        {allCategories.length > 0 ? (
                             filteredCustomers?.map((data, index) => (
                                 <CategoryRow
                                     key={data.id}
@@ -129,7 +129,10 @@ const Categories = () => {
                                     categoryData={data}
                                     handleDeleteCategory={handleDeleteCategory}
                                 ></CategoryRow>
-                            ))}
+                            ))
+                        ) : (
+                            <Empty description="No categories found!" />
+                        )}
                     </tbody>
                 </table>
             </div>

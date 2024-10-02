@@ -2,7 +2,7 @@
 
 import CustomerRow from "@/components/dashboard/CustomerRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -130,7 +130,7 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allCustomers.length > 0 &&
+                        {allCustomers.length > 0 ?
                             filteredCustomers?.map((data, index) => (
                                 <CustomerRow
                                     key={data.id}
@@ -138,7 +138,7 @@ const Products = () => {
                                     customerData={data}
                                     handleDeleteProduct={handleDeleteProduct}
                                 ></CustomerRow>
-                            ))}
+                            )) : <Empty description="No customer found!" />}
                     </tbody>
                 </table>
             </div>

@@ -3,7 +3,7 @@
 import CategoryRow from "@/components/dashboard/CategoryRow";
 import OrderRow from "@/components/dashboard/OrderRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -115,14 +115,17 @@ const Orders = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allOrders.length > 0 &&
+                        {allOrders.length > 0 ? (
                             filteredOrders?.map((data, index) => (
                                 <OrderRow
                                     key={data.id}
                                     index={index}
                                     categoryData={data}
                                 ></OrderRow>
-                            ))}
+                            ))
+                        ) : (
+                            <Empty description="No customer found!" />
+                        )}
                     </tbody>
                 </table>
             </div>
