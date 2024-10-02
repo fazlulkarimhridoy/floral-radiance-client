@@ -37,7 +37,6 @@ const FeaturedProducts = () => {
         return (
             <div className="flex flex-col items-center justify-center gap-5 fixed top-[75%] left-[55%] transform -translate-x-1/2 -translate-y-1/2">
                 <Spin size="large" />
-                <h2>loading.....</h2>
             </div>
         );
     }
