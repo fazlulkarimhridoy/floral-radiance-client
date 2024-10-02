@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import ProductCard from "../Home/ProductCard";
-import { Spin } from "antd";
+import { Empty, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
 
 interface ProductType {
@@ -56,13 +56,17 @@ const AllProducts = () => {
 
     return (
         <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20">
-            {shopProducts?.length > 0
-                ? filteredProducts?.length > 0
-                    ? filteredProducts?.map((item) => (
-                          <ProductCard key={item?.id} item={item} />
-                      ))
-                    : "No product for this category"
-                : "No product added yet!"}
+            {shopProducts?.length > 0 ? (
+                filteredProducts?.length > 0 ? (
+                    filteredProducts?.map((item) => (
+                        <ProductCard key={item?.id} item={item} />
+                    ))
+                ) : (
+                    <Empty description="No product for this category!" />
+                )
+            ) : (
+                <Empty description="No product added yet!" />
+            )}
         </div>
     );
 };
