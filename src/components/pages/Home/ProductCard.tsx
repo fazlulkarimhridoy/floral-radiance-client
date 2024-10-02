@@ -1,5 +1,6 @@
 "use client";
 
+import { message } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
@@ -55,6 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
             localStorage.setItem("cartItem", JSON.stringify(updatedCart));
             return updatedCart; // Return the new state for the next render
         });
+        message.success("Product Addded To Cart!");
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {

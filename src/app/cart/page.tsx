@@ -97,7 +97,7 @@ const Cart: React.FC = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="flex flex-col md:flex-row justify-between gap-4 my-[22px]">
+            <div className="flex flex-col md:flex-row justify-center gap-10 my-[22px]">
                 <ShipmentCalculator />
                 {cartData?.length > 0 && (
                     <CartTotal calculateTotal={calculateTotal} show={true} />

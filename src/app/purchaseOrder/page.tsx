@@ -120,6 +120,13 @@ const Page = () => {
         setCashOnDelivery(true);
         console.log("cash on delivery", cashOnDelivery);
     };
+
+    // handle cash on delivery
+    const handleAdvanceChange = () => {
+        setCashOnDelivery(false);
+        console.log("cash on delivery", cashOnDelivery);
+    };
+
     // handle email
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -189,9 +196,8 @@ const Page = () => {
 
             localStorage.removeItem("cartItem");
             setCartData([]);
-
+            window.location.href = "/";
             message.success("Order placed successfully!");
-            window.location.href = "/"; // Adjust the redirect URL as needed
         } catch (error: any) {
             console.error(error);
             message.error(
@@ -292,7 +298,6 @@ const Page = () => {
                         <div className="flex flex-col md:flex-row gap-2">
                             <div className="flex flex-col gap-2 w-full">
                                 <label
-                                    htmlFor=""
                                     className="text-xl flex gap-2 items-center text-[#3d4349]"
                                 >
                                     {" "}
@@ -309,7 +314,6 @@ const Page = () => {
                             </div>
                             <div className="flex flex-col gap-2 w-full">
                                 <label
-                                    htmlFor=""
                                     className="text-xl flex gap-2 items-center text-[#3d4349]"
                                 >
                                     {" "}
@@ -320,7 +324,6 @@ const Page = () => {
                                     type="number"
                                     maxLength={11}
                                     placeholder="017XXXXXXXX"
-                                    className=""
                                     onChange={handlePhoneNumberChange}
                                 />
                             </div>
@@ -328,7 +331,6 @@ const Page = () => {
                         {/*Customer mobile number */}
                         <div className="flex flex-col gap-2">
                             <label
-                                htmlFor=""
                                 className="text-xl flex gap-2 items-center text-[#3d4349]"
                             >
                                 {" "}
@@ -338,14 +340,12 @@ const Page = () => {
                                 required
                                 type="string"
                                 placeholder="abc@example.com"
-                                className=""
                                 onChange={handleEmailChange}
                             />
                         </div>
                         {/* Delivery address */}
                         <div className="flex flex-col gap-2">
                             <label
-                                htmlFor=""
                                 className="text-xl flex gap-2 items-center text-[#3d4349]"
                             >
                                 {" "}
@@ -356,7 +356,6 @@ const Page = () => {
                                 type="string"
                                 maxLength={100}
                                 placeholder="address"
-                                className=""
                                 onChange={handleAddressChange}
                             />
                         </div>
@@ -419,7 +418,10 @@ const Page = () => {
                                 <FaMoneyBillWave />
                                 Cash on Delivery
                             </button>
-                            <button className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 text-[#7a71b1]">
+                            <button
+                                onClick={handleAdvanceChange}
+                                className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 text-[#7a71b1]"
+                            >
                                 Advance Payment
                             </button>
                             <button

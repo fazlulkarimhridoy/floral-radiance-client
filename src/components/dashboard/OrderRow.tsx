@@ -43,7 +43,17 @@ const OrderRow = ({
             <td>{paymentMethod}</td>
             <td>{deliveryDate}</td>
             <td>{deliveryTime}</td>
-            <td>{orderDate}</td>
+            <td>
+                <div>
+                    {typeof orderDate === "string"
+                        ? new Date(orderDate).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                          })
+                        : "Invalid date"}
+                </div>
+            </td>
             <td>{orderStatus}</td>
             <td>
                 <Button className="btn btn-circle btn-outline btn-sm">
