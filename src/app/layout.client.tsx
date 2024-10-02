@@ -5,7 +5,6 @@ import "./globals.css";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import Footer from "@/components/shared/Footer/Footer";
 import TanstackProvider from "../../providers/TanstackProvider";
-import { CartProvider } from "@/context/CartContext";
 import { usePathname } from "next/navigation";
 import CategoryProvider from "@/context/CategoryContext";
 
@@ -24,7 +23,6 @@ export default function LayoutClient({
             {!pathname.startsWith("/admin") && (
                 <>
                     <CategoryProvider>
-                        <CartProvider>
                             <TanstackProvider>
                                 <div>
                                     <Navbar />
@@ -32,7 +30,6 @@ export default function LayoutClient({
                                     <Footer />
                                 </div>
                             </TanstackProvider>
-                        </CartProvider>
                     </CategoryProvider>
                 </>
             )}

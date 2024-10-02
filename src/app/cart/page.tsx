@@ -15,7 +15,6 @@ interface CartItem {
 }
 
 const Cart: React.FC = () => {
-    
     const [cartData, setCartData] = useState<CartItem[]>([]);
 
     // Retrieve cart data from localStorage when the component mounts
@@ -38,9 +37,8 @@ const Cart: React.FC = () => {
         return cartData.reduce((total, item) => total + item.price, 0);
     };
 
-
     return (
-        <div className="w-full lg:w-[85%] mx-auto px-2 lg:px-0 py-4">
+        <div className="w-full lg:w-[70%] mx-auto px-2 lg:px-0 py-4">
             <div className="overflow-x-auto scroll-smooth pt-4 mb-5 md:mb-0">
                 <table className="table">
                     {/* head */}
@@ -50,7 +48,7 @@ const Cart: React.FC = () => {
                             <th>Product & image</th>
                             <th>Name</th>
                             <th>Price</th>
-                            <th>Delete</th>
+                            <th className="text-right">Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,14 +82,14 @@ const Cart: React.FC = () => {
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <td className="text-right">
                                         <Button
                                             onClick={() =>
                                                 removeFromCart(data?.id)
                                             }
-                                            className="btn btn-circle btn-outline btn-sm"
+                                            className="btn btn-md"
                                         >
-                                            <FaTrash className="text-red-600"></FaTrash>
+                                            <FaTrash size={20} className="text-red-600"></FaTrash>
                                         </Button>
                                     </td>
                                 </tr>
@@ -99,9 +97,11 @@ const Cart: React.FC = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="flex flex-col md:flex-row justify-between gap-4">
+            <div className="flex flex-col md:flex-row justify-center gap-10 my-[22px]">
                 <ShipmentCalculator />
-                {cartData?.length > 0 && <CartTotal calculateTotal={calculateTotal} show={true} />}
+                {cartData?.length > 0 && (
+                    <CartTotal calculateTotal={calculateTotal} show={true} />
+                )}
             </div>
         </div>
     );

@@ -107,7 +107,10 @@ const barData: DataItem[] = [
 
 type statistic = {
     orderStatistic: {
-        _sum: number;
+        _sum: {
+            totalPrice: number;
+            _count: number;
+        };
         _count: number;
     };
     customerStatistic: {
@@ -120,7 +123,7 @@ type statistic = {
 
 const AdminDashboard = () => {
     // fetch order statistics
-    const { data, isLoading, isPending, isFetching } = useQuery<statistic>({
+    const { data, isLoading } = useQuery<statistic>({
         queryKey: ["statistics"],
         queryFn: async () => {
             const res1 = await axios.get(
@@ -143,7 +146,7 @@ const AdminDashboard = () => {
     });
 
     // checking if loading
-    if (isLoading || isPending || isFetching) {
+    if (isLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
@@ -166,7 +169,7 @@ const AdminDashboard = () => {
                         <Statistic
                             className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
                             title="Total Balance (BDT)"
-                            value={data?.orderStatistic?._sum}
+                            value={data?.orderStatistic?._sum?.totalPrice}
                             precision={2}
                             formatter={formatter}
                         />
@@ -203,7 +206,9 @@ const AdminDashboard = () => {
                 <BarChart width={1600} height={500} data={barData}>
                     <Bar dataKey="uv" fill="#8884d8" />
                 </BarChart>
-                <p className="text-center text-lg font-semibold mt-5">Order and Customer Data Graph</p>
+                <p className="text-center text-lg font-semibold mt-5">
+                    Order and Customer Data Graph
+                </p>
             </div>
         </div>
     );

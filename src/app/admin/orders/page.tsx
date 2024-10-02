@@ -11,11 +11,18 @@ import React, { useState } from "react";
 // types
 const { Search } = Input;
 
-type CategoryType = {
+type OrderType = {
     id: number;
-    categoryId: number;
-    name: string;
-    description: string;
+    customerId: number;
+    totalPrice: number;
+    deliveryDate: string;
+    deliveryTime: string;
+    orderStatus: string;
+    orderDate: string;
+    orderTime: string;
+    paymentMethod: string;
+    items: string[];
+    customer: string;
 };
 
 const Orders = () => {
@@ -24,16 +31,14 @@ const Orders = () => {
 
     // fetch category from server
     const {
-        data: allCategories = [],
+        data: allOrders = [],
         isLoading,
-        isPending,
-        isFetching,
         refetch,
-    } = useQuery<CategoryType[]>({
-        queryKey: ["allCategories"],
+    } = useQuery<OrderType[]>({
+        queryKey: ["allOrders"],
         queryFn: async () => {
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/all-order`
             );
             return res.data.data;
         },
@@ -41,37 +46,18 @@ const Orders = () => {
         refetchOnWindowFocus: false,
     });
 
-    // delete category
-    const handleDeleteCategory = (id: CategoryType) => {
-        const confirmed = window.confirm(
-            "Are you sure you want to delete this category?"
-        );
-        if (confirmed) {
-            axios
-                .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category?id=${id}`
-                )
-                .then((data) => {
-                    message.success("Successfully deleted");
-                    refetch();
-                    console.log(data);
-                });
-        }
-    };
+    console.log(allOrders);
 
     // Handle product filter for search
-    const filteredCustomers = allCategories?.filter((category) => {
+    const filteredOrders = allOrders?.filter((order) => {
         if (searchText) {
             const searchString = searchText.toLowerCase();
 
             // Check product name, category (strings), and productId (number)
-            return (
-                category?.name?.toLowerCase()?.includes(searchString) ||
-                category?.categoryId
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchString)
-            );
+            return order?.customerId
+                ?.toString()
+                ?.toLowerCase()
+                ?.includes(searchString);
         }
         return true; // If no searchText, return all products
     });
@@ -83,7 +69,7 @@ const Orders = () => {
     };
 
     // checking if loading
-    if (isLoading || isPending || isFetching) {
+    if (isLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
@@ -116,21 +102,25 @@ const Orders = () => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Category Id</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Delete</th>
+                            <th>Customer Id</th>
+                            <th>Items</th>
+                            <th>Total Price</th>
+                            <th>Payment Method</th>
+                            <th>Delivery Date</th>
+                            <th>Delivery Time</th>
+                            <th>Order Date</th>
+                            <th>Order Status</th>
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allCategories.length > 0 &&
-                            filteredCustomers?.map((data, index) => (
+                        {allOrders.length > 0 &&
+                            filteredOrders?.map((data, index) => (
                                 <OrderRow
                                     key={data.id}
                                     index={index}
                                     categoryData={data}
-                                    handleDeleteCategory={handleDeleteCategory}
                                 ></OrderRow>
                             ))}
                     </tbody>

@@ -160,7 +160,7 @@ const ShipmentCalculator = () => {
           ]}
       />
 
-      <h1 className="flex items-center text-lg text-fade-black">Estimate Delivery cost: 20<FaBangladeshiTakaSign className="text-sm" /></h1>
+      <h1 className="flex items-center text-lg text-fade-black">Estimate Delivery cost: 200<FaBangladeshiTakaSign className="text-sm" /></h1>
 
       <div>
         <button className="text-white bg-black w-full p-2 rounded-lg">Calculate delivery cost</button>

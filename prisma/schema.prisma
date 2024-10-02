@@ -20,9 +20,6 @@ model Customer {
   email      String?  @unique
   phone      String   @unique
   address    String
-  city       String?
-  state      String?
-  zipCode    String?
   createdAt  DateTime @default(now())
   Orders     Order[]
   Review     Review[]
@@ -60,17 +57,18 @@ model Category {
 
 // order model
 model Order {
-  id            Int            @id @default(autoincrement())
-  customer      Customer       @relation(fields: [customerId], references: [id], onUpdate: Cascade)
+  id            Int           @id @default(autoincrement())
+  customer      Customer      @relation(fields: [customerId], references: [id], onUpdate: Cascade)
   customerId    Int
   totalPrice    Int
   deliveryDate  String?
   deliveryTime  String?
-  orderStatus   OrderStatus?   @default(PENDING)
-  orderDate     DateTime?      @default(now())
-  paymentMethod PaymentMethod? @default(CASH_ON_DELIVERY)
+  orderStatus   OrderStatus   @default(PENDING)
+  orderDate     DateTime?     @default(now())
+  paymentMethod PaymentMethod @default(CASHON)
+  items         Json?
 
-  items    OrderItem[]
+  // items    OrderItem[]
   payment  Payment?
   shipping Shipping?
 }
@@ -78,7 +76,7 @@ model Order {
 // order item model
 model OrderItem {
   id        Int     @id @default(autoincrement())
-  order     Order   @relation(fields: [orderId], references: [id])
+  // order     Order   @relation(fields: [orderId], references: [id])
   orderId   Int
   product   Product @relation(fields: [productId], references: [id])
   productId Int
@@ -131,8 +129,8 @@ enum OrderStatus {
 }
 
 enum PaymentMethod {
+  CASHON
   BKASH
-  CASH_ON_DELIVERY
 }
 
 enum PaymentStaus {

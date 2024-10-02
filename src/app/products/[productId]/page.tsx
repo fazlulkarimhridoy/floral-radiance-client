@@ -6,7 +6,7 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
-import ProductImage from "@/components/pages/DetailsPage/ProductImage";
+import ImageDetails from "@/components/pages/DetailsPage/ImaegDetails";
 
 interface ProductType {
     id: number;
@@ -74,7 +74,7 @@ const Page = ({ params }: { params: { productId: string } }) => {
             {singleProduct ? (
                 <div className=" rounded-xl border-[#f472b6] md:flex gap-4 w-full lg:w-[83%] mx-auto p-6 bg-[#f4f4f4]">
                     <div className="">
-                        <ProductImage srcList={singleProduct.images} />
+                        <ImageDetails srcList={singleProduct.images} />
                     </div>
                     <div className=" space-y-4">
                         <div className="space-y-4">
