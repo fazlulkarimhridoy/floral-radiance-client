@@ -2,39 +2,45 @@
 
 import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
 import Link from "next/link";
-import { CartContext } from "@/context/CartContext";
+
+interface CartItem {
+    id: number;
+    product_name: string;
+    images: string;
+    price: number;
+}
 
 const Navbar = () => {
-  const [showNavbar, setShowNavbar] = useState(false);
-  const [open, setOpen] = useState(false);
-  const cartContext = useContext(CartContext);
-  useEffect(() => {
-    window.addEventListener("scroll", changeBackground);
-    return () => {
-      window.removeEventListener("scroll", changeBackground);
-    };
-  }, []);
-  
-  if (!cartContext) {
-    return null;
-  }
+    const [showNavbar, setShowNavbar] = useState(false);
+    const [open, setOpen] = useState(false);
+    useEffect(() => {
+        window.addEventListener("scroll", changeBackground);
+        return () => {
+            window.removeEventListener("scroll", changeBackground);
+        };
+    }, []);
 
-  const { cart } = cartContext;
+    const [cartData, setCartData] = useState<CartItem[]>([]);
+
+    // Retrieve cart data from localStorage when the component mounts
+    useEffect(() => {
+        const storedCart = localStorage.getItem("cartItem");
+        if (storedCart) {
+            setCartData(JSON.parse(storedCart));
+        }
+    }, []);
 
     const showDrawer = () => {
         setOpen(true);
     };
 
-
     const onClose = () => {
         setOpen(false);
     };
-
-
 
     const changeBackground = () => {
         if (window.scrollY >= 120) {
@@ -44,13 +50,11 @@ const Navbar = () => {
         }
     };
 
-
-
     return (
         <motion.div
             className={
                 showNavbar
-                    ? "bg-pink-400 sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
+                    ? "bg-[#37a3f5] sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
                     : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
             }
         >
@@ -75,59 +79,55 @@ const Navbar = () => {
                             <Link href="/">Home</Link>
                         </li>
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            <Link href={"/products"}>Shop</Link>
+                            <Link href="/products">Shop</Link>
                         </li>
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            Pages
-                        </li>
-                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            About Us
-                        </li>
-                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            Contact Us
-                        </li>
-                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                            <Link href="/admin/dashboard">Dashboard</Link>
+                            <Link href="/aboutUs">About Us</Link>
                         </li>
                     </ul>
                 </div>
 
-        <div className="flex gap-6 ">
-          <Link className="relative" href={"/cart"}>
-            <button>
-              <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
-            </button>
-            <p className= "absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">{cart.length}</p> 
-          </Link>
+                <div className="flex gap-6 ">
+                    <Link className="relative" href={"/cart"}>
+                        <button>
+                            <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
+                        </button>
+                        <p className="absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">
+                            {cartData?.length}
+                        </p>
+                    </Link>
 
-          {/* Hamburger menu */}
-          <div className="lg:hidden block">
-            <MenuOutlined onClick={showDrawer} />
-            <Drawer width={240} title="" onClose={onClose} open={open}>
-              <ul className="text-lg space-y-2 font-poppins font-medium">
-                <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  <Link href={"/"}>Home</Link>
-                </li>
-                
-                <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  <Link href={"/products"}>Shop</Link>
-                </li>
-                <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  Pages
-                </li>
-                <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  About Us
-                </li>
-                <li className="hover:text-pink-600 cursor-pointer transition-colors">
-                  Contact Us
-                </li>
-              </ul>
-            </Drawer>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
+                    {/* Hamburger menu */}
+                    <div className="lg:hidden block">
+                        <MenuOutlined onClick={showDrawer} />
+                        <Drawer
+                            width={240}
+                            title=""
+                            onClose={onClose}
+                            open={open}
+                        >
+                            <ul className="text-lg space-y-2 font-poppins font-medium">
+                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                    <Link href="/">Home</Link>
+                                </li>
+
+                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                    <Link href="/products">Shop</Link>
+                                </li>
+
+                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                    <Link href="/aboutUs">About Us</Link>
+                                </li>
+                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                    Contact Us
+                                </li>
+                            </ul>
+                        </Drawer>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
 };
 
 export default Navbar;

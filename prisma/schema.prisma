@@ -15,14 +15,14 @@ datasource db {
 // customer model
 model Customer {
   id         Int      @id @default(autoincrement())
-  customerId Int      @unique
+  customerId String   @unique @default(uuid())
   name       String
-  email      String   @unique
+  email      String?  @unique
   phone      String   @unique
   address    String
-  city       String
-  state      String
-  zipCode    String
+  city       String?
+  state      String?
+  zipCode    String?
   createdAt  DateTime @default(now())
   Orders     Order[]
   Review     Review[]
@@ -60,12 +60,15 @@ model Category {
 
 // order model
 model Order {
-  id          Int         @id @default(autoincrement())
-  customer    Customer    @relation(fields: [customerId], references: [id], onUpdate: Cascade)
-  customerId  Int
-  totalPrice  Int
-  orderStatus OrderStatus @default(PENDING)
-  orderDate   DateTime    @default(now())
+  id            Int            @id @default(autoincrement())
+  customer      Customer       @relation(fields: [customerId], references: [id], onUpdate: Cascade)
+  customerId    Int
+  totalPrice    Int
+  deliveryDate  String?
+  deliveryTime  String?
+  orderStatus   OrderStatus?   @default(PENDING)
+  orderDate     DateTime?      @default(now())
+  paymentMethod PaymentMethod? @default(CASH_ON_DELIVERY)
 
   items    OrderItem[]
   payment  Payment?
