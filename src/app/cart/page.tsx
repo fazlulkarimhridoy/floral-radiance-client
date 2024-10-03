@@ -8,7 +8,7 @@ import CartTotal from "@/components/pages/Cart/CartTotal";
 import Image from "next/image";
 
 interface CartItem {
-    id: number;
+    id: string;
     product_name: string;
     images: string;
     price: number;
@@ -17,15 +17,15 @@ interface CartItem {
 const Cart: React.FC = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
 
-    // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
-        const storedCart = localStorage.getItem("cartItem");
-        if (storedCart) {
-            setCartData(JSON.parse(storedCart));
+        // Load cart data from localStorage
+        const storedData = localStorage.getItem("cartItem");
+        if (storedData) {
+            setCartData(JSON.parse(storedData));
         }
     }, []);
 
-    const removeFromCart = (id: number) => {
+    const removeFromCart = (id: string) => {
         // selected id data should be deleted from local storage
         const updatedCartData = cartData.filter((item) => item.id !== id);
         localStorage.setItem("cartItem", JSON.stringify(updatedCartData));
@@ -89,7 +89,10 @@ const Cart: React.FC = () => {
                                             }
                                             className="btn btn-md"
                                         >
-                                            <FaTrash size={20} className="text-red-600"></FaTrash>
+                                            <FaTrash
+                                                size={20}
+                                                className="text-red-600"
+                                            ></FaTrash>
                                         </Button>
                                     </td>
                                 </tr>
