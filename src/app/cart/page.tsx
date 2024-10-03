@@ -39,7 +39,7 @@ const Cart: React.FC = () => {
 
     return (
         <div className="w-full lg:w-[70%] mx-auto px-2 lg:px-0 py-4">
-            <div className="overflow-x-auto scroll-smooth pt-4 mb-5 md:mb-0">
+            <div className="overflow-x-auto scroll-smooth pt-4 mb-5 md:mb-0 ">
                 <table className="table">
                     {/* head */}
                     <thead>
