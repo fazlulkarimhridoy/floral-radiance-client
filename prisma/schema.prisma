@@ -22,6 +22,7 @@ model Customer {
   address    String
   createdAt  DateTime @default(now())
   Orders     Order[]
+  @@map("customer")
 }
 
 // product model
@@ -40,6 +41,7 @@ model Product {
   updated_at     DateTime? @default(now()) @updatedAt @db.Timestamp(0)
   Category       Category? @relation(fields: [categoryId], references: [id])
   categoryId     Int?
+  @@map("product")
 }
 
 // category model
@@ -50,6 +52,7 @@ model Category {
   description String?
 
   products Product[]
+  @@map("category")
 }
 
 // order model
@@ -64,6 +67,7 @@ model Order {
   orderDate     DateTime?     @default(now())
   paymentMethod PaymentMethod @default(CASHON)
   items         Json?
+  @@map("order")
 }
 
 // all enums
