@@ -1,8 +1,7 @@
 "use client";
 
-import { message } from "antd";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 interface Item {
@@ -18,52 +17,10 @@ interface Item {
 
 interface ProductCardProps {
     item: Item;
+    handleCart: Function;
 }
 
-interface CartItem {
-    id: number;
-    product_name: string;
-    images: string;
-    price: number;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-    // Initialize cartData state with data from localStorage
-    const [cardData, setCardData] = useState<CartItem[]>(() => {
-        const storedData = localStorage.getItem("cartItem");
-        return storedData ? JSON.parse(storedData) : [];
-    });
-
-    const handleCart = async (
-        id: number,
-        product_name: string,
-        images: string,
-        price: number
-    ) => {
-        // Use functional state update to ensure you're working with the latest state
-        setCardData((prevCardData) => {
-            const itemExists = prevCardData.some((item) => item.id === id);
-            // If item is already in the cart, just return the previous state
-            if (itemExists) {
-                return prevCardData;
-            }
-            // Add new item to the cart if it's not already there
-            const updatedCart = [
-                ...prevCardData,
-                { id, product_name, images, price },
-            ];
-            // Update localStorage with the updated cart array
-            localStorage.setItem("cartItem", JSON.stringify(updatedCart));
-            return updatedCart; // Return the new state for the next render
-        });
-        message.success("Product Addded To Cart!");
-    };
-    // Synchronize localStorage whenever the cardData state changes
-    useEffect(() => {
-        // Store the entire updated cart into localStorage
-        localStorage.setItem("cartItem", JSON.stringify(cardData));
-    }, [cardData]);
-
+const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart }) => {
     return (
         <div className=" w-full md:w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl  amoled-shadow  bg-white lg:bg-none">
             <div className=" rounded-xl">

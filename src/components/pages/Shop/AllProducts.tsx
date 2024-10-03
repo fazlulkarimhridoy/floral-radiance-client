@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../Home/ProductCard";
-import { Empty, Spin } from "antd";
+import { Empty, message, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
 
 interface ProductType {
@@ -15,6 +15,13 @@ interface ProductType {
     description: string;
     rating: number;
     category: string;
+}
+
+interface CartItem {
+    id: number;
+    product_name: string;
+    images: string;
+    price: number;
 }
 
 const AllProducts = () => {
@@ -49,7 +56,29 @@ const AllProducts = () => {
                   return true; // If no searchText, return all products
               })
             : [];
-
+    const [cartData, setCartData] = useState<CartItem[]>(() => {
+        const storedData = localStorage.getItem("cartItem");
+        return storedData ? JSON.parse(storedData) : [];
+    });
+    const handleCart = async (
+        id: number,
+        product_name: string,
+        images: string,
+        price: number
+    ) => {
+        // Use functional state update to ensure you're working with the latest state
+        setCartData((prevCardData) => [
+            ...prevCardData,
+            { product_name, images, price, id },
+        ]);
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+        message.success("Product Addded To Cart!");
+    };
+    // Synchronize localStorage whenever the cardData state changes
+    useEffect(() => {
+        // Store the entire updated cart into localStorage
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+    }, [cartData]);
     // show loader if data loads
     if (isLoading) {
         return (
@@ -64,7 +93,11 @@ const AllProducts = () => {
             {shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (
-                        <ProductCard key={item?.id} item={item} />
+                        <ProductCard
+                            key={item?.id}
+                            item={item}
+                            handleCart={handleCart}
+                        />
                     ))
                 ) : (
                     <Empty description="No product for this category!" />

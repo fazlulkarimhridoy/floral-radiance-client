@@ -3,7 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ProductCard from "./ProductCard";
-import { Empty, Spin } from "antd";
+import { Empty, message, Spin } from "antd";
+import { useEffect, useState } from "react";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -16,6 +17,13 @@ interface ProductType {
     discount_price: number;
     description: string;
     rating: number;
+}
+
+interface CartItem {
+    id: number;
+    product_name: string;
+    images: string;
+    price: number;
 }
 
 const FeaturedProducts = () => {
@@ -31,6 +39,31 @@ const FeaturedProducts = () => {
         retry: 2,
         refetchOnWindowFocus: false,
     });
+
+    const [cartData, setCartData] = useState<CartItem[]>(() => {
+        const storedData = localStorage.getItem("cartItem");
+        return storedData ? JSON.parse(storedData) : [];
+    });
+
+    const handleCart = async (
+        id: number,
+        product_name: string,
+        images: string,
+        price: number
+    ) => {
+        // Use functional state update to ensure you're working with the latest state
+        setCartData((prevCardData) => [
+            ...prevCardData,
+            { product_name, images, price, id },
+        ]);
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+        message.success("Product Addded To Cart!");
+    };
+    // Synchronize localStorage whenever the cardData state changes
+    useEffect(() => {
+        // Store the entire updated cart into localStorage
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+    }, [cartData]);
 
     // show loader if data loads
     if (isLoading) {
@@ -52,11 +85,20 @@ const FeaturedProducts = () => {
                 </h1>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
-                {featuredProducts?.length > 0
-                    ? featuredProducts?.map((item) => (
-                          <ProductCard key={item?.id} item={item} />
-                      ))
-                    : <Empty className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16" description="No products yet!" />}
+                {featuredProducts?.length > 0 ? (
+                    featuredProducts?.map((item) => (
+                        <ProductCard
+                            key={item?.id}
+                            item={item}
+                            handleCart={handleCart}
+                        />
+                    ))
+                ) : (
+                    <Empty
+                        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16"
+                        description="No products yet!"
+                    />
+                )}
             </div>
         </div>
     );
