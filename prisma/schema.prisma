@@ -9,7 +9,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://rabbyfar_floral:Floral_003@103.112.62.144:3306/rabbyfar_floral"
 }
 
 // customer model
