@@ -8,7 +8,7 @@ const HowItWorks = () => {
         How Our Flower Bouquet Service Works
       </h1>
       <div className="grid  grid-cols-1 md:grid-cols-3 md:grid-rows-3 p-2 md:p-0 md:w-[90%] lg:w-[70%] mx-auto gap-4 m-10">
-        <div className=" md:row-span-2  bg-[#c3b2e8] rounded-xl p-4 flex flex-col gap-2 justify-center items-center text-center">
+        <div className=" md:row-span-2  bg-[#c3b2e8] rounded-xl p-4 flex flex-col gap-2 justify-center items-center text-center  amoled-shadow">
           <Image
             className="rounded-full bg-none"
             src={"/Images/explore.jpg"}
@@ -30,7 +30,7 @@ const HowItWorks = () => {
             height={300}
           />
         </div>
-        <div className=" md:col-span-2  bg-[#f682a5] rounded-xl p-4 ">
+        <div className=" md:col-span-2  bg-[#f682a5] rounded-xl p-4  amoled-shadow">
           <div className="space-y-4">
             <Image
               className="rounded-xl bg-none object-fill bg-slate-800"
@@ -48,7 +48,7 @@ const HowItWorks = () => {
           </div>
           <div></div>
         </div>
-        <div className="  bg-[#c4d68c] rounded-xl p-4 space-y-2">
+        <div className="  bg-[#c4d68c] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
           <Image
             className="rounded-xl bg-none object-fill bg-slate-800"
             src={"/Images/place-order.jpg"}
@@ -59,11 +59,11 @@ const HowItWorks = () => {
           <h1 className="playfair text-2xl font-bold text-[#25441a]">
             Place Your Order
           </h1>
-          <p className="font-outfit text-xl">
+          <p className="font-outfit text-xl text-center">
           Provide delivery details and pick a date
           </p>
         </div>
-        <div className=" bg-[#ffdf70] rounded-xl p-4 space-y-2">
+        <div className=" bg-[#ffdf70] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
           <Image
             className="rounded-xl bg-none object-fill bg-slate-800"
             src={"/Images/payment.jpg"}
@@ -74,11 +74,11 @@ const HowItWorks = () => {
           <h1 className="playfair text-2xl font-bold text-[#48431c]">
             Secure Checkout
           </h1>
-          <p className="font-outfit text-xl">
+          <p className="font-outfit text-xl text-center">
           Make a payment through our trusted gateway.
           </p>
         </div>
-        <div className="md:col-span-2  bg-[#f8a475] rounded-xl p-4 relative flex flex-row-reverse ">
+        <div className="md:col-span-2  bg-[#f8a475] rounded-xl p-4 relative flex flex-row-reverse  amoled-shadow  justify-center items-center ">
           <div>
             <Image
               className="rounded-full bg-none object-fill bg-slate-800  right-4"
@@ -98,7 +98,7 @@ const HowItWorks = () => {
             </p>
           </div>
         </div>
-        <div className="  bg-[#b8cedc] rounded-xl p-4 flex flex-col justify-center">
+        <div className="  bg-[#b8cedc] rounded-xl p-4 flex flex-col justify-center  amoled-shadow items-center ">
         <Image
             className="rounded-full bg-none object-fill bg-slate-800  right-4"
             src={"/Images/share.jpg"}
@@ -109,7 +109,7 @@ const HowItWorks = () => {
           <h1 className="text-[#174365] playfair text-2xl font-bold">
             Enjoy and Share
           </h1>
-          <p className="font-outfit text-xl">
+          <p className="font-outfit text-xl text-center">
           Brighten someone’s day with stunning flowers!
           </p>
         </div>

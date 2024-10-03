@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const GetBouquet = () => {
@@ -16,9 +17,11 @@ const GetBouquet = () => {
           width={200}
         />
         <div>
-          <button className="text-white border-2 border-white rounded-xl p-4 hover:bg-white hover:text-black font-outfit transition-colors duration-300">
-            Get bouquet
-          </button>
+          <Link href={'products'}>
+            <button className="text-white border-2 border-white rounded-xl p-4 hover:bg-white hover:text-black font-outfit transition-colors duration-300">
+              Get bouquet
+            </button>
+          </Link>
         </div>
       </div>
     </div>

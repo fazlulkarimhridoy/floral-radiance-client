@@ -1,11 +1,12 @@
 "use client";
-import ProductImage from "@/components/pages/DetailsPage/productImage";
+// import ProductImage from "@/components/pages/DetailsPage/productImage";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
+import ImageDetails from "@/components/pages/DetailsPage/ImaegDetails";
 
 interface ProductType {
     id: number;
@@ -58,10 +59,10 @@ const Page = ({ params }: { params: { productId: string } }) => {
 
     console.log(featuredProducts);
 
-  // Funtion for finding the selected product
-  const findProduct = (item: Array<any>) => {
-    return Number(params.productId) === item?.id;
-  };
+    // Funtion for finding the selected product
+    const findProduct = (item: ProductType) => {
+        return Number(params.productId) === item?.id;
+    };
 
     //single product data
     const singleProduct = featuredProducts?.find(findProduct);
@@ -73,7 +74,7 @@ const Page = ({ params }: { params: { productId: string } }) => {
             {singleProduct ? (
                 <div className=" rounded-xl border-[#f472b6] md:flex gap-4 w-full lg:w-[83%] mx-auto p-6 bg-[#f4f4f4]">
                     <div className="">
-                        <ProductImage srcList={singleProduct.images} />
+                        <ImageDetails srcList={singleProduct.images} />
                     </div>
                     <div className=" space-y-4">
                         <div className="space-y-4">

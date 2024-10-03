@@ -4,10 +4,8 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const prisma = new PrismaClient();
-        const result = await prisma.customer.findMany({
-            orderBy: {
-                id: "desc",
-            },
+        const result = await prisma.customer.aggregate({
+            _count: true,
         });
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {

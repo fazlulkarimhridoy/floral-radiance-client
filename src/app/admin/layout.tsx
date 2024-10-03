@@ -7,7 +7,6 @@ import {
     FaClipboardList,
     FaHome,
     FaListUl,
-    FaPlus,
     FaRegPlusSquare,
     FaShoppingCart,
     FaSignOutAlt,
@@ -219,13 +218,13 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 {/* dashboard content */}
                 <div
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    className="flex-1 flex-nowrap overflow-x-scroll scroll-smooth bg-blue-50 h-screen p-2 md:p-8 lg:p-12 lg:mb-0"
+                    className="flex-1 flex-nowrap overflow-x-scroll scroll-smooth h-screen bg-blue-50 p-2 md:p-8 lg:p-12 pb-28 md:pb-28 lg:mb-0"
                 >
                     {children}
                 </div>
             </div>
             {/* for medium devices */}
-            <div className="hidden md:flex md:justify-center lg:hidden w-full bottom-0 sticky bg-blue-200">
+            <div className="hidden md:flex md:justify-center lg:hidden w-full fixed bottom-0 bg-blue-200">
                 <ul
                     id="link1"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
@@ -235,7 +234,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 </ul>
             </div>
             {/* for small devices */}
-            <div className="flex justify-center md:hidden w-full bottom-0 sticky bg-blue-200">
+            <div className="flex justify-center md:hidden w-full fixed bottom-0 bg-blue-200">
                 <ul
                     id="link1"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}

@@ -8,9 +8,6 @@ interface CustomerType {
     email: string;
     phone: string;
     address: string;
-    city: string;
-    state: string;
-    zipCode: string;
 }
 
 const CustomerRow = ({
@@ -22,21 +19,12 @@ const CustomerRow = ({
     index: number;
     handleDeleteProduct: Function;
 }) => {
-    const {
-        id,
-        customerId,
-        name,
-        email,
-        phone,
-        address,
-        city,
-        state,
-        zipCode,
-    } = customerData;
+    const { id, customerId, name, email, phone, address } = customerData;
 
     return (
         <tr>
             <th>{index + 1}</th>
+            <th>{id}</th>
             <th>{customerId}</th>
             <td>
                 <div className="text-gray-600 font-bold">{name}</div>
@@ -44,15 +32,12 @@ const CustomerRow = ({
             <td>{email}</td>
             <td>{phone}</td>
             <td>{address}</td>
-            <td>{city}</td>
-            <td>{state}</td>
-            <td>{zipCode}</td>
             <td>
                 <Button
                     onClick={() => handleDeleteProduct(id)}
-                    className="btn btn-circle btn-outline btn-sm"
+                    className="btn btn-square"
                 >
-                    <FaTrash className="text-red-600"></FaTrash>
+                    <FaTrash size={20} className="text-red-600"></FaTrash>
                 </Button>
             </td>
         </tr>

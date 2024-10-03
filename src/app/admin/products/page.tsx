@@ -2,7 +2,7 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -26,14 +26,12 @@ const { Search } = Input;
 
 const Products = () => {
     // states and calls
-    const [searchText, setSearchText] = useState(null || "");
+    const [searchText, setSearchText] = useState("");
 
     // fetch all product from server
     const {
         data: allProducts = [],
         isLoading,
-        isPending,
-        isFetching,
         refetch,
     } = useQuery<ProductType[]>({
         queryKey: ["allProducts"],
@@ -66,22 +64,29 @@ const Products = () => {
     };
 
     // Handle product filter for search
-    const filteredProducts = allProducts?.filter((product) => {
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredProducts =
+        allProducts?.length > 0
+            ? allProducts?.filter((product) => {
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return (
-                product?.product_name?.toLowerCase()?.includes(searchString) ||
-                product?.category?.toLowerCase()?.includes(searchString) ||
-                product?.productId
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchString)
-            );
-        }
-        return true; // If no searchText, return all products
-    });
+                      // Check product name, category (strings), and productId (number)
+                      return (
+                          product?.product_name
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          product?.category
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          product?.productId
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString)
+                      );
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -89,7 +94,7 @@ const Products = () => {
     };
 
     // checking if loading
-    if (isLoading || isPending || isFetching) {
+    if (isLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
@@ -134,7 +139,7 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allProducts?.length > 0 &&
+                        {allProducts?.length > 0 ? (
                             filteredProducts?.map((data, index) => (
                                 <ProductRow
                                     key={data.id}
@@ -142,7 +147,13 @@ const Products = () => {
                                     productData={data}
                                     handleDeleteProduct={handleDeleteProduct}
                                 ></ProductRow>
-                            ))}
+                            ))
+                        ) : (
+                            <Empty
+                                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                                description="No customer found!"
+                            />
+                        )}
                     </tbody>
                 </table>
             </div>

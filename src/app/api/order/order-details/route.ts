@@ -11,10 +11,7 @@ export async function GET(req: Request) {
                 id: id,
             },
             include: {
-                items: true,
                 customer: true,
-                payment: true,
-                shipping: true,
             },
         });
         return NextResponse.json({ status: "success", data: result });

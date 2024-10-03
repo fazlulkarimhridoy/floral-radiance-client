@@ -4,7 +4,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const prisma = new PrismaClient();
-        const result = await prisma.category.findMany();
+        const result = await prisma.category.findMany({
+            orderBy: {
+                id: "desc",
+            },
+        });
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {
         return NextResponse.json({ status: "fail", data: error });

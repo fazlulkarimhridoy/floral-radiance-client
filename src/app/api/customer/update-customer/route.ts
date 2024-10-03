@@ -7,28 +7,20 @@ export async function PUT(req: Request) {
 
         const {
             id,
-            firstName,
-            lastName,
+            name,
             email,
             phone,
             address,
-            city,
-            state,
-            zipCode,
         } = await req.json();
         const result = await prisma.customer.update({
             where: {
                 id: id,
             },
             data: {
-                firstName,
-                lastName,
+                name,
                 email,
                 phone,
                 address,
-                city,
-                state,
-                zipCode,
             },
         });
         return NextResponse.json({ status: "success", data: result });
