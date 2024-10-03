@@ -19,7 +19,7 @@ type CategoryType = {
 
 const Categories = () => {
     // states and calls
-    const [searchText, setSearchText] = useState(null || "");
+    const [searchText, setSearchText] = useState("");
 
     // fetch category from server
     const {
@@ -57,21 +57,26 @@ const Categories = () => {
     };
 
     // Handle product filter for search
-    const filteredCustomers = allCategories?.filter((category) => {
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredCustomers =
+        allCategories?.length > 0
+            ? allCategories?.filter((category) => {
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return (
-                category?.name?.toLowerCase()?.includes(searchString) ||
-                category?.categoryId
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchString)
-            );
-        }
-        return true; // If no searchText, return all products
-    });
+                      // Check product name, category (strings), and productId (number)
+                      return (
+                          category?.name
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          category?.categoryId
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString)
+                      );
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -89,7 +94,7 @@ const Categories = () => {
     }
 
     return (
-        <div>
+        <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
                     Manage Category
@@ -131,7 +136,7 @@ const Categories = () => {
                                 ></CategoryRow>
                             ))
                         ) : (
-                            <Empty description="No categories found!" />
+                                <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No categories found!" />
                         )}
                     </tbody>
                 </table>

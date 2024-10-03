@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import ProductCard from "./ProductCard";
-import { Spin } from "antd";
+import { Empty, Spin } from "antd";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -35,14 +35,14 @@ const FeaturedProducts = () => {
     // show loader if data loads
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center gap-5 fixed top-[75%] left-[55%] transform -translate-x-1/2 -translate-y-1/2">
-                <Spin size="large" />
+            <div className="flex flex-col items-center justify-center gap-5 absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
+                <Spin style={{ color: "white" }} size="large" />
             </div>
         );
     }
 
     return (
-        <div className="max-w-[70%] mx-auto my-20">
+        <div className="max-w-[70%] mx-auto my-20 relative">
             <div className="">
                 <h3 className="text-center italic font-medium">
                     Wonderful gifts
@@ -56,7 +56,7 @@ const FeaturedProducts = () => {
                     ? featuredProducts?.map((item) => (
                           <ProductCard key={item?.id} item={item} />
                       ))
-                    : "No featured Products"}
+                    : <Empty className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16" description="No products yet!" />}
             </div>
         </div>
     );
