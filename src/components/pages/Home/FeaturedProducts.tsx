@@ -40,10 +40,16 @@ const FeaturedProducts = () => {
         refetchOnWindowFocus: false,
     });
 
-    const [cartData, setCartData] = useState<CartItem[]>(() => {
+    
+    const [cartData, setCartData] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        // Load cart data from localStorage
         const storedData = localStorage.getItem("cartItem");
-        return storedData ? JSON.parse(storedData) : [];
-    });
+        if (storedData) {
+            setCartData(JSON.parse(storedData));
+        }
+    }, []);
 
     const handleCart = async (
         id: number,
