@@ -34,22 +34,27 @@ const AllProducts = () => {
     });
 
     // Handle product filter for search
-    const filteredProducts = shopProducts?.filter((product) => {
-        const searchText = categoryName;
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredProducts =
+        shopProducts?.length > 0
+            ? shopProducts?.filter((product) => {
+                  const searchText = categoryName;
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return product?.category?.toLowerCase()?.includes(searchString);
-        }
-        return true; // If no searchText, return all products
-    });
+                      // Check product name, category (strings), and productId (number)
+                      return product?.category
+                          ?.toLowerCase()
+                          ?.includes(searchString);
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // show loader if data loads
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center gap-5 fixed top-[75%] left-[55%] transform -translate-x-1/2 -translate-y-1/2">
-                <Spin size="large" />
+            <div className="flex flex-col items-center justify-center gap-5 absolute top-[75%] left-[55%] lg:left-[60%] transform -translate-x-1/2 -translate-y-1/2">
+                <Spin style={{ color: "white" }} size="large" />
             </div>
         );
     }

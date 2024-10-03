@@ -23,21 +23,23 @@ export default function LayoutClient({
             {!pathname.startsWith("/admin") && (
                 <>
                     <CategoryProvider>
-                            <TanstackProvider>
-                                <div>
-                                    <Navbar />
-                                    <div>{children}</div>
-                                    <Footer />
-                                </div>
-                            </TanstackProvider>
+                        <TanstackProvider>
+                            <div>
+                                <Navbar />
+                                <div>{children}</div>
+                                <Footer />
+                            </div>
+                        </TanstackProvider>
                     </CategoryProvider>
                 </>
             )}
             {pathname.startsWith("/admin") && (
                 <>
-                    <TanstackProvider>
-                        <div>{children}</div>
-                    </TanstackProvider>
+                    <CategoryProvider>
+                        <TanstackProvider>
+                            <div>{children}</div>
+                        </TanstackProvider>
+                    </CategoryProvider>
                 </>
             )}
         </div>

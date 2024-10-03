@@ -22,27 +22,24 @@ model Customer {
   address    String
   createdAt  DateTime @default(now())
   Orders     Order[]
-  Review     Review[]
 }
 
 // product model
 model Product {
-  id             Int         @id @default(autoincrement())
-  productId      Int         @unique
+  id             Int       @id @default(autoincrement())
+  productId      Int       @unique
   images         Json?
-  product_name   String      @db.VarChar(255)
+  product_name   String    @db.VarChar(255)
   price          Int
   discount_price Int?
-  stock          Int         @default(0)
+  stock          Int       @default(0)
   category       String?
-  description    String      @db.LongText
-  rating         Int         @default(0)
-  created_at     DateTime?   @default(now()) @db.Timestamp(0)
-  updated_at     DateTime?   @default(now()) @updatedAt @db.Timestamp(0)
-  Category       Category?   @relation(fields: [categoryId], references: [id])
+  description    String    @db.LongText
+  rating         Int       @default(0)
+  created_at     DateTime? @default(now()) @db.Timestamp(0)
+  updated_at     DateTime? @default(now()) @updatedAt @db.Timestamp(0)
+  Category       Category? @relation(fields: [categoryId], references: [id])
   categoryId     Int?
-  OrderItem      OrderItem[]
-  Review         Review[]
 }
 
 // category model
@@ -67,57 +64,6 @@ model Order {
   orderDate     DateTime?     @default(now())
   paymentMethod PaymentMethod @default(CASHON)
   items         Json?
-
-  // items    OrderItem[]
-  payment  Payment?
-  shipping Shipping?
-}
-
-// order item model
-model OrderItem {
-  id        Int     @id @default(autoincrement())
-  // order     Order   @relation(fields: [orderId], references: [id])
-  orderId   Int
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
-  quantity  Int
-  price     Float
-}
-
-// review model
-model Review {
-  id         Int      @id @default(autoincrement())
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  Int
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId Int
-  rating     Int
-  comment    String
-  createdAt  DateTime @default(now())
-}
-
-// payment model
-model Payment {
-  id            Int           @id @default(autoincrement())
-  order         Order         @relation(fields: [orderId], references: [id])
-  orderId       Int           @unique
-  paymentMethod PaymentMethod
-  amount        Float
-  paymentStatus PaymentStaus  @default(PENDING)
-  paymentDate   DateTime      @default(now())
-}
-
-// shipping model
-model Shipping {
-  id              Int       @id @default(autoincrement())
-  order           Order     @relation(fields: [orderId], references: [id])
-  orderId         Int       @unique
-  shippingAddress String
-  city            String
-  state           String
-  zipCode         String
-  shippingDate    DateTime?
-  deliveryDate    DateTime?
 }
 
 // all enums
@@ -131,10 +77,4 @@ enum OrderStatus {
 enum PaymentMethod {
   CASHON
   BKASH
-}
-
-enum PaymentStaus {
-  PENDING
-  COMPLETED
-  FAILED
 }

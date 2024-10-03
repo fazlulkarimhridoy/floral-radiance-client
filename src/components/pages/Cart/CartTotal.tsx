@@ -1,6 +1,5 @@
-import { CartContext } from "@/context/CartContext";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 interface CartTotalProps {

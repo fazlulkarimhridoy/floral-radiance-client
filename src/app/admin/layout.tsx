@@ -7,7 +7,6 @@ import {
     FaClipboardList,
     FaHome,
     FaListUl,
-    FaPlus,
     FaRegPlusSquare,
     FaShoppingCart,
     FaSignOutAlt,

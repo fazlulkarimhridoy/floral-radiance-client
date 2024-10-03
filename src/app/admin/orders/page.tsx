@@ -1,9 +1,8 @@
 "use client";
 
-import CategoryRow from "@/components/dashboard/CategoryRow";
 import OrderRow from "@/components/dashboard/OrderRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -27,7 +26,7 @@ type OrderType = {
 
 const Orders = () => {
     // states and calls
-    const [searchText, setSearchText] = useState(null || "");
+    const [searchText, setSearchText] = useState("");
 
     // fetch category from server
     const {
@@ -49,7 +48,7 @@ const Orders = () => {
     console.log(allOrders);
 
     // Handle product filter for search
-    const filteredOrders = allOrders?.filter((order) => {
+    const filteredOrders = allOrders?.length > 0 ? allOrders?.filter((order) => {
         if (searchText) {
             const searchString = searchText.toLowerCase();
 
@@ -60,7 +59,7 @@ const Orders = () => {
                 ?.includes(searchString);
         }
         return true; // If no searchText, return all products
-    });
+    }) : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -78,7 +77,7 @@ const Orders = () => {
     }
 
     return (
-        <div>
+        <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
                     Manage Order
@@ -115,14 +114,17 @@ const Orders = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allOrders.length > 0 &&
+                        {allOrders.length > 0 ? (
                             filteredOrders?.map((data, index) => (
                                 <OrderRow
                                     key={data.id}
                                     index={index}
                                     categoryData={data}
                                 ></OrderRow>
-                            ))}
+                            ))
+                        ) : (
+                            <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No customer found!" />
+                        )}
                     </tbody>
                 </table>
             </div>

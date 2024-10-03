@@ -2,7 +2,7 @@
 
 import CustomerRow from "@/components/dashboard/CustomerRow";
 import { useQuery } from "@tanstack/react-query";
-import { Input, message } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useState } from "react";
@@ -20,7 +20,7 @@ const { Search } = Input;
 
 const Products = () => {
     // states and calls
-    const [searchText, setSearchText] = useState(null || "");
+    const [searchText, setSearchText] = useState("");
 
     // fetch all customers
     const {
@@ -58,7 +58,7 @@ const Products = () => {
     };
 
     // Handle product filter for search
-    const filteredCustomers = allCustomers?.filter((customer) => {
+    const filteredCustomers = allCustomers?.length > 0 ? allCustomers?.filter((customer) => {
         if (searchText) {
             const searchString = searchText.toLowerCase();
 
@@ -77,7 +77,7 @@ const Products = () => {
             );
         }
         return true; // If no searchText, return all products
-    });
+    }) : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -95,7 +95,7 @@ const Products = () => {
     }
 
     return (
-        <div className="sticky top-0">
+        <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
                     Manage Customer
@@ -130,7 +130,7 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allCustomers.length > 0 &&
+                        {allCustomers.length > 0 ?
                             filteredCustomers?.map((data, index) => (
                                 <CustomerRow
                                     key={data.id}
@@ -138,7 +138,7 @@ const Products = () => {
                                     customerData={data}
                                     handleDeleteProduct={handleDeleteProduct}
                                 ></CustomerRow>
-                            ))}
+                            )) : <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No customer found!" />}
                     </tbody>
                 </table>
             </div>

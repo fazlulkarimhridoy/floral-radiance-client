@@ -1,7 +1,7 @@
-import CategoryProvider, { useCategory } from "@/context/CategoryContext";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCategory } from "@/context/CategoryContext";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext } from "react";
+import React from "react";
 
 interface CategoryType {
     id: number;
