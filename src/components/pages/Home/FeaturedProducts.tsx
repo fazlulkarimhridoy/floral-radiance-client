@@ -40,7 +40,6 @@ const FeaturedProducts = () => {
         refetchOnWindowFocus: false,
     });
 
-    
     const [cartData, setCartData] = useState<CartItem[]>([]);
 
     useEffect(() => {
@@ -81,7 +80,7 @@ const FeaturedProducts = () => {
     }
 
     return (
-        <div className="max-w-[70%] mx-auto my-20 relative">
+        <div className="max-w-[70%] mx-auto my-20 relative ">
             <div className="">
                 <h3 className="text-center italic font-medium">
                     Wonderful gifts
