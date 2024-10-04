@@ -94,6 +94,16 @@ const AddProduct = () => {
         const productId = values.productId;
         const images = thumbUrlsArray;
 
+        // Extract the selected category ID
+        const selectedCategoryId =
+            allCategories?.length > 0 &&
+            allCategories?.find((cat) => cat.name === category)?.id;
+
+        if (!selectedCategoryId) {
+            message.error("Category not found");
+            return;
+        }
+
         const productData = {
             product_name,
             price,
@@ -104,6 +114,7 @@ const AddProduct = () => {
             rating,
             productId,
             images,
+            categoryId: selectedCategoryId,
         };
 
         console.log(productData);
@@ -139,10 +150,7 @@ const AddProduct = () => {
     };
 
     // fetch category from server
-    const {
-        data: allCategories = [],
-        isLoading,
-    } = useQuery<CategoryType[]>({
+    const { data: allCategories = [], isLoading } = useQuery<CategoryType[]>({
         queryKey: ["allCategories"],
         queryFn: async () => {
             const res = await axios.get(
@@ -321,6 +329,7 @@ const AddProduct = () => {
                                 className="w-full"
                                 placeholder="Enter product id..."
                                 size="large"
+                                maxLength={4}
                             />
                         </Form.Item>
                     </div>
