@@ -43,7 +43,7 @@ const AddCategory = () => {
 
         await axios
             .post(
-                "http://localhost:3001/api/category/add-category",
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/add-category`,
                 categoryData,
                 {
                     headers: {
