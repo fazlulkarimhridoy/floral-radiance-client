@@ -11,11 +11,7 @@ export async function GET(req: Request) {
                 name: name,
             },
             include: {
-                products: {
-                    select: {
-                        id: true,
-                    },
-                },
+                products: true,
             },
         });
         console.log(result?.products);

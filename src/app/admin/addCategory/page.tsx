@@ -130,6 +130,7 @@ const AddCategory = () => {
                             ]}
                         >
                             <InputNumber
+                                maxLength={4}
                                 className="w-full"
                                 placeholder="Enter category id..."
                                 size="large"
