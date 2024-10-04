@@ -121,7 +121,7 @@ const AddProduct = () => {
 
         await axios
             .post(
-                "http://localhost:3001/api/product/add-product",
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/add-product`,
                 productData,
                 {
                     headers: {
