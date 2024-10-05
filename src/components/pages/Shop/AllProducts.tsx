@@ -33,6 +33,8 @@ const AllProducts = () => {
         refetchOnWindowFocus: false,
     });
 
+    console.log(shopProducts);
+
     // Handle product filter for search
     const filteredProducts = shopProducts?.filter((product) => {
         const searchText = categoryName;
