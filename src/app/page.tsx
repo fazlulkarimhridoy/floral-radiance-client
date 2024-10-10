@@ -16,7 +16,6 @@ const Home = () => {
   
   useEffect(() => {
 
- 
     const handleScroll = () => {
       if (window?.scrollY > 300) {
         setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
@@ -44,8 +43,8 @@ const Home = () => {
   return (
     <div className={`${bgColor} transition-colors duration-300 `}>
       <Banner></Banner>
-      <HowItWorks/>
       <FeaturedProducts/>
+      <HowItWorks/>
       <GetBouquet/>
       <NewFooter/>
     </div>

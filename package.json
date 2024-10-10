@@ -14,6 +14,7 @@
     "@prisma/client": "^5.20.0",
     "@tanstack/react-query": "^5.40.0",
     "antd": "^5.20.5",
+    "aos": "^2.3.4",
     "axios": "^1.7.2",
     "framer-motion": "^11.2.4",
     "mysql2": "^3.10.1",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.35.6",
+    "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
