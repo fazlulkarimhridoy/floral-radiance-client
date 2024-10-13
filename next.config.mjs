@@ -5,12 +5,4 @@ import { Module } from "module";
 Module.exports = {
     output: "standalone",
     reactStrictMode: true,
-    async rewrites() {
-        return [
-            {
-                source: "/admin/:id",
-                destination: "/api/admin/updateProduct/[id]",
-            },
-        ];
-    },
 };
