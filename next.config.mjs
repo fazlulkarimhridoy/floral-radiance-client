@@ -3,6 +3,7 @@ import { Module } from "module";
 
 // next.config.js
 Module.exports = {
+    output: "standalone",
     reactStrictMode: true,
     async rewrites() {
         return [
@@ -13,18 +14,3 @@ Module.exports = {
         ];
     },
 };
-
-const nextConfig = {
-    output: "export",
-    images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "res.cloudinary.com",
-                port: "",
-            },
-        ],
-    },
-};
-
-export default nextConfig;
