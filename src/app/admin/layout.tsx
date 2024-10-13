@@ -175,7 +175,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <Image
                                 width={500}
                                 height={500}
-                                src="https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/9_zq39kj.jpg"
+                                src=""
                                 alt="user_photo"
                                 className="w-12 h-12 rounded-full bg-gray-500"
                             />
