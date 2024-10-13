@@ -24,8 +24,8 @@ interface SingleProductData {
     images: string[];
 }
 
-const Page = ({ params }: { params: { productId: string } }) => {
-    console.log(params.productId);
+const Page = ({ params }: { params: { slug: string } }) => {
+    console.log(params.slug);
 
     const [activeButton, setActiveButton] = useState<number | null>(null);
     // const [quantity, setQuantity] = useState(10)
@@ -61,7 +61,7 @@ const Page = ({ params }: { params: { productId: string } }) => {
 
     // Funtion for finding the selected product
     const findProduct = (item: ProductType) => {
-        return Number(params.productId) === item?.id;
+        return Number(params.slug) === item?.id;
     };
 
     //single product data

@@ -9,7 +9,6 @@ export async function GET() {
                 id: "desc",
             },
         });
-        console.log(result);
         return NextResponse.json({ status: "success", data: result });
     } catch (error) {
         console.log(error);
