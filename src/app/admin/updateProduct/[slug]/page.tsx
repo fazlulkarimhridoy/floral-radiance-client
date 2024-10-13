@@ -55,7 +55,7 @@ type CategoryType = {
     description: string;
 };
 
-const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
+const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     // states and props
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -64,7 +64,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     const { push } = router;
 
     // get id from url param
-    const idString = params?.updateProduct;
+    const idString = params?.slug;
     const id = Number(idString);
 
     // file upload changes
