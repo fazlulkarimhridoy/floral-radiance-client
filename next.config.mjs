@@ -3,28 +3,6 @@ import { Module } from "module";
 
 // next.config.js
 Module.exports = {
-    reactStrictMode: true,
-    async rewrites() {
-        return [
-            {
-                source: "/admin/:id",
-                destination: "/api/admin/updateProduct/[id]",
-            },
-        ];
-    },
-};
-
-const nextConfig = {
     output: "standalone",
-    images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "res.cloudinary.com",
-                port: "",
-            },
-        ],
-    },
+    reactStrictMode: true,
 };
-
-export default nextConfig;
