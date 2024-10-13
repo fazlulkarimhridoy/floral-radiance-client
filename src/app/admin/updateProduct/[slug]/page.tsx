@@ -6,7 +6,6 @@ import {
     Button,
     Form,
     FormProps,
-    GetProp,
     Image,
     Input,
     InputNumber,

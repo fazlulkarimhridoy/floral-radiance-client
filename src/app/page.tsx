@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Banner from "@/components/pages/Home/Banner";
-import CustomerReviews from "@/components/pages/Home/CustomerReviews";
 import FeaturedProducts from "@/components/pages/Home/FeaturedProducts";
-import Gallery from "@/components/pages/Home/Gallery";
 import HowItWorks from "@/components/pages/Home/HowItWorks";
-import OfferSection from "@/components/pages/Home/OfferSection";
 import GetBouquet from "@/components/pages/Home/GetBouquet";
 import NewFooter from "@/components/pages/Home/NewFooter";
 
@@ -29,7 +26,6 @@ const Home = () => {
      if (window.scrollY > 3300){
         setBgColor("bg-[#b8cedc]"); // Default background color
       }
-      console.log(window.scrollY);
     };
 
     // Add event listener for scroll

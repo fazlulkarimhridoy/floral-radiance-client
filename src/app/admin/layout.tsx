@@ -24,8 +24,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <>
             <li>
                 <Link
-                    href="/admin/dashboard"
-                    className={pathname === "/admin/dashboard" ? "active" : ""}
+                    href="/admin"
+                    className={pathname === "/admin" ? "active" : ""}
                 >
                     <RxDashboard />
                     Dashboard
@@ -101,8 +101,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <>
             <li>
                 <Link
-                    href="/admin/dashboard"
-                    className={pathname === "/admin/dashboard" ? "active" : ""}
+                    href="/admin"
+                    className={pathname === "/admin" ? "active" : ""}
                 >
                     <RxDashboard />
                 </Link>
