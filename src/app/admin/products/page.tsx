@@ -2,13 +2,10 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Empty, Flex, Input, message, Rate } from "antd";
+import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import Image from "next/image";
-import Link from "next/link";
 import React, { useState } from "react";
-import { FaEye, FaTools, FaTrash } from "react-icons/fa";
 
 interface ProductType {
     id: number;
@@ -26,8 +23,6 @@ interface ProductType {
 }
 
 const { Search } = Input;
-
-const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
 const Products = () => {
     // states and calls
@@ -51,7 +46,7 @@ const Products = () => {
     });
 
     // handle delete
-    const handleDeleteProduct = (id: Number) => {
+    const handleDeleteProduct = (id: ProductType) => {
         const confirmed = window.confirm(
             "Are you sure you want to delete this product?"
         );
@@ -146,122 +141,12 @@ const Products = () => {
                         {/* rows */}
                         {allProducts?.length > 0 ? (
                             filteredProducts?.map((data, index) => (
-                                // <ProductRow
-                                //     key={data.id}
-                                //     index={index}
-                                //     productData={data}
-                                //     handleDeleteProduct={handleDeleteProduct}
-                                // ></ProductRow>
-                                <tr key={data.id}>
-                                    <th>{index + 1}</th>
-                                    <th>{data.productId}</th>
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle w-12 h-12">
-                                                    <Image
-                                                        width={500}
-                                                        height={500}
-                                                        src={data.images[0]}
-                                                        alt="Avatar Tailwind CSS Component"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">
-                                                    {data.product_name}
-                                                </div>
-                                                <div className="text-sm opacity-50">
-                                                    {data.category ||
-                                                        "No Category"}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="text-gray-600 font-bold">
-                                            {data.price}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="text-gray-600 font-bold">
-                                            {data.discount_price}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <Flex gap="middle" className="mt-2">
-                                            <Rate
-                                                className="flex items-center justify-center text-base text-pink-600"
-                                                tooltips={desc}
-                                                value={data.rating}
-                                            />
-                                        </Flex>
-                                    </td>
-                                    <td>
-                                        <div>{data.stock}</div>
-                                    </td>
-                                    <td>
-                                        <div className="text-gray-600 font-bold">
-                                            {typeof data.created_at === "string"
-                                                ? new Date(
-                                                      data.created_at
-                                                  ).toLocaleDateString(
-                                                      "en-US",
-                                                      {
-                                                          year: "numeric",
-                                                          month: "long",
-                                                          day: "numeric",
-                                                      }
-                                                  )
-                                                : "Invalid date"}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="text-gray-600 font-bold">
-                                            {typeof data.created_at === "string"
-                                                ? new Date(
-                                                      data.updated_at
-                                                  ).toLocaleDateString(
-                                                      "en-US",
-                                                      {
-                                                          year: "numeric",
-                                                          month: "long",
-                                                          day: "numeric",
-                                                      }
-                                                  )
-                                                : "Invalid date"}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <Link href={`/products/${data.id}`}>
-                                            <Button className="btn btn-circle btn-outline btn-sm">
-                                                <FaEye></FaEye>
-                                            </Button>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link
-                                            href={`/admin/products/${data.id}`}
-                                        >
-                                            <Button
-                                                // onClick={() => handleUpdateProduct(id)}
-                                                className="btn btn-circle btn-outline btn-sm"
-                                            >
-                                                <FaTools color="green" />
-                                            </Button>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Button
-                                            onClick={() =>
-                                                handleDeleteProduct(data.id)
-                                            }
-                                            className="btn btn-circle btn-outline btn-sm"
-                                        >
-                                            <FaTrash className="text-red-600"></FaTrash>
-                                        </Button>
-                                    </td>
-                                </tr>
+                                <ProductRow
+                                    key={data.id}
+                                    index={index}
+                                    productData={data}
+                                    handleDeleteProduct={handleDeleteProduct}
+                                ></ProductRow>
                             ))
                         ) : (
                             <Empty
