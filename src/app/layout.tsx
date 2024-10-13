@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import LayoutClient from "./layout.client";
+import CategoryProvider from "@/context/CategoryContext";
+import TanstackProvider from "../../providers/TanstackProvider";
+import Navbar from "@/components/shared/Navbar/Navbar";
+import Footer from "@/components/shared/Footer/Footer";
 
 export const metadata: Metadata = {
     title: "Floral Radiance",
@@ -13,7 +16,15 @@ export default function RootLayout({
     return (
         <html lang="en" data-theme="light">
             <body className="scroll-container">
-                <LayoutClient>{children}</LayoutClient>
+                <CategoryProvider>
+                    <TanstackProvider>
+                        <div>
+                            <Navbar />
+                            <div>{children}</div>
+                            <Footer />
+                        </div>
+                    </TanstackProvider>
+                </CategoryProvider>
             </body>
         </html>
     );
