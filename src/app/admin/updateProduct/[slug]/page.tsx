@@ -63,6 +63,10 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const router = useRouter();
     const { push } = router;
 
+    // get id from url param
+    const idString = params?.slug;
+    const id = Number(idString);
+
     // file upload changes
     const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
         setFileList(newFileList);
@@ -82,11 +86,8 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         isFetching,
         isPending,
     } = useQuery({
-        queryKey: ["SingleProductDetails"],
+        queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
-            // get id from url param
-            const idString = params?.slug;
-            const id = Number(idString);
             const res = await axios.get(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details?id=${id}`
             );
@@ -104,16 +105,13 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         },
         retry: 2,
         refetchOnWindowFocus: false,
-        // enabled: id ? true : false,
+        enabled: id ? true : false,
     });
 
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
     ) => {
-        // get id from url param
-        const idString = params?.slug;
-        const id = Number(idString);
         const thumbUrlsArray = fileList?.map((file) => file?.thumbUrl);
         const product_name =
             values.product_name || singleProductDetails?.product_name;
