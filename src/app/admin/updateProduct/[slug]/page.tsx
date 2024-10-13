@@ -108,6 +108,8 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         enabled: id ? true : false,
     });
 
+    console.log("single product details", singleProductDetails);
+
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
