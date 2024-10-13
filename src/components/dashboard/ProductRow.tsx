@@ -115,7 +115,7 @@ const ProductRow = ({
                 </Link>
             </td>
             <td>
-                <Link href={`/admin/updateProduct/${id}`}>
+                <Link href={`/admin/products/${id}`}>
                     <Button
                         // onClick={() => handleUpdateProduct(id)}
                         className="btn btn-circle btn-outline btn-sm"
