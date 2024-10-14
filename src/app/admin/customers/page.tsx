@@ -47,7 +47,7 @@ const Products = () => {
         if (confirmed) {
             axios
                 .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer?id=${id}`
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer/${id}`
                 )
                 .then((data) => {
                     message.success("Successfully deleted");
