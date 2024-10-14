@@ -88,7 +88,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details?id=${id}`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${id}`
             );
             // converting image url's to file type for default display
             const imageList = res?.data?.data?.images.map(
@@ -141,7 +141,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         // updating product on server
         await axios
             .patch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product?id=${id}`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product/${id}`,
                 productUpdateData,
                 {
                     headers: {

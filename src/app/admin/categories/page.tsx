@@ -46,7 +46,7 @@ const Categories = () => {
         if (confirmed) {
             axios
                 .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category?id=${id}`
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`
                 )
                 .then((data) => {
                     message.success("Successfully deleted");
