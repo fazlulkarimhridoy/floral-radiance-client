@@ -119,7 +119,6 @@ const Products = () => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>ID</th>
                             <th>Customer Id</th>
                             <th>Name</th>
                             <th>Email Address</th>
