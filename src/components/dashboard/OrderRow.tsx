@@ -1,7 +1,27 @@
-import { Button, Modal } from "antd";
+import { Button, message, Modal, Select } from "antd";
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import OrderItem from "./OrderItem";
+import axios from "axios";
+
+const statusOptions = [
+    {
+        value: "PENDING",
+        label: "PENDING",
+    },
+    {
+        value: "SHIPPED",
+        label: "SHIPPED",
+    },
+    {
+        value: "DELIVERED",
+        label: "DELIVERED",
+    },
+    {
+        value: "CANCELLED",
+        label: "CANCELLED",
+    },
+];
 
 type OrderType = {
     id: number;
@@ -50,10 +70,31 @@ const OrderRow = ({
         customer,
     } = categoryData;
 
-    // const parsedItems = JSON.parse(items);
-
-    console.log("items", items);
-    console.log("customers", customer);
+    const handleOrderStatus = async (value: any) => {
+        console.log("status", value);
+        // update status to server
+        await axios
+            .patch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${customerId}`,
+                {
+                    orderStatus: value,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((data) => {
+                console.log(data);
+                if (data.data.status == "success") {
+                    message.success("Order status updated");
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
     return (
         <tr>
             <th>{customerId}</th>
@@ -77,7 +118,23 @@ const OrderRow = ({
             <th>
                 <Button onClick={showModal}>Oder Details</Button>
             </th>
-            <td>{orderStatus}</td>
+            {/* <td>{orderStatus}</td> */}
+            <td>
+                <Select
+                    style={{ width: 120 }}
+                    className="w-full"
+                    onChange={handleOrderStatus}
+                    defaultValue={orderStatus}
+                >
+                    {statusOptions
+                        .filter((option) => option.value !== orderStatus)
+                        .map((option) => (
+                            <option key={option.value} value={option.value}>
+                                {option.label}
+                            </option>
+                        ))}
+                </Select>
+            </td>
             <td>
                 <Button className="btn btn-circle btn-outline btn-sm">
                     <FaTrash className="text-red-600"></FaTrash>
@@ -126,8 +183,7 @@ const OrderRow = ({
                 </div>
                 <div className="mt-2">
                     <p className="text-lg font-bold">
-                        Total Price: {" "}
-                        {totalPrice} Taka
+                        Total Price: {totalPrice} Taka
                     </p>
                 </div>
             </Modal>
