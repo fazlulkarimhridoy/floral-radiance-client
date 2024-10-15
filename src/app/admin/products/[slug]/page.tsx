@@ -81,9 +81,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     // fetch data from server
     const {
         data: singleProductDetails,
-        isLoading,
-        isFetching,
-        isPending,
+        isLoading
     } = useQuery({
         queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
@@ -185,7 +183,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     });
 
     // checking if loading
-    if (isLoading || isPending || isFetching || isCategoryLoading) {
+    if (isLoading || isCategoryLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
