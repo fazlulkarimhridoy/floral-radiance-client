@@ -21,7 +21,13 @@ type OrderType = {
     orderTime: string;
     paymentMethod: string;
     items: string[];
-    customer: string;
+    customer: {
+        name: string;
+        email: string;
+        phone: string;
+        address: string;
+        customerId: string;
+    };
 };
 
 const Orders = () => {
@@ -48,18 +54,21 @@ const Orders = () => {
     console.log(allOrders);
 
     // Handle product filter for search
-    const filteredOrders = allOrders?.length > 0 ? allOrders?.filter((order) => {
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredOrders =
+        allOrders?.length > 0
+            ? allOrders?.filter((order) => {
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return order?.customerId
-                ?.toString()
-                ?.toLowerCase()
-                ?.includes(searchString);
-        }
-        return true; // If no searchText, return all products
-    }) : [];
+                      // Check product name, category (strings), and productId (number)
+                      return order?.customerId
+                          ?.toString()
+                          ?.toLowerCase()
+                          ?.includes(searchString);
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -100,14 +109,14 @@ const Orders = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Customer Id</th>
-                            <th>Items</th>
+                            <th>Name</th>
                             <th>Total Price</th>
                             <th>Payment Method</th>
                             <th>Delivery Date</th>
                             <th>Delivery Time</th>
                             <th>Order Date</th>
+                            <th>Details</th>
                             <th>Order Status</th>
                             <th>View</th>
                         </tr>
@@ -123,7 +132,10 @@ const Orders = () => {
                                 ></OrderRow>
                             ))
                         ) : (
-                            <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No customer found!" />
+                            <Empty
+                                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                                description="No customer found!"
+                            />
                         )}
                     </tbody>
                 </table>

@@ -14,11 +14,11 @@
 
 
 
-*{
+* {
   box-sizing: border-box;
 }
 
-.webkit-center{
+.webkit-center {
   text-align: -webkit-center;
 }
 
@@ -28,11 +28,11 @@
   font-style: normal;
 }
 
-.playfair{
+.playfair {
   font-family: "Playfair Display", serif;
 }
 
-.text-fade-black{
+.text-fade-black {
   color: #3d4349;
 }
 
@@ -42,8 +42,8 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-.box-shadow{
-  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+.box-shadow {
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -57,21 +57,24 @@ input::-webkit-inner-spin-button {
     @apply cursor-pointer hover:text-pink-600 hover:translate-x-1 transition-all;
   }
 
-  .sideBar-navLink{
+  .sideBar-navLink {
     @apply cursor-pointer hover:text-[#333] hover:font-semibold transition-all ease-linear hover:border-r-2 border-[#333] px-2 hover:bg-[#f4f4f4] py-4
   }
 
-  .btn-purple{
-    @apply rounded-lg px-8 py-2 bg-[#f472b6] text-white hover:scale-105 transition-all text-xl font-bold text-center 
+  .btn-purple {
+    @apply rounded-lg px-8 py-2 bg-[#f472b6] text-white hover:scale-105 transition-all text-xl font-bold text-center
   }
 
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   /* Hide scrollbar for IE, Edge, and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
@@ -82,9 +85,17 @@ input::-webkit-inner-spin-button {
 
 /* animation for product add to cart */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -93,11 +104,11 @@ input::-webkit-inner-spin-button {
   font-family: "Poppins", sans-serif;
 }
 
-.font-dm{
+.font-dm {
   font-family: "DM Sans", sans-serif;
 }
 
-.font-roboto{
+.font-roboto {
   font-family: "Roboto", sans-serif;
 }
 
@@ -157,16 +168,16 @@ input::-webkit-inner-spin-button {
   border-radius: 40px;
   background-color: #f4f4f4;
   transition: background-color 0.3s, color 0.3s;
-  
+
 }
 
 .button-group button.active {
-  background-color:#333333;
+  background-color: #333333;
   color: white;
   border: none;
 }
 
-.button-group{
+.button-group {
   scroll-behavior: smooth;
 }
 
@@ -180,21 +191,22 @@ input::-webkit-inner-spin-button {
   background-color: #e0e0e0;
 }
 
-.scrollbar-container{
+.scrollbar-container {
   width: calc(-505px + 100vw);
 
 }
 
-.left-arrow,.right-arrow{
+.left-arrow,
+.right-arrow {
   position: absolute;
   /* background: linear-gradient(to left, #f0f0f0 50%, transparent); */
 }
 
-.left-arrow{
+.left-arrow {
   left: 0;
 }
 
-.right-arrow{
+.right-arrow {
   right: 0;
 }
 
@@ -214,7 +226,7 @@ input::-webkit-inner-spin-button {
 .carousel-button {
   position: absolute;
   top: 86%;
-  right:5%;
+  right: 5%;
   transform: translateY(-50%);
   background-color: #463b3e;
   color: white;
@@ -226,8 +238,6 @@ input::-webkit-inner-spin-button {
   border-radius: 40px;
 }
 
-.amoled-shadow{
+.amoled-shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-
-
