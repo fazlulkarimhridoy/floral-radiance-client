@@ -45,10 +45,10 @@ type OrderType = {
 
 const OrderRow = ({
     categoryData,
-    index,
+    refetch,
 }: {
     categoryData: OrderType;
-    index: number;
+    refetch: Function;
 }) => {
     // states and calls
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,14 +70,14 @@ const OrderRow = ({
         customer,
     } = categoryData;
 
-    const handleOrderStatus = async (value: any) => {
-        console.log("status", value);
+    const handleOrderStatus = async (e: any) => {
+        console.log("status", e.target.value);
         // update status to server
         await axios
             .patch(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${customerId}`,
                 {
-                    orderStatus: value,
+                    orderStatus: e.target.value,
                 },
                 {
                     headers: {
@@ -88,6 +88,7 @@ const OrderRow = ({
             .then((data) => {
                 console.log(data);
                 if (data.data.status == "success") {
+                    refetch();
                     message.success("Order status updated");
                 }
             })
@@ -101,7 +102,7 @@ const OrderRow = ({
             <th>{customer?.name}</th>
 
             <td>{totalPrice}</td>
-            <td>{paymentMethod === "CASHON" ? "COD" : "Bkash"}</td>
+            <td>{paymentMethod === "CASHON" ? "Cash On Delivery" : "Bkash"}</td>
             <td>{deliveryDate}</td>
             <td>{deliveryTime}</td>
             <td>
@@ -120,20 +121,30 @@ const OrderRow = ({
             </th>
             {/* <td>{orderStatus}</td> */}
             <td>
-                <Select
-                    style={{ width: 120 }}
-                    className="w-full"
+                <select
+                    style={{ width: 130 }}
+                    className={`${
+                        orderStatus === "PENDING" && "bg-yellow-100"
+                    } ${orderStatus === "SHIPPED" && "bg-blue-100"} ${
+                        orderStatus === "DELIVERED" && "bg-green-100"
+                    } ${
+                        orderStatus === "CANCELLED" && "bg-red-100"
+                    } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
                     onChange={handleOrderStatus}
                     defaultValue={orderStatus}
                 >
                     {statusOptions
-                        .filter((option) => option.value !== orderStatus)
+                        // .filter((option) => option.value !== orderStatus)
                         .map((option) => (
-                            <option key={option.value} value={option.value}>
+                            <option
+                                className="bg-white"
+                                key={option.value}
+                                value={option.value}
+                            >
                                 {option.label}
                             </option>
                         ))}
-                </Select>
+                </select>
             </td>
             <td>
                 <Button className="btn btn-circle btn-outline btn-sm">

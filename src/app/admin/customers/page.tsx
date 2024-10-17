@@ -128,12 +128,12 @@ const Products = () => {
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
             >
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Customer Id</th>
+                        <tr className="bg-gray-200">
+                            <th>Id</th>
+                            <th>Unique Id</th>
                             <th>Name</th>
                             <th>Email Address</th>
                             <th>Phone</th>
