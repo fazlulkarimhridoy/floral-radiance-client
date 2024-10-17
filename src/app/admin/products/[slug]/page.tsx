@@ -18,7 +18,7 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const { Option } = Select;
 
@@ -55,6 +55,13 @@ type CategoryType = {
 };
 
 const UpdateProduct = ({ params }: { params: { slug: string } }) => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and props
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -79,10 +86,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     );
 
     // fetch data from server
-    const {
-        data: singleProductDetails,
-        isLoading
-    } = useQuery({
+    const { data: singleProductDetails, isLoading } = useQuery({
         queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
             const res = await axios.get(

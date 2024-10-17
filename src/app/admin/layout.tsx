@@ -16,9 +16,31 @@ import { RxDashboard } from "react-icons/rx";
 import "@/styles/adminlayout.css";
 import { usePathname } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
+import axios from "axios";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
+
+    // handle logout
+    const handleLogout = async () => {
+        const values = {
+            email: "floralradiance@gmail.com",
+            password: "floraladmin98",
+        };
+        await axios
+            .post(`${process.env.NEXT_PUBLIC_BASE_URL}/logout`, values, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     const links = (
         <>
@@ -185,7 +207,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                 </h2>
                                 <span className="flex items-center space-x-1">
                                     <Link
-                                        href="/admin/dashboard"
+                                        href="/admin"
                                         className="text-xs hover:underline text-gray-600"
                                     >
                                         View profile
@@ -203,6 +225,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <ul className="pt-4 pb-2 space-y-1 text-sm">
                                 <li>
                                     <button
+                                        onClick={handleLogout}
                                         rel="noopener noreferrer"
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                     >

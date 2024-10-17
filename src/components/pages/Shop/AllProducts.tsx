@@ -56,7 +56,7 @@ const AllProducts = () => {
                   return true; // If no searchText, return all products
               })
             : [];
-            
+
     const [cartData, setCartData] = useState<CartItem[]>([]);
 
     useEffect(() => {

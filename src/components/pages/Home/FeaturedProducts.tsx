@@ -73,9 +73,11 @@ const FeaturedProducts = () => {
     // show loader if data loads
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center gap-5 absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2">
-                <Spin style={{ color: "white" }} size="large" />
-            </div>
+                <Spin
+                    fullscreen={true}
+                    style={{ color: "white" }}
+                    size="large"
+                />
         );
     }
 

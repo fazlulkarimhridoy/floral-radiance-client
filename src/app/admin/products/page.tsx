@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ProductType {
     id: number;
@@ -25,6 +25,13 @@ interface ProductType {
 const { Search } = Input;
 
 const Products = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 
