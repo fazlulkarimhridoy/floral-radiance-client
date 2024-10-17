@@ -10,7 +10,7 @@ import CategoryProvider from "@/context/CategoryContext";
 
 export const metadata: Metadata = {
     title: "Floral Radiance",
-    description: "Designed and developed by Hridoy & Himel",
+    description: "Designed and developed by Himel & Hridoy",
 };
 
 export default function LayoutClient({

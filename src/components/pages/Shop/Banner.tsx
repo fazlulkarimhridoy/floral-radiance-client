@@ -38,28 +38,7 @@ const Banner: React.FC<CarouselProps> = ({ images }) => {
     }, [currentIndex, images.length, goToNext]);
 
     return (
-        <div className="carousel relative rounded-2xl  overflow-hidden">
-            {/* <div className="carousel-track" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-        <img
-          src={images[currentIndex]}
-          alt="carousel"
-          className="carousel-image w-[300px] h-[200px] object-cover"
-        />
-      </div> */}
-            {/* <div>
-        {images.map((img, idx) => {
-          return (
-            <Image
-              className="  carousel-image w-[300px] h-[200px] object-cover bg-white"
-              key={idx}
-              src={img}
-              height={0}
-              width={300}
-              alt="flowers"
-            ></Image>
-          );
-        })}
-      </div> */}
+        <div className="carousel relative rounded-2xl w-[360px] md:w-full  overflow-hidden">
 
             <div
                 className={`flex transition ease-in-out duration-1000`}

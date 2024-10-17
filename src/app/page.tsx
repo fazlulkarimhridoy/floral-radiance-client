@@ -8,13 +8,15 @@ import GetBouquet from "@/components/pages/Home/GetBouquet";
 import NewFooter from "@/components/pages/Home/NewFooter";
 
 const Home = () => {
-    const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
+  const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
+ 
+  
+  useEffect(() => {
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window?.scrollY > 300) {
-                setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
-            }
+    const handleScroll = () => {
+      if (window?.scrollY > 300) {
+        setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
+      }
 
             if (window?.scrollY > 500) {
                 setBgColor("bg-white"); // Default background color
@@ -34,15 +36,15 @@ const Home = () => {
         };
     }, []);
 
-    return (
-        <div className={`${bgColor} transition-colors duration-300 `}>
-            <Banner></Banner>
-            <HowItWorks />
-            <FeaturedProducts />
-            <GetBouquet />
-            <NewFooter />
-        </div>
-    );
+  return (
+    <div className={`${bgColor} transition-colors duration-300 `}>
+      <Banner></Banner>
+      <FeaturedProducts/>
+      <HowItWorks/>
+      <GetBouquet/>
+      <NewFooter/>
+    </div>
+  );
 };
 
 export default Home;

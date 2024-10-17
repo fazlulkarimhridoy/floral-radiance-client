@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const Page = () => {
@@ -6,6 +7,16 @@ const Page = () => {
       <h1 className="playfair text-center text-4xl font-bold text-[#52225e]">
         About Us
       </h1>
+      <div className="flex justify-center ">
+        <Image
+          src={`/Images/miraz.jfif`}
+          alt="image"
+          width={500}
+          height={100}
+          className="rounded-xl box-shadow"
+        ></Image>
+      </div>
+
       <p className="font-outfit text-[#52225e] text-lg max-w-[800px] text-center mx-auto">
         About Floral Radiance Founded in 2022, Floral Radiance has blossomed
         into a trusted provider of premium fresh flower bouquets. Our journey
