@@ -173,7 +173,7 @@ const AdminDashboard = () => {
                 </h3>
             </div>
             {/* statistics */}
-            <div className="mt-10 px-0 xl:px-52 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
+            <div className="mt-10 px-10 2xl:px-52 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
                 <div>
                     <Statistic
                         className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
