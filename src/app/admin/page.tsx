@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Col, Row, Statistic, StatisticProps } from "antd";
+import { Statistic, StatisticProps } from "antd";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { Bar, BarChart } from "recharts";
 
@@ -122,6 +125,13 @@ type statistic = {
 };
 
 const AdminDashboard = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // fetch order statistics
     const { data, isLoading } = useQuery<statistic>({
         queryKey: ["statistics"],

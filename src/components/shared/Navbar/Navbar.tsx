@@ -2,7 +2,7 @@
 
 import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
@@ -17,13 +17,6 @@ interface CartItem {
 const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [open, setOpen] = useState(false);
-    useEffect(() => {
-        window.addEventListener("scroll", changeBackground);
-        return () => {
-            window.removeEventListener("scroll", changeBackground);
-        };
-    }, []);
-
     const [cartData, setCartData] = useState<CartItem[]>([]);
 
     // Retrieve cart data from localStorage when the component mounts
@@ -34,6 +27,7 @@ const Navbar = () => {
         }
     }, []);
 
+
     const showDrawer = () => {
         setOpen(true);
     };
@@ -41,6 +35,13 @@ const Navbar = () => {
     const onClose = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        window.addEventListener("scroll", changeBackground);
+        return () => {
+            window.removeEventListener("scroll", changeBackground);
+        };
+    }, []);
 
     const changeBackground = () => {
         if (window.scrollY >= 120) {

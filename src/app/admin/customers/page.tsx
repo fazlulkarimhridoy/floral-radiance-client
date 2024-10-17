@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type CustomerType = {
     id: number;
@@ -19,6 +19,13 @@ type CustomerType = {
 const { Search } = Input;
 
 const Products = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 
@@ -58,26 +65,33 @@ const Products = () => {
     };
 
     // Handle product filter for search
-    const filteredCustomers = allCustomers?.length > 0 ? allCustomers?.filter((customer) => {
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredCustomers =
+        allCustomers?.length > 0
+            ? allCustomers?.filter((customer) => {
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return (
-                customer?.name?.toLowerCase()?.includes(searchString) ||
-                customer?.email?.toLowerCase()?.includes(searchString) ||
-                customer?.phone
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchString) ||
-                customer?.customerId
-                    ?.toString()
-                    ?.toLowerCase()
-                    ?.includes(searchString)
-            );
-        }
-        return true; // If no searchText, return all products
-    }) : [];
+                      // Check product name, category (strings), and productId (number)
+                      return (
+                          customer?.name
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          customer?.email
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          customer?.phone
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          customer?.customerId
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString)
+                      );
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -129,7 +143,7 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {/* rows */}
-                        {allCustomers.length > 0 ?
+                        {allCustomers.length > 0 ? (
                             filteredCustomers?.map((data, index) => (
                                 <CustomerRow
                                     key={data.id}
@@ -137,7 +151,13 @@ const Products = () => {
                                     customerData={data}
                                     handleDeleteProduct={handleDeleteProduct}
                                 ></CustomerRow>
-                            )) : <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No customer found!" />}
+                            ))
+                        ) : (
+                            <Empty
+                                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                                description="No customer found!"
+                            />
+                        )}
                     </tbody>
                 </table>
             </div>
