@@ -126,10 +126,10 @@ const Products = () => {
                 </div>
             </div>
             <div className="overflow-x-auto scroll-smooth bg-blue-50 pt-4 mb-5 md:mb-0">
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-gray-200">
                             <th>#</th>
                             <th>Product Id</th>
                             <th>Product & image</th>

@@ -120,10 +120,10 @@ const Categories = () => {
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
             >
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-gray-200">
                             <th>#</th>
                             <th>Category Id</th>
                             <th>Name</th>
