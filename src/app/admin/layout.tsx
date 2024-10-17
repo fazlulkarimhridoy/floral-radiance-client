@@ -14,32 +14,18 @@ import {
 } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import "@/styles/adminlayout.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
-import axios from "axios";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
+    const router = useRouter();
+    const { push } = router;
 
     // handle logout
     const handleLogout = async () => {
-        const values = {
-            email: "floralradiance@gmail.com",
-            password: "floraladmin98",
-        };
-        await axios
-            .post(`${process.env.NEXT_PUBLIC_BASE_URL}/logout`, values, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                withCredentials: true,
-            })
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        localStorage.removeItem("token");
+        push("/login");
     };
 
     const links = (
