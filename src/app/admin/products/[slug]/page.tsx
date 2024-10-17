@@ -6,7 +6,6 @@ import {
     Button,
     Form,
     FormProps,
-    GetProp,
     Image,
     Input,
     InputNumber,
@@ -19,7 +18,7 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const { Option } = Select;
 
@@ -55,7 +54,14 @@ type CategoryType = {
     description: string;
 };
 
-const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
+const UpdateProduct = ({ params }: { params: { slug: string } }) => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and props
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
@@ -64,7 +70,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     const { push } = router;
 
     // get id from url param
-    const idString = params?.updateProduct;
+    const idString = params?.slug;
     const id = Number(idString);
 
     // file upload changes
@@ -80,16 +86,11 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     );
 
     // fetch data from server
-    const {
-        data: singleProductDetails,
-        isLoading,
-        isFetching,
-        isPending,
-    } = useQuery({
+    const { data: singleProductDetails, isLoading } = useQuery({
         queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details?id=${id}`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${id}`
             );
             // converting image url's to file type for default display
             const imageList = res?.data?.data?.images.map(
@@ -107,6 +108,8 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
         refetchOnWindowFocus: false,
         enabled: id ? true : false,
     });
+
+    console.log("single product details", singleProductDetails);
 
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
@@ -140,7 +143,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
         // updating product on server
         await axios
             .patch(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product?id=${id}`,
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product/${id}`,
                 productUpdateData,
                 {
                     headers: {
@@ -184,7 +187,7 @@ const UpdateProduct = ({ params }: { params: { updateProduct: string } }) => {
     });
 
     // checking if loading
-    if (isLoading || isPending || isFetching || isCategoryLoading) {
+    if (isLoading || isCategoryLoading) {
         return (
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>

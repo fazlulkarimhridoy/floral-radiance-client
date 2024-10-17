@@ -14,18 +14,29 @@ import {
 } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import "@/styles/adminlayout.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
+import floral from "../../../public/Images/floral.jpg";
+import { message } from "antd";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
+    const router = useRouter();
+    const { push } = router;
+
+    // handle logout
+    const handleLogout = async () => {
+        localStorage.removeItem("token");
+        message.success("Logout successful");
+        push("/login");
+    };
 
     const links = (
         <>
             <li>
                 <Link
-                    href="/admin/dashboard"
-                    className={pathname === "/admin/dashboard" ? "active" : ""}
+                    href="/admin"
+                    className={pathname === "/admin" ? "active" : ""}
                 >
                     <RxDashboard />
                     Dashboard
@@ -88,9 +99,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     Add Category
                 </Link>
             </li>
-            <li>
+            <li className="text-blue-700">
                 <Link href="/">
-                    <FaHome />
+                    <FaHome color="blue" />
                     Home
                 </Link>
             </li>
@@ -101,10 +112,15 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <>
             <li>
                 <Link
-                    href="/admin/dashboard"
-                    className={pathname === "/admin/dashboard" ? "active" : ""}
+                    href="/admin"
+                    className={pathname === "/admin" ? "active" : ""}
                 >
                     <RxDashboard />
+                    <span
+                        className={`${pathname === "/admin" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Dashboard
+                    </span>
                 </Link>
             </li>
 
@@ -114,6 +130,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/orders" ? "active" : ""}
                 >
                     <FaShoppingCart />
+                    <span
+                        className={`${pathname === "/admin/orders" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Orders
+                    </span>
                 </Link>
             </li>
             <li>
@@ -122,6 +143,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/customers" ? "active" : ""}
                 >
                     <FaUserFriends />
+                    <span
+                        className={`${pathname === "/admin/customers" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Customers
+                    </span>
                 </Link>
             </li>
             <li>
@@ -130,6 +156,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/products" ? "active" : ""}
                 >
                     <FaClipboardList />
+                    <span
+                        className={`${pathname === "/admin/products" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Products
+                    </span>
                 </Link>
             </li>
             <li>
@@ -138,6 +169,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/categories" ? "active" : ""}
                 >
                     <FaListUl />
+                    <span
+                        className={`${pathname === "/admin/categories" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Categories
+                    </span>
                 </Link>
             </li>
             <li>
@@ -146,6 +182,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/addProduct" ? "active" : ""}
                 >
                     <FaRegPlusSquare />
+                    <span
+                        className={`${pathname === "/admin/addProduct" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Add Product
+                    </span>
                 </Link>
             </li>
             <li>
@@ -156,11 +197,21 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     }
                 >
                     <TbCategoryPlus />
+                    <span
+                        className={`${pathname === "/admin/addCategory" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Add Category
+                    </span>
+                </Link>
+            </li>
+            <li onClick={handleLogout}>
+                <Link href="">
+                    <FaSignOutAlt color="red" />
                 </Link>
             </li>
             <li>
                 <Link href="/">
-                    <FaHome />
+                    <FaHome color="blue" />
                 </Link>
             </li>
         </>
@@ -175,7 +226,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <Image
                                 width={500}
                                 height={500}
-                                src="https://res.cloudinary.com/dmit5qbfo/image/upload/v1717146701/9_zq39kj.jpg"
+                                src={floral}
                                 alt="user_photo"
                                 className="w-12 h-12 rounded-full bg-gray-500"
                             />
@@ -183,13 +234,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                 <h2 className="text-lg font-semibold">
                                     Floral Radiance
                                 </h2>
-                                <span className="flex items-center space-x-1">
-                                    <Link
-                                        href="/admin/dashboard"
-                                        className="text-xs hover:underline text-gray-600"
-                                    >
-                                        View profile
-                                    </Link>
+                                <span className="flex items-center space-x-1 text-sm font-thin">
+                                    Admin Panel
                                 </span>
                             </div>
                         </div>
@@ -203,11 +249,17 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <ul className="pt-4 pb-2 space-y-1 text-sm">
                                 <li>
                                     <button
+                                        onClick={handleLogout}
                                         rel="noopener noreferrer"
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                     >
-                                        <FaSignOutAlt></FaSignOutAlt>
-                                        <span>Logout</span>
+                                        <FaSignOutAlt
+                                            color="red"
+                                            size={20}
+                                        ></FaSignOutAlt>
+                                        <span className="font-semibold text-red-500">
+                                            Logout
+                                        </span>
                                     </button>
                                 </li>
                             </ul>
@@ -238,7 +290,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <ul
                     id="link1"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-1 gap-2 text-gray-500 whitespace-nowrap"
+                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-3 gap-2 text-gray-500 whitespace-nowrap"
                 >
                     {linksForMobile}
                 </ul>

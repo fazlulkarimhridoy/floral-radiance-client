@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // types
 const { Search } = Input;
@@ -21,10 +21,23 @@ type OrderType = {
     orderTime: string;
     paymentMethod: string;
     items: string[];
-    customer: string;
+    customer: {
+        name: string;
+        email: string;
+        phone: string;
+        address: string;
+        customerId: string;
+    };
 };
 
 const Orders = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 
@@ -48,18 +61,21 @@ const Orders = () => {
     console.log(allOrders);
 
     // Handle product filter for search
-    const filteredOrders = allOrders?.length > 0 ? allOrders?.filter((order) => {
-        if (searchText) {
-            const searchString = searchText.toLowerCase();
+    const filteredOrders =
+        allOrders?.length > 0
+            ? allOrders?.filter((order) => {
+                  if (searchText) {
+                      const searchString = searchText.toLowerCase();
 
-            // Check product name, category (strings), and productId (number)
-            return order?.customerId
-                ?.toString()
-                ?.toLowerCase()
-                ?.includes(searchString);
-        }
-        return true; // If no searchText, return all products
-    }) : [];
+                      // Check product name, category (strings), and productId (number)
+                      return order?.customerId
+                          ?.toString()
+                          ?.toLowerCase()
+                          ?.includes(searchString);
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
@@ -96,18 +112,18 @@ const Orders = () => {
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
             >
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
-                            <th>#</th>
+                        <tr className="bg-gray-200">
                             <th>Customer Id</th>
-                            <th>Items</th>
+                            <th>Name</th>
                             <th>Total Price</th>
                             <th>Payment Method</th>
                             <th>Delivery Date</th>
                             <th>Delivery Time</th>
                             <th>Order Date</th>
+                            <th>Details</th>
                             <th>Order Status</th>
                             <th>View</th>
                         </tr>
@@ -115,15 +131,18 @@ const Orders = () => {
                     <tbody>
                         {/* rows */}
                         {allOrders.length > 0 ? (
-                            filteredOrders?.map((data, index) => (
+                            filteredOrders?.map((data) => (
                                 <OrderRow
                                     key={data.id}
-                                    index={index}
                                     categoryData={data}
+                                    refetch={refetch}
                                 ></OrderRow>
                             ))
                         ) : (
-                            <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No customer found!" />
+                            <Empty
+                                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                                description="No customer found!"
+                            />
                         )}
                     </tbody>
                 </table>

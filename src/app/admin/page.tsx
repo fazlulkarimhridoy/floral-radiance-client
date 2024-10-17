@@ -1,10 +1,13 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Col, Row, Statistic, StatisticProps } from "antd";
+import { Statistic, StatisticProps } from "antd";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import CountUp from "react-countup";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
+import { Bar, BarChart } from "recharts";
 
 const formatter: StatisticProps["formatter"] = (value) => (
     <CountUp end={value as number} separator="," />
@@ -122,6 +125,13 @@ type statistic = {
 };
 
 const AdminDashboard = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // fetch order statistics
     const { data, isLoading } = useQuery<statistic>({
         queryKey: ["statistics"],
@@ -163,52 +173,69 @@ const AdminDashboard = () => {
                 </h3>
             </div>
             {/* statistics */}
-            <div className="mt-10">
-                <Row gutter={16}>
-                    <Col span={6}>
-                        <Statistic
-                            className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                            title="Total Balance (BDT)"
-                            value={data?.orderStatistic?._sum?.totalPrice}
-                            precision={2}
-                            formatter={formatter}
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                            title="Total Orders"
-                            value={data?.orderStatistic?._count}
-                            formatter={formatter}
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                            title="Total Customers"
-                            value={data?.customerStatistic?._count}
-                            formatter={formatter}
-                        />
-                    </Col>
-                    <Col span={6}>
-                        <Statistic
-                            className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
-                            title="Total Products"
-                            value={data?.productStatistic?._count}
-                            precision={2}
-                            formatter={formatter}
-                        />
-                    </Col>
-                </Row>
+            <div className="mt-10 px-10 2xl:px-52 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
+                <div>
+                    <Statistic
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        title="Total Balance (BDT)"
+                        value={data?.orderStatistic?._sum?.totalPrice}
+                        precision={2}
+                        formatter={formatter}
+                    />
+                </div>
+                <div>
+                    <Statistic
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        title="Total Orders"
+                        value={data?.orderStatistic?._count}
+                        formatter={formatter}
+                    />
+                </div>
+                <div>
+                    <Statistic
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        title="Total Customers"
+                        value={data?.customerStatistic?._count}
+                        formatter={formatter}
+                    />
+                </div>
+                <div>
+                    <Statistic
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        title="Total Products"
+                        value={data?.productStatistic?._count}
+                        precision={2}
+                        formatter={formatter}
+                    />
+                </div>
             </div>
             {/* chartbar */}
-            <div className="mt-20">
-                <BarChart width={1600} height={500} data={barData}>
-                    <Bar dataKey="uv" fill="#8884d8" />
-                </BarChart>
-                <p className="text-center text-lg font-semibold mt-5">
-                    Order and Customer Data Graph
-                </p>
+            <div className="mt-20 flex flex-wrap flex-col md:flex-row items-center justify-center gap m-5">
+                <div>
+                    <BarChart width={330} height={400} data={barData}>
+                        <Bar dataKey="uv" fill="#8884d8" />
+                    </BarChart>
+
+                    <p className="text-center text-lg font-semibold mt-5">
+                        Order and Customer Data Graph
+                    </p>
+                </div>
+                <div className="mt-5 md:mt-0">
+                    <BarChart width={330} height={400} data={barData}>
+                        <Bar dataKey="pv" fill="#346423" />
+                    </BarChart>
+                    <p className="text-center text-lg font-semibold mt-5">
+                        Customer Data Graph
+                    </p>
+                </div>
+                <div className="mt-5 md:mt-0">
+                    <BarChart width={330} height={400} data={barData}>
+                        <Bar dataKey="amt" fill="#099889" />
+                    </BarChart>
+                    <p className="text-center text-lg font-semibold mt-5">
+                        Product Data Graph
+                    </p>
+                </div>
             </div>
         </div>
     );

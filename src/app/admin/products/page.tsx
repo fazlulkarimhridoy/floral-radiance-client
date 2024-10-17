@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ProductType {
     id: number;
@@ -25,6 +25,13 @@ interface ProductType {
 const { Search } = Input;
 
 const Products = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 
@@ -53,7 +60,7 @@ const Products = () => {
         if (confirmed) {
             axios
                 .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product?id=${id}`
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product/${id}`
                 )
                 .then((data) => {
                     message.success("Successfully deleted");
@@ -119,10 +126,10 @@ const Products = () => {
                 </div>
             </div>
             <div className="overflow-x-auto scroll-smooth bg-blue-50 pt-4 mb-5 md:mb-0">
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-gray-200">
                             <th>#</th>
                             <th>Product Id</th>
                             <th>Product & image</th>
