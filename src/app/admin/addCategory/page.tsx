@@ -11,7 +11,7 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 
 // types
 type CategoryType = {
@@ -22,6 +22,13 @@ type CategoryType = {
 };
 
 const AddCategory = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const formRef = React.useRef<FormInstance<CategoryType>>(null);
 

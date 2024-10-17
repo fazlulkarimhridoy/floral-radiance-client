@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // types
 const { Search } = Input;
@@ -31,6 +31,13 @@ type OrderType = {
 };
 
 const Orders = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 

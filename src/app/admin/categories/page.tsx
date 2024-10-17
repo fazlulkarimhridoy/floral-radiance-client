@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input, message } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // types
 const { Search } = Input;
@@ -18,6 +18,13 @@ type CategoryType = {
 };
 
 const Categories = () => {
+    // check if user is logged in
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "/login";
+        }
+    }, []);
     // states and calls
     const [searchText, setSearchText] = useState("");
 
@@ -136,7 +143,10 @@ const Categories = () => {
                                 ></CategoryRow>
                             ))
                         ) : (
-                                <Empty className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" description="No categories found!" />
+                            <Empty
+                                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                                description="No categories found!"
+                            />
                         )}
                     </tbody>
                 </table>
