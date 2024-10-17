@@ -99,9 +99,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     Add Category
                 </Link>
             </li>
-            <li>
+            <li className="text-blue-700">
                 <Link href="/">
-                    <FaHome />
+                    <FaHome color="blue" />
                     Home
                 </Link>
             </li>
@@ -116,6 +116,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin" ? "active" : ""}
                 >
                     <RxDashboard />
+                    <span
+                        className={`${pathname === "/admin" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Dashboard
+                    </span>
                 </Link>
             </li>
 
@@ -125,6 +130,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/orders" ? "active" : ""}
                 >
                     <FaShoppingCart />
+                    <span
+                        className={`${pathname === "/admin/orders" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Orders
+                    </span>
                 </Link>
             </li>
             <li>
@@ -133,6 +143,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/customers" ? "active" : ""}
                 >
                     <FaUserFriends />
+                    <span
+                        className={`${pathname === "/admin/customers" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Customers
+                    </span>
                 </Link>
             </li>
             <li>
@@ -141,6 +156,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/products" ? "active" : ""}
                 >
                     <FaClipboardList />
+                    <span
+                        className={`${pathname === "/admin/products" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Products
+                    </span>
                 </Link>
             </li>
             <li>
@@ -149,6 +169,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/categories" ? "active" : ""}
                 >
                     <FaListUl />
+                    <span
+                        className={`${pathname === "/admin/categories" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Categories
+                    </span>
                 </Link>
             </li>
             <li>
@@ -157,6 +182,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={pathname === "/admin/addProduct" ? "active" : ""}
                 >
                     <FaRegPlusSquare />
+                    <span
+                        className={`${pathname === "/admin/addProduct" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Add Product
+                    </span>
                 </Link>
             </li>
             <li>
@@ -167,6 +197,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     }
                 >
                     <TbCategoryPlus />
+                    <span
+                        className={`${pathname === "/admin/addCategory" ? "active flex" : "hidden"} text-sm`}
+                    >
+                        Add Category
+                    </span>
                 </Link>
             </li>
             <li onClick={handleLogout}>
@@ -176,7 +211,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </li>
             <li>
                 <Link href="/">
-                    <FaHome />
+                    <FaHome color="blue" />
                 </Link>
             </li>
         </>
@@ -218,8 +253,13 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                         rel="noopener noreferrer"
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                     >
-                                        <FaSignOutAlt color="red" size={20}></FaSignOutAlt>
-                                        <span className="font-semibold text-red-500">Logout</span>
+                                        <FaSignOutAlt
+                                            color="red"
+                                            size={20}
+                                        ></FaSignOutAlt>
+                                        <span className="font-semibold text-red-500">
+                                            Logout
+                                        </span>
                                     </button>
                                 </li>
                             </ul>
@@ -250,7 +290,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <ul
                     id="link1"
                     style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-1 gap-2 text-gray-500 whitespace-nowrap"
+                    className="flex flex-row flex-nowrap overflow-x-scroll scroll-smooth menu menu-horizontal text-[22px] px-3 gap-2 text-gray-500 whitespace-nowrap"
                 >
                     {linksForMobile}
                 </ul>
