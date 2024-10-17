@@ -112,10 +112,10 @@ const Orders = () => {
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
             >
-                <table className="table">
+                <table className="table whitespace-nowrap">
                     {/* head */}
                     <thead>
-                        <tr>
+                        <tr className="bg-gray-200">
                             <th>Customer Id</th>
                             <th>Name</th>
                             <th>Total Price</th>
@@ -131,11 +131,11 @@ const Orders = () => {
                     <tbody>
                         {/* rows */}
                         {allOrders.length > 0 ? (
-                            filteredOrders?.map((data, index) => (
+                            filteredOrders?.map((data) => (
                                 <OrderRow
                                     key={data.id}
-                                    index={index}
                                     categoryData={data}
+                                    refetch={refetch}
                                 ></OrderRow>
                             ))
                         ) : (

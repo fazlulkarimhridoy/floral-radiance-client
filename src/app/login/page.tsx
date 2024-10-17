@@ -31,8 +31,8 @@ const LoginPage = () => {
                 const token = data.data.token;
                 if (token) {
                     localStorage.setItem("token", token);
-                    message.success("Login successful   ");
                     push("/admin");
+                    message.success("Login successful   ");
                 }
             })
             .catch((error) => {

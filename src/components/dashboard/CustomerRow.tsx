@@ -23,7 +23,7 @@ const CustomerRow = ({
 
     return (
         <tr>
-            <th>{index + 1}</th>
+            <th>{id}</th>
             <th>{customerId}</th>
             <td>
                 <div className="text-gray-600 font-bold">{name}</div>
