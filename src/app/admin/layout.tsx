@@ -16,6 +16,8 @@ import { RxDashboard } from "react-icons/rx";
 import "@/styles/adminlayout.css";
 import { usePathname, useRouter } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
+import floral from "../../../public/Images/floral.jpg";
+import { message } from "antd";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
@@ -25,6 +27,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // handle logout
     const handleLogout = async () => {
         localStorage.removeItem("token");
+        message.success("Logout successful");
         push("/login");
     };
 
@@ -166,6 +169,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <TbCategoryPlus />
                 </Link>
             </li>
+            <li onClick={handleLogout}>
+                <Link href="">
+                    <FaSignOutAlt color="red" />
+                </Link>
+            </li>
             <li>
                 <Link href="/">
                     <FaHome />
@@ -183,7 +191,7 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             <Image
                                 width={500}
                                 height={500}
-                                src=""
+                                src={floral}
                                 alt="user_photo"
                                 className="w-12 h-12 rounded-full bg-gray-500"
                             />
@@ -191,13 +199,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                 <h2 className="text-lg font-semibold">
                                     Floral Radiance
                                 </h2>
-                                <span className="flex items-center space-x-1">
-                                    <Link
-                                        href="/admin"
-                                        className="text-xs hover:underline text-gray-600"
-                                    >
-                                        View profile
-                                    </Link>
+                                <span className="flex items-center space-x-1 text-sm font-thin">
+                                    Admin Panel
                                 </span>
                             </div>
                         </div>
@@ -215,8 +218,8 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                         rel="noopener noreferrer"
                                         className="flex items-center p-2 space-x-3 rounded-md"
                                     >
-                                        <FaSignOutAlt></FaSignOutAlt>
-                                        <span>Logout</span>
+                                        <FaSignOutAlt color="red" size={20}></FaSignOutAlt>
+                                        <span className="font-semibold text-red-500">Logout</span>
                                     </button>
                                 </li>
                             </ul>
