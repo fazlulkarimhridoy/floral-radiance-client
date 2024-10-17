@@ -45,10 +45,10 @@ type OrderType = {
 
 const OrderRow = ({
     categoryData,
-    refetch
+    refetch,
 }: {
     categoryData: OrderType;
-    refetch: Function
+    refetch: Function;
 }) => {
     // states and calls
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -123,14 +123,24 @@ const OrderRow = ({
             <td>
                 <select
                     style={{ width: 130 }}
-                    className={`${orderStatus === "PENDING" && "bg-orange-100"} ${orderStatus === "SHIPPED" && "bg-blue-100"} ${orderStatus === "DELIVERED" && "bg-green-100"} ${orderStatus === "CANCELLED" && "bg-red-100"} w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
+                    className={`${
+                        orderStatus === "PENDING" && "bg-yellow-100"
+                    } ${orderStatus === "SHIPPED" && "bg-blue-100"} ${
+                        orderStatus === "DELIVERED" && "bg-green-100"
+                    } ${
+                        orderStatus === "CANCELLED" && "bg-red-100"
+                    } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
                     onChange={handleOrderStatus}
                     defaultValue={orderStatus}
                 >
                     {statusOptions
                         // .filter((option) => option.value !== orderStatus)
                         .map((option) => (
-                            <option className="bg-white" key={option.value} value={option.value}>
+                            <option
+                                className="bg-white"
+                                key={option.value}
+                                value={option.value}
+                            >
                                 {option.label}
                             </option>
                         ))}
