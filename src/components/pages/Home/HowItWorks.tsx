@@ -14,7 +14,7 @@ const HowItWorks = () => {
       </h1>
       <div  className="grid  grid-cols-1 md:grid-cols-3 md:grid-rows-3 p-2 md:p-0 md:w-[90%] lg:w-[70%] mx-auto gap-4 m-10">
         {/* card one */}
-        <div data-aos="flip-left" data-aos-delay="500" data-aos-easing="ease-in-out"
+        <div data-aos="flip-left" data-aos-delay="600" data-aos-easing="ease-in-out"
         data-aos-duration="700" className=" md:row-span-2  bg-[#c3b2e8] rounded-xl p-4 flex flex-col gap-2 justify-center items-center text-center  amoled-shadow relative">
           <Image
             className="rounded-full bg-none md:absolute md:-top-20 border-2 border-purple-700"

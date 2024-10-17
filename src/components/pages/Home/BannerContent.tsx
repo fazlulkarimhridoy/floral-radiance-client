@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import React, { useEffect } from "react";
 
 const BannerContent = () => {
+  useEffect(() => {
+    AOS.init({});
+  },[])
   return (
     <div className="">
       <div className="">
@@ -23,7 +29,7 @@ const BannerContent = () => {
                 </button>
               </Link>
             </div>
-            <div className="">
+            <div data-aos="zoom-in"  data-aos-delay="500" data-aos-easing="ease-in-out" className="">
               <Image
                 className="rounded-full "
                 width={400}
