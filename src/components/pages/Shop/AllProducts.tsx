@@ -73,13 +73,18 @@ const AllProducts = () => {
         images: string,
         price: number
     ) => {
-        // Use functional state update to ensure you're working with the latest state
-        setCartData((prevCardData) => [
-            ...prevCardData,
-            { product_name, images, price, id },
-        ]);
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-        message.success("Product Addded To Cart!");
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            // Use functional state update to ensure you're working with the latest state
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            message.success("Product Addded To Cart!");
+        } else {
+            message.warning("Product already added to cart!");
+        }
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {

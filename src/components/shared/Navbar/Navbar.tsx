@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 
 interface CartItem {
     id: number;
@@ -22,11 +23,11 @@ const Navbar = () => {
     // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
         const storedCart = localStorage.getItem("cartItem");
+        console.log(storedCart);
         if (storedCart) {
             setCartData(JSON.parse(storedCart));
         }
     }, []);
-
 
     const showDrawer = () => {
         setOpen(true);

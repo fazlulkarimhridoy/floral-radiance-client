@@ -56,13 +56,18 @@ const FeaturedProducts = () => {
         images: string,
         price: number
     ) => {
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            message.success("Product Addded To Cart!");
+        } else {
+            message.warning("Product already in the cart!");
+        }
         // Use functional state update to ensure you're working with the latest state
-        setCartData((prevCardData) => [
-            ...prevCardData,
-            { product_name, images, price, id },
-        ]);
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-        message.success("Product Addded To Cart!");
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -73,11 +78,7 @@ const FeaturedProducts = () => {
     // show loader if data loads
     if (isLoading) {
         return (
-                <Spin
-                    fullscreen={true}
-                    style={{ color: "white" }}
-                    size="large"
-                />
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
         );
     }
 
