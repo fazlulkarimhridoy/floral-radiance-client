@@ -6,6 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 interface CartItem {
     id: number;

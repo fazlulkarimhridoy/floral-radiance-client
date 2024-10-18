@@ -3,7 +3,7 @@
 // import { Image   } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import { Button, Input, message } from "antd";
+import { Button, Input, message, Spin } from "antd";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import type { DatePickerProps } from "antd";
@@ -54,6 +54,7 @@ const Page = () => {
     const [deliveryTime, setDeliveryTime] = useState<string | string[]>([]);
     const [note, setNote] = useState("");
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
@@ -134,6 +135,7 @@ const Page = () => {
     };
 
     const handleSubmitData = async () => {
+        setLoading(true);
         if (
             !name ||
             !phone ||
@@ -142,11 +144,13 @@ const Page = () => {
             !deliveryDate ||
             !deliveryTime
         ) {
+            setLoading(false);
             message.error("Please fill in all required fields.");
             return;
         }
 
         if (cartData.length === 0) {
+            setLoading(false);
             message.error("Your cart is empty.");
             return;
         }
@@ -164,6 +168,7 @@ const Page = () => {
             );
 
             if (customerResponse.data.status !== "success") {
+                setLoading(false);
                 throw new Error("Failed to create customer.");
             }
 
@@ -191,20 +196,30 @@ const Page = () => {
 
             console.log(orderResponse);
             if (orderResponse.data.status !== "success") {
+                setLoading(false);
                 throw new Error("Failed to create order.");
             }
 
             localStorage.removeItem("cartItem");
             setCartData([]);
             window.location.href = "/";
+            setLoading(false);
             message.success("Order placed successfully!");
         } catch (error: any) {
             console.error(error);
+            setLoading(false);
             message.error(
                 error.message || "An error occurred while placing the order."
             );
         }
     };
+
+    // show loader if data loads
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+        );
+    }
 
     return (
         <div className="bg-[#f2f6f9] p-4 space-y-4">
@@ -297,9 +312,7 @@ const Page = () => {
                         {/*Customer name */}
                         <div className="flex flex-col md:flex-row gap-2">
                             <div className="flex flex-col gap-2 w-full">
-                                <label
-                                    className="text-xl flex gap-2 items-center text-[#3d4349]"
-                                >
+                                <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
                                     Full Name:
                                 </label>
@@ -313,9 +326,7 @@ const Page = () => {
                                 />
                             </div>
                             <div className="flex flex-col gap-2 w-full">
-                                <label
-                                    className="text-xl flex gap-2 items-center text-[#3d4349]"
-                                >
+                                <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
                                     <FaMobileAlt /> Mobile Number:
                                 </label>
@@ -330,9 +341,7 @@ const Page = () => {
                         </div>
                         {/*Customer mobile number */}
                         <div className="flex flex-col gap-2">
-                            <label
-                                className="text-xl flex gap-2 items-center text-[#3d4349]"
-                            >
+                            <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                 {" "}
                                 <FaMobileAlt /> Email Address:
                             </label>
@@ -345,9 +354,7 @@ const Page = () => {
                         </div>
                         {/* Delivery address */}
                         <div className="flex flex-col gap-2">
-                            <label
-                                className="text-xl flex gap-2 items-center text-[#3d4349]"
-                            >
+                            <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                 {" "}
                                 <FaLocationDot /> Delivery Address:
                             </label>

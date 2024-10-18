@@ -22,14 +22,14 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart }) => {
     return (
-        <div className=" w-full md:w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-xl  amoled-shadow  bg-white lg:bg-none">
-            <div className=" rounded-xl">
+        <div className=" w-full md:w-[250px] flex flex-col  items-stretch text-center justify-center gap-4 p-4 rounded-2xl  amoled-shadow  bg-white lg:bg-none">
+            <div className="flex items-center justify-center p-4">
                 <Image
                     src={item?.images[0]}
                     alt={`Image`}
-                    width={120}
+                    width={100}
                     height={100}
-                    className={` w-full p-4 rounded-xl`}
+                    className="w-[200px] h-[200px] rounded-xl"
                 />
             </div>
             <div className=" border-[#194464] flex flex-col gap-2">

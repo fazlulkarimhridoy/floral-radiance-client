@@ -46,23 +46,23 @@ const Products = () => {
         refetchOnWindowFocus: false,
     });
 
-    // handle delete
-    const handleDeleteProduct = (id: CustomerType) => {
-        const confirmed = window.confirm(
-            "Are you sure you want to delete this customer?"
-        );
-        if (confirmed) {
-            axios
-                .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer/${id}`
-                )
-                .then((data) => {
-                    message.success("Successfully deleted");
-                    refetch();
-                    console.log(data);
-                });
-        }
-    };
+    // // handle delete
+    // const handleDeleteProduct = (id: CustomerType) => {
+    //     const confirmed = window.confirm(
+    //         "Are you sure you want to delete this customer?"
+    //     );
+    //     if (confirmed) {
+    //         axios
+    //             .delete(
+    //                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer/${id}`
+    //             )
+    //             .then((data) => {
+    //                 message.success("Successfully deleted");
+    //                 refetch();
+    //                 console.log(data);
+    //             });
+    //     }
+    // };
 
     // Handle product filter for search
     const filteredCustomers =
@@ -116,7 +116,7 @@ const Products = () => {
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
-                        placeholder="search customers...."
+                        placeholder="search by name, number, email...."
                         allowClear
                         enterButton="Search"
                         size="large"
@@ -138,18 +138,15 @@ const Products = () => {
                             <th>Email Address</th>
                             <th>Phone</th>
                             <th>Address</th>
-                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* rows */}
                         {allCustomers.length > 0 ? (
-                            filteredCustomers?.map((data, index) => (
+                            filteredCustomers?.map((data) => (
                                 <CustomerRow
                                     key={data.id}
-                                    index={index}
                                     customerData={data}
-                                    handleDeleteProduct={handleDeleteProduct}
                                 ></CustomerRow>
                             ))
                         ) : (

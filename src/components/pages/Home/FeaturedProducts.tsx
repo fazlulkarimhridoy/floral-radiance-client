@@ -76,11 +76,11 @@ const FeaturedProducts = () => {
     }, [cartData]);
 
     // show loader if data loads
-    if (isLoading) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+    //     );
+    // }
 
     return (
         <div className="max-w-[70%] mx-auto my-20 relative ">
@@ -93,7 +93,9 @@ const FeaturedProducts = () => {
                 </h1>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
-                {featuredProducts?.length > 0 ? (
+                {isLoading ? (
+                    <Spin style={{ color: "white" }} size="large" />
+                ) : featuredProducts?.length > 0 ? (
                     featuredProducts?.map((item) => (
                         <ProductCard
                             key={item?.id}
