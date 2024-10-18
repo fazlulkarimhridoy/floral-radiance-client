@@ -13,6 +13,7 @@ import {
     InputNumber,
     message,
     Select,
+    Spin,
     Upload,
     UploadFile,
     UploadProps,
@@ -53,6 +54,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     });
 
 const AddProduct = () => {
+    const [loading, setLoading] = useState(false)
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -91,6 +93,7 @@ const AddProduct = () => {
 
     // handle form submission finish
     const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
+        setLoading(true);
         const thumbUrlsArray = fileList.map((file) => file.thumbUrl);
         const product_name = values.product_name;
         const price = values.price;
@@ -108,6 +111,7 @@ const AddProduct = () => {
             allCategories?.find((cat) => cat.name === category)?.id;
 
         if (!selectedCategoryId) {
+            setLoading(false);
             message.error("Category not found");
             return;
         }
@@ -139,6 +143,7 @@ const AddProduct = () => {
             )
             .then((data) => {
                 if (data.data.status == "success") {
+                    setLoading(false);
                     message.success("Product added successfully");
                     // clear form values
                     formRef.current?.resetFields();
@@ -146,6 +151,7 @@ const AddProduct = () => {
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error);
             });
     };
@@ -176,6 +182,13 @@ const AddProduct = () => {
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
             </div>
+        );
+    }
+
+    // show loader if uploads takes time
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
         );
     }
 
@@ -329,7 +342,7 @@ const AddProduct = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please enter product id!",
+                                    message: "Please enter product id as number!",
                                 },
                             ]}
                         >

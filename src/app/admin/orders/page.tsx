@@ -68,10 +68,22 @@ const Orders = () => {
                       const searchString = searchText.toLowerCase();
 
                       // Check product name, category (strings), and productId (number)
-                      return order?.customerId
-                          ?.toString()
-                          ?.toLowerCase()
-                          ?.includes(searchString);
+                      return (
+                          order?.customer.name
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          order?.customer.email
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          order?.customer.phone
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          order?.customerId
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchString)
+                      );
                   }
                   return true; // If no searchText, return all products
               })
@@ -100,7 +112,7 @@ const Orders = () => {
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
-                        placeholder="search customers...."
+                        placeholder="search by name, number, email...."
                         allowClear
                         enterButton="Search"
                         size="large"
@@ -125,7 +137,6 @@ const Orders = () => {
                             <th>Order Date</th>
                             <th>Details</th>
                             <th>Order Status</th>
-                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody>

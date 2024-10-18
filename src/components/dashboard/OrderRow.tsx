@@ -146,11 +146,7 @@ const OrderRow = ({
                         ))}
                 </select>
             </td>
-            <td>
-                <Button className="btn btn-circle btn-outline btn-sm">
-                    <FaTrash className="text-red-600"></FaTrash>
-                </Button>
-            </td>
+            
             <Modal
                 className="w-full"
                 footer={false}

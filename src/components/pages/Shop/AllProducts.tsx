@@ -73,13 +73,18 @@ const AllProducts = () => {
         images: string,
         price: number
     ) => {
-        // Use functional state update to ensure you're working with the latest state
-        setCartData((prevCardData) => [
-            ...prevCardData,
-            { product_name, images, price, id },
-        ]);
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-        message.success("Product Addded To Cart!");
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            // Use functional state update to ensure you're working with the latest state
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            message.success("Product Addded To Cart!");
+        } else {
+            message.warning("Product already added to cart!");
+        }
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -90,7 +95,11 @@ const AllProducts = () => {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center gap-5 absolute top-[75%] left-[55%] lg:left-[60%] transform -translate-x-1/2 -translate-y-1/2">
-                <Spin style={{ color: "white" }} size="large" />
+                <Spin
+                    className="text-white bg-white"
+                    style={{ color: "white" }}
+                    size="large"
+                />
             </div>
         );
     }
