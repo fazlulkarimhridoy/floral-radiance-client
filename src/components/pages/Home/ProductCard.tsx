@@ -89,12 +89,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                     footer={[
                         <div className="flex gap-2 justify-end">
                             <Link href={`/cart`}>
-                                <button className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center" key="submit" type="primary">
+                                <button className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center" >
                                     View cart
                                 </button>
                             </Link>
                             <Link href={`/purchaseOrder`}>
-                                <button className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center" key="submit" type="primary">
+                                <button className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center" >
                                     Purchase
                                 </button>
                             </Link>
