@@ -56,13 +56,18 @@ const FeaturedProducts = () => {
         images: string,
         price: number
     ) => {
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            message.success("Product Addded To Cart!");
+        } else {
+            message.warning("Product already in the cart!");
+        }
         // Use functional state update to ensure you're working with the latest state
-        setCartData((prevCardData) => [
-            ...prevCardData,
-            { product_name, images, price, id },
-        ]);
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-        message.success("Product Addded To Cart!");
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -71,15 +76,11 @@ const FeaturedProducts = () => {
     }, [cartData]);
 
     // show loader if data loads
-    if (isLoading) {
-        return (
-                <Spin
-                    fullscreen={true}
-                    style={{ color: "white" }}
-                    size="large"
-                />
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+    //     );
+    // }
 
     return (
         <div className="max-w-[70%] mx-auto my-20 relative ">
@@ -92,7 +93,9 @@ const FeaturedProducts = () => {
                 </h1>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
-                {featuredProducts?.length > 0 ? (
+                {isLoading ? (
+                    <Spin style={{ color: "white" }} size="large" />
+                ) : featuredProducts?.length > 0 ? (
                     featuredProducts?.map((item) => (
                         <ProductCard
                             key={item?.id}

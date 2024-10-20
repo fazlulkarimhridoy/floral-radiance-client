@@ -8,10 +8,11 @@ import {
     Input,
     InputNumber,
     message,
+    Spin,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 // types
 type CategoryType = {
@@ -22,6 +23,7 @@ type CategoryType = {
 };
 
 const AddCategory = () => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -36,6 +38,7 @@ const AddCategory = () => {
     const onFinish: FormProps<CategoryType>["onFinish"] = async (
         values: any
     ) => {
+        setLoading(true);
         const name = values.name;
         const categoryId = values.categoryId;
         const description = values.description;
@@ -60,12 +63,14 @@ const AddCategory = () => {
             )
             .then((data) => {
                 if (data.data.status == "success") {
+                    setLoading(false);
                     message.success("Category added successfully");
                     // clear form values
                     formRef.current?.resetFields();
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error);
             });
     };
@@ -77,14 +82,12 @@ const AddCategory = () => {
         console.log("Failed:", errorInfo);
     };
 
-    // checking if loading
-    // if (isLoading) {
-    //     return (
-    //         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-    //             <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
-    //         </div>
-    //     );
-    // }
+    // show loader if uploads takes time
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+        );
+    }
 
     return (
         <div>
@@ -132,7 +135,7 @@ const AddCategory = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please enter category id!",
+                                    message: "Please enter category id as number!",
                                 },
                             ]}
                         >

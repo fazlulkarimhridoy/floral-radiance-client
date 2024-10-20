@@ -1,9 +1,9 @@
 "use client";
-import { Button, Form, FormProps, Input, message } from "antd";
+import { Button, Form, FormProps, Input, message, Spin } from "antd";
 import Password from "antd/es/input/Password";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 // types
 type LoginType = {
@@ -13,11 +13,13 @@ type LoginType = {
 
 const LoginPage = () => {
     // states and calls
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
     const { push } = router;
 
     // handle form submission finish
     const onFinish: FormProps<LoginType>["onFinish"] = async (values) => {
+        setLoading(true);
         console.log("Success:", values);
         await axios
             .post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, values, {
@@ -31,11 +33,16 @@ const LoginPage = () => {
                 const token = data.data.token;
                 if (token) {
                     localStorage.setItem("token", token);
+                    setLoading(false);
                     push("/admin");
                     message.success("Login successful   ");
+                } else {
+                    setLoading(false);
+                    message.error("Invalid email or password");
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 message.error(error.data.message);
             });
     };
@@ -46,6 +53,13 @@ const LoginPage = () => {
     ) => {
         console.log("Failed:", errorInfo);
     };
+
+    // show loader if data loads
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+        );
+    }
 
     return (
         <div className="my-[156px]">

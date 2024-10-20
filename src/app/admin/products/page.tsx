@@ -117,7 +117,7 @@ const Products = () => {
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
-                        placeholder="search products..."
+                        placeholder="search by id, name, category..."
                         allowClear
                         enterButton="Search"
                         size="large"
