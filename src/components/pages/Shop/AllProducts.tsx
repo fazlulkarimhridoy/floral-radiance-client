@@ -26,7 +26,7 @@ interface CartItem {
 
 const AllProducts = () => {
     const { categoryName } = useCategory();
-
+    const [modal1Open, setModal1Open] = useState(false);
     // fetch all products froom server
     const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],
@@ -79,7 +79,7 @@ const AllProducts = () => {
             { product_name, images, price, id },
         ]);
         localStorage.setItem("cartItem", JSON.stringify(cartData));
-        message.success("Product Addded To Cart!");
+        setModal1Open(true)
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -104,6 +104,8 @@ const AllProducts = () => {
                             key={item?.id}
                             item={item}
                             handleCart={handleCart}
+                            modal1Open={modal1Open}
+                            setModal1Open={setModal1Open}
                         />
                     ))
                 ) : (
