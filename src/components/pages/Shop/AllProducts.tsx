@@ -27,6 +27,8 @@ interface CartItem {
 const AllProducts = () => {
     const { categoryName } = useCategory();
     const [modal1Open, setModal1Open] = useState(false);
+
+
     // fetch all products froom server
     const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],

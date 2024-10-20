@@ -86,6 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                 </button>
 
                 <Modal
+                    key={item?.id}
                     footer={[
                         <div className="flex gap-2 justify-end">
                             <Link href={`/cart`}>
@@ -111,11 +112,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                 >
                     <div className="flex gap-4">
                         <figure>
-                            <Image width={150} height={150} src={item.images[0]} alt="flower" />
+                            <Image width={150} height={150} src={item?.images[0]} alt="flower" />
                         </figure>
                         <div className="flex space-y-8">
                             <div className="space-y-4">
-                                <h1 className="font-outfit md:text-2xl font-semibold">{item.product_name}</h1>
+                                <h1 className="font-outfit md:text-2xl font-semibold">{item?.product_name}</h1>
                                 <h1 className="flex items-center gap-2 md:text-xl font-bold"><FaCheckCircle className="text-xl" /> Added to cart successfully!</h1>
                             </div>
                         </div>
