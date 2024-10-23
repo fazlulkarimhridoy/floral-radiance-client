@@ -11,18 +11,13 @@ import { message } from "antd";
 
 interface ProductType {
     id: number;
-    product_id: number;
+    productId: number;
     images: string[];
     product_name: string;
     price: number;
     discount_price: number;
     description: string;
     rating: number;
-}
-
-interface SingleProductData {
-    product_id: string;
-    images: string[];
 }
 
 interface CartItem {
@@ -35,8 +30,11 @@ interface CartItem {
 const Page = ({ params }: { params: { slug: string } }) => {
 
     console.log(params.slug);
+
+
     const [modal1Open, setModal1Open] = useState(false);
     const [activeButton, setActiveButton] = useState<number | null>(null);
+    // const [singleProduct , setSingleProduct] = useState<Array<string>>([])
     // const [quantity, setQuantity] = useState(10)
     const [price, setPrice] = useState(250);
 
@@ -52,30 +50,19 @@ const Page = ({ params }: { params: { slug: string } }) => {
         handlePrice(buttonIndex);
     };
 
-    //Fetching all product data
 
-    const { data: featuredProducts = [] } = useQuery<ProductType[]>({
-        queryKey: ["featuredProducts"],
+
+        const { data: singleProduct} = useQuery<ProductType>({
+        queryKey: ["singleProduct"],
         queryFn: async () => {
             const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${params.slug}`
             );
             return res.data.data;
         },
         retry: 2,
         refetchOnWindowFocus: false,
     });
-
-    console.log(featuredProducts);
-
-    // Funtion for finding the selected product
-    const findProduct = (item: ProductType) => {
-        return Number(params.slug) === item?.id;
-    };
-
-    //single product data
-    const singleProduct = featuredProducts?.find(findProduct);
-    console.log(singleProduct);
 
     useEffect(() => {
         // Load cart data from localStorage
@@ -86,9 +73,6 @@ const Page = ({ params }: { params: { slug: string } }) => {
     }, []);
 
     const [cartData, setCartData] = useState<CartItem[]>([]);
-
-
-
 
     const handleCart = async (
         id: number,
@@ -109,7 +93,9 @@ const Page = ({ params }: { params: { slug: string } }) => {
         // Store the entire updated cart into localStorage
         localStorage.setItem("cartItem", JSON.stringify(cartData));
     }, [cartData]);
+    
 
+    console.log('single product',singleProduct)
 
     // show loader if data loads
 
@@ -119,15 +105,15 @@ const Page = ({ params }: { params: { slug: string } }) => {
             {singleProduct ? (
                 <div className=" rounded-xl border-[#f472b6] md:flex gap-4 w-full lg:w-[83%] mx-auto p-6 ">
                     <div className="">
-                        <ImageDetails srcList={singleProduct.images} />
+                        <ImageDetails srcList={singleProduct?.images} />
                     </div>
                     <div className=" space-y-4">
                         <div className="space-y-4">
                             <h1 className="text-4xl font-semibold font-outfit text-[#0b0f3b]">
-                                {singleProduct.product_name}
+                                {singleProduct?.product_name}
                             </h1>
                             <p className="text-xl playfair font-semibold ">
-                                {singleProduct.description}
+                            {singleProduct?.description}
                             </p>
                         </div>
                         <div className="space-y-4 max-w-[400px] ">
