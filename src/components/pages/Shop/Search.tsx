@@ -1,9 +1,12 @@
+import { useSearchText } from "@/context/SearchTextContext";
+import { SearchProps } from "antd/es/input";
 import React, { useEffect, useRef, useState } from "react";
 import { IoSearchSharp } from "react-icons/io5";
 
 const Search = () => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [isFocused, setIsFocused] = useState(false);
+    const { setSearchText } = useSearchText();
 
     useEffect(() => {
         const handleFocus = () => {
@@ -37,6 +40,12 @@ const Search = () => {
                 className={`input-element outline-none bg-[#f4f4f4] ${
                     isFocused ? "focused" : ""
                 }`}
+                onKeyDown={(e: any) => {
+                    if (e.key === "Enter") {
+                        setSearchText(e.target.value);
+                    }
+                }}
+                
             />
             <style jsx>{`
                 .input-container {
@@ -52,7 +61,12 @@ const Search = () => {
                     box-sizing: border-box;
                 }
                 .input-element.focused {
-                    width: 250px; /* Width when focused */
+                    width: 100%; /* Width when focused */
+                }
+                @media (min-width: 768px) {
+                    .input-element.focused {
+                        width: 500px; /* Width when focused */
+                    }
                 }
             `}</style>
         </div>

@@ -103,6 +103,11 @@ const Products = () => {
                         enterButton="Search"
                         size="large"
                         onSearch={onSearch}
+                        onKeyDown={(e: any) => {
+                            if (e.key === "Enter") {
+                                setSearchText(e.target.value);
+                            }
+                        }}
                     />
                 </div>
             </div>
