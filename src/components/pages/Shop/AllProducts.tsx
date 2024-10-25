@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../Home/ProductCard";
 import { Empty, message, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
+import { useSearchText } from "@/context/SearchTextContext";
 
 interface ProductType {
     id: number;
@@ -26,6 +27,9 @@ interface CartItem {
 
 const AllProducts = () => {
     const { categoryName } = useCategory();
+    console.log(categoryName);
+    const { searchText } = useSearchText();
+    console.log("from all", searchText);
     const [modal1Open, setModal1Open] = useState(false);
 
 
@@ -46,9 +50,9 @@ const AllProducts = () => {
     const filteredProducts =
         shopProducts?.length > 0
             ? shopProducts?.filter((product) => {
-                  const searchText = categoryName;
+                  const searchingText = categoryName || searchText;
                   if (searchText) {
-                      const searchString = searchText.toLowerCase();
+                      const searchString = searchingText.toLowerCase();
 
                       // Check product name, category (strings), and productId (number)
                       return product?.category
@@ -102,7 +106,7 @@ const AllProducts = () => {
     }
 
     return (
-        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20">
+        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
             {shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (

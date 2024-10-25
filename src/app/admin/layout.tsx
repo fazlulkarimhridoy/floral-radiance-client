@@ -17,7 +17,6 @@ import "@/styles/adminlayout.css";
 import { usePathname, useRouter } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
 import floral from "../../../public/Images/floral.jpg";
-import { message } from "antd";
 import Swal from "sweetalert2";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {

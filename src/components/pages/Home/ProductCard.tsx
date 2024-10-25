@@ -43,15 +43,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
 
 
     return (
-        <div className="w-full min-h-[200px] md:w-[250px] flex flex-col items-stretch text-center justify-center gap-4 p-4 rounded-xl amoled-shadow bg-white lg:bg-none">
+        <div className="w-full min-h-[200px] md:w-[250px] flex flex-col items-stretch text-center justify-center gap-4 px-4 pt-4 pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
             <Link href={`products/${item.id}`}>
-                <div className="rounded-xl">
+                <div className="p-4">
                     <Image
                         src={item?.images[0]}
                         alt={`Image`}
                         width={120}
                         height={100}
-                        className="w-full p-4 rounded-xl"
+                        className="w-full rounded-lg"
                     />
                 </div>
                 <div className="border-[#194464] flex flex-col gap-2">
