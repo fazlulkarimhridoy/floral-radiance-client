@@ -9,7 +9,6 @@ import {
     Image,
     Input,
     InputNumber,
-    message,
     Select,
     Upload,
     UploadFile,
@@ -19,6 +18,7 @@ import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 
@@ -109,7 +109,6 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         enabled: id ? true : false,
     });
 
-    console.log("single product details", singleProductDetails);
 
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
@@ -152,11 +151,16 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                 }
             )
             .then((data) => {
-                console.log(data);
                 if (data.data.status == "success") {
-                    message.success("Product updated successfully");
                     // go back to product list
                     push("/admin/products");
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Product updated successfully!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
             })
             .catch((error) => {

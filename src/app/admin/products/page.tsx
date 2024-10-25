@@ -2,7 +2,7 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input, message } from "antd";
+import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
