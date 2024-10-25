@@ -391,7 +391,7 @@ const AddProduct = () => {
                                 onPreview={handlePreview}
                                 onChange={handleChange}
                             >
-                                {fileList.length >= 8 ? null : uploadButton}
+                                {fileList.length >= 5 ? null : uploadButton}
                             </Upload>
                             {previewImage && (
                                 <Image

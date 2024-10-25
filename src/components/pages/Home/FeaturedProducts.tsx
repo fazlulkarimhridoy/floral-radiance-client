@@ -27,6 +27,7 @@ interface CartItem {
 }
 
 const FeaturedProducts = () => {
+    const [modal1Open, setModal1Open] = useState(false);
     // fetch all products from server
     const { data: featuredProducts = [], isLoading } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],
@@ -63,7 +64,7 @@ const FeaturedProducts = () => {
                 { product_name, images, price, id },
             ]);
             localStorage.setItem("cartItem", JSON.stringify(cartData));
-            message.success("Product Addded To Cart!");
+            setModal1Open(true)
         } else {
             message.warning("Product already in the cart!");
         }
@@ -101,6 +102,8 @@ const FeaturedProducts = () => {
                             key={item?.id}
                             item={item}
                             handleCart={handleCart}
+                            modal1Open={modal1Open}
+                            setModal1Open={setModal1Open}
                         />
                     ))
                 ) : (

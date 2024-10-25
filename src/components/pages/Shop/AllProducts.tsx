@@ -26,6 +26,8 @@ interface CartItem {
 
 const AllProducts = () => {
     const { categoryName } = useCategory();
+    const [modal1Open, setModal1Open] = useState(false);
+
 
     // fetch all products froom server
     const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
@@ -73,18 +75,13 @@ const AllProducts = () => {
         images: string,
         price: number
     ) => {
-        const existingProduct = cartData.find((item) => item.id === id);
-        if (!existingProduct) {
-            // Use functional state update to ensure you're working with the latest state
-            setCartData((prevCardData) => [
-                ...prevCardData,
-                { product_name, images, price, id },
-            ]);
-            localStorage.setItem("cartItem", JSON.stringify(cartData));
-            message.success("Product Addded To Cart!");
-        } else {
-            message.warning("Product already added to cart!");
-        }
+        // Use functional state update to ensure you're working with the latest state
+        setCartData((prevCardData) => [
+            ...prevCardData,
+            { product_name, images, price, id },
+        ]);
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+        setModal1Open(true)
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -113,6 +110,8 @@ const AllProducts = () => {
                             key={item?.id}
                             item={item}
                             handleCart={handleCart}
+                            modal1Open={modal1Open}
+                            setModal1Open={setModal1Open}
                         />
                     ))
                 ) : (

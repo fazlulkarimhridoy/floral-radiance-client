@@ -18,6 +18,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { TbCategoryPlus } from "react-icons/tb";
 import floral from "../../../public/Images/floral.jpg";
 import { message } from "antd";
+import Swal from "sweetalert2";
 
 const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const pathname = usePathname();
@@ -27,8 +28,14 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // handle logout
     const handleLogout = async () => {
         localStorage.removeItem("token");
-        message.success("Logout successful");
         push("/login");
+        Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Successfully logged out!",
+            showConfirmButton: false,
+            timer: 1500,
+        });
     };
 
     const links = (
@@ -117,7 +124,9 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <RxDashboard />
                     <span
-                        className={`${pathname === "/admin" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin" ? "active flex" : "hidden"
+                        } text-sm`}
                     >
                         Dashboard
                     </span>
@@ -131,7 +140,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <FaShoppingCart />
                     <span
-                        className={`${pathname === "/admin/orders" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/orders"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Orders
                     </span>
@@ -144,7 +157,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <FaUserFriends />
                     <span
-                        className={`${pathname === "/admin/customers" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/customers"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Customers
                     </span>
@@ -157,7 +174,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <FaClipboardList />
                     <span
-                        className={`${pathname === "/admin/products" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/products"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Products
                     </span>
@@ -170,7 +191,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <FaListUl />
                     <span
-                        className={`${pathname === "/admin/categories" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/categories"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Categories
                     </span>
@@ -183,7 +208,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <FaRegPlusSquare />
                     <span
-                        className={`${pathname === "/admin/addProduct" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/addProduct"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Add Product
                     </span>
@@ -198,7 +227,11 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                     <TbCategoryPlus />
                     <span
-                        className={`${pathname === "/admin/addCategory" ? "active flex" : "hidden"} text-sm`}
+                        className={`${
+                            pathname === "/admin/addCategory"
+                                ? "active flex"
+                                : "hidden"
+                        } text-sm`}
                     >
                         Add Category
                     </span>
