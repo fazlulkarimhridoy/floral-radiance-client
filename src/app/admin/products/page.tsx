@@ -2,10 +2,11 @@
 
 import ProductRow from "@/components/dashboard/ProductRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input, message } from "antd";
+import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 interface ProductType {
     id: number;
@@ -54,20 +55,32 @@ const Products = () => {
 
     // handle delete
     const handleDeleteProduct = (id: ProductType) => {
-        const confirmed = window.confirm(
-            "Are you sure you want to delete this product?"
-        );
-        if (confirmed) {
-            axios
-                .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product/${id}`
-                )
-                .then((data) => {
-                    message.success("Successfully deleted");
-                    refetch();
-                    console.log(data);
-                });
-        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete(
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product/${id}`
+                    )
+                    .then(() => {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Product has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
+                        refetch();
+                    });
+            }
+        });
     };
 
     // Handle product filter for search

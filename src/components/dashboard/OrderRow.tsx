@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import OrderItem from "./OrderItem";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const statusOptions = [
     {
@@ -71,13 +72,13 @@ const OrderRow = ({
     } = categoryData;
 
     const handleOrderStatus = async (e: any) => {
-        console.log("status", e.target.value);
+        const status = e.target.value
         // update status to server
         await axios
             .patch(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${customerId}`,
                 {
-                    orderStatus: e.target.value,
+                    orderStatus: status,
                 },
                 {
                     headers: {
@@ -86,10 +87,15 @@ const OrderRow = ({
                 }
             )
             .then((data) => {
-                console.log(data);
                 if (data.data.status == "success") {
                     refetch();
-                    message.success("Order status updated");
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `ORDER ${status}`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
             })
             .catch((error) => {
@@ -146,7 +152,7 @@ const OrderRow = ({
                         ))}
                 </select>
             </td>
-            
+
             <Modal
                 className="w-full"
                 footer={false}
