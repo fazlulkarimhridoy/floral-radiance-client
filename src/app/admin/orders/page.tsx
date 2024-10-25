@@ -58,7 +58,6 @@ const Orders = () => {
         refetchOnWindowFocus: false,
     });
 
-    console.log(allOrders);
 
     // Handle product filter for search
     const filteredOrders =

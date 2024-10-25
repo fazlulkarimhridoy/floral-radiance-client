@@ -27,8 +27,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart }) => {
                 <Image
                     src={item?.images[0]}
                     alt={`Image`}
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
                     className="w-[200px] h-[200px] rounded-xl"
                 />
             </div>
@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart }) => {
                 <p className="font-outfit text-base font-bold text-[#194464]">
                     {item?.product_name}
                 </p>
-                <p className="font-outfit text-sm text-[#194464]">
+                <p className="font-outfit text-sm text-[#194464] truncate">
                     {item?.description}
                 </p>
                 <div className="flex items-center justify-center text-center">

@@ -400,7 +400,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                                 fileList={fileList}
                                 onChange={handleChange}
                             >
-                                {fileList && fileList.length >= 8
+                                {fileList && fileList.length >= 5
                                     ? null
                                     : uploadButton}
                             </Upload>
