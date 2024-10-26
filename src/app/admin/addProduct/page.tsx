@@ -147,7 +147,7 @@ const AddProduct = () => {
           setLoading(false);
           Swal.fire({
             position: "center",
-            icon: "error",
+            icon: "success",
             title: "Successfully added product!",
             showConfirmButton: false,
             timer: 1500,

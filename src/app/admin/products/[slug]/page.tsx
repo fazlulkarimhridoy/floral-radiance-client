@@ -10,6 +10,7 @@ import {
     Input,
     InputNumber,
     Select,
+    Spin,
     Upload,
     UploadFile,
     UploadProps,
@@ -55,6 +56,7 @@ type CategoryType = {
 };
 
 const UpdateProduct = ({ params }: { params: { slug: string } }) => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -114,6 +116,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
     ) => {
+        setLoading(true);
         const thumbUrlsArray = fileList?.map((file) => file?.thumbUrl);
         const product_name =
             values.product_name || singleProductDetails?.product_name;
@@ -151,6 +154,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                 }
             )
             .then((data) => {
+                setLoading(false);
                 if (data.data.status == "success") {
                     // go back to product list
                     push("/admin/products");
@@ -164,6 +168,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error);
             });
     };
@@ -198,6 +203,12 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
             </div>
         );
     }
+
+    // show loader if uploads takes time
+  if (loading) {
+    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
+  }
+
 
     return (
         <div>
