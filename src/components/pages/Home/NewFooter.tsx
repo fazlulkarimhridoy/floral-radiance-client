@@ -8,7 +8,7 @@ import { BiLogoGmail } from "react-icons/bi";
 
 const NewFooter = () => {
   return (
-    <div className="pb-10 px-4 bg-[#b8cedc] py-4 rounded-xl">
+    <div className="pb-10 mt-4 px-4 bg-[#b8cedc] py-4 rounded-xl">
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[400px_400px_208px] place-content-center md:grid-rows-2 md:w-[90%] mx-auto gap-4">
         <div className=" row-span-2 bg-white rounded-xl ">
           <p className="playfair text-[#184363] font-bold text-4xl p-4">
