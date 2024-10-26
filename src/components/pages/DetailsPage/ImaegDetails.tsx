@@ -18,7 +18,7 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
     return (
         <div className=" space-y-4">
             <div className=" box-shadow p-2 rounded-xl flex justify-center">
-                <Image alt="product" src={srcList[0]} className="" />
+                <Image alt="product" src={srcList[0]} className="w-full" />
             </div>
             {/* packaging image */}
             <div className="flex justify-between overflow-x-scroll gap-4">

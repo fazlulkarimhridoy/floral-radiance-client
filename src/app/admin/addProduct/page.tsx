@@ -54,7 +54,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     });
 
 const AddProduct = () => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -80,8 +80,13 @@ const AddProduct = () => {
     };
 
     // handle file change
-    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    const handleChange: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
+        console.log(newFileList);
+
         setFileList(newFileList);
+    };
 
     // image upload button
     const uploadButton = (
@@ -342,7 +347,8 @@ const AddProduct = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Please enter product id as number!",
+                                    message:
+                                        "Please enter product id as number!",
                                 },
                             ]}
                         >
@@ -390,6 +396,7 @@ const AddProduct = () => {
                                 fileList={fileList}
                                 onPreview={handlePreview}
                                 onChange={handleChange}
+                                beforeUpload={() => false}
                             >
                                 {fileList.length >= 5 ? null : uploadButton}
                             </Upload>

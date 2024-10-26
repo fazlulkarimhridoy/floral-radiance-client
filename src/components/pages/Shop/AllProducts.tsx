@@ -27,9 +27,7 @@ interface CartItem {
 
 const AllProducts = () => {
     const { categoryName } = useCategory();
-    console.log(categoryName);
     const { searchText } = useSearchText();
-    console.log("from all", searchText);
     const [modal1Open, setModal1Open] = useState(false);
 
 
@@ -51,7 +49,7 @@ const AllProducts = () => {
         shopProducts?.length > 0
             ? shopProducts?.filter((product) => {
                   const searchingText = categoryName || searchText;
-                  if (searchText) {
+                  if (searchingText) {
                       const searchString = searchingText.toLowerCase();
 
                       // Check product name, category (strings), and productId (number)
