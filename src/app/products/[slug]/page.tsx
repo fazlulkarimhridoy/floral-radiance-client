@@ -6,8 +6,14 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
-import ImageDetails from "@/components/pages/DetailsPage/ImaegDetails";
-import { message } from "antd";
+
+import { Flex, message, Rate } from "antd";
+import { FaStar } from "react-icons/fa";
+import { Spin } from "antd";
+import { div } from "framer-motion/client";
+import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
+
+const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
 interface ProductType {
     id: number;
@@ -18,6 +24,9 @@ interface ProductType {
     discount_price: number;
     description: string;
     rating: number;
+    category: string;
+
+
 }
 
 interface CartItem {
@@ -52,7 +61,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
 
 
 
-        const { data: singleProduct} = useQuery<ProductType>({
+    const { data: singleProduct } = useQuery<ProductType>({
         queryKey: ["singleProduct"],
         queryFn: async () => {
             const res = await axios.get(
@@ -93,17 +102,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
         // Store the entire updated cart into localStorage
         localStorage.setItem("cartItem", JSON.stringify(cartData));
     }, [cartData]);
-    
 
-    console.log('single product',singleProduct)
+
+    console.log('single product', singleProduct)
 
     // show loader if data loads
 
     return (
-        <div className=" lg:p-4">
-            <h1 className="text-4xl">Details about product</h1>
+        <div className=" md:w-[70%] mx-auto lg:p-4">
             {singleProduct ? (
-                <div className=" rounded-xl border-[#f472b6] md:flex gap-4 w-full lg:w-[83%] mx-auto p-6 ">
+                <div className=" rounded-xl border-[#f472b6] md:flex gap-4 w-full lg:w-[83%] mx-auto p-6">
                     <div className="">
                         <ImageDetails srcList={singleProduct?.images} />
                     </div>
@@ -112,46 +120,64 @@ const Page = ({ params }: { params: { slug: string } }) => {
                             <h1 className="text-4xl font-semibold font-outfit text-[#0b0f3b]">
                                 {singleProduct?.product_name}
                             </h1>
-                            <p className="text-xl playfair font-semibold ">
-                            {singleProduct?.description}
+                            {/* price ...............................*/}
+                            <div className="flex items-center font-semibold text-2xl">
+                                <div className={`max-w-52 flex gap-2 ${singleProduct.discount_price ? "flex-row-reverse justify-end items-center " : ""}`}>
+                                    <div className="text-center rounded-lg py-4 text-[#184364] font-bold text-xl flex justify-center items-center">
+
+                                        <span className={`${singleProduct?.discount_price ? "line-through text-red-500 text-xl" : ""} text-3xl font-semibold`}>{singleProduct?.price}</span>{" "}
+                                        <span>
+                                            {" "}
+                                            <TbCurrencyTaka />
+                                        </span>
+                                    </div>
+                                    {singleProduct?.discount_price ? (<div className="t text-center rounded-lg py-4 text-[#184364] font-bold text-4xl flex justify-center items-center">
+                                        {singleProduct?.discount_price}{" "}
+                                        <span>
+                                            {" "}
+                                            <TbCurrencyTaka />
+                                        </span>
+                                    </div>) : ""}
+                                </div>
+                            </div>
+                            <p className="text-xl font-outfit font-semibold ">
+                                {singleProduct?.description}
                             </p>
+                            <Flex gap="middle" className="mt-2">
+                                <Rate
+                                    className="flex items-center justify-center text-base text-pink-600"
+                                    tooltips={desc}
+                                    value={singleProduct?.rating}
+                                />
+                            </Flex>
+                            <p className="flex items-center gap-2 text-2xl font-semibold"><span>Category:</span>{singleProduct?.category}</p>
                         </div>
                         <div className="space-y-4 max-w-[400px] ">
-                            <div className="flex justify-between gap-2">
-                                <div className=" border-2 border-[#0b0f3b] flex-1  text-center rounded-lg py-4 text-[#184364] font-bold text-xl flex justify-center items-center">
-                                    <span className={`${singleProduct.discount_price ? "line-through text-red-500" : ""} line-through text-red-500`}>{singleProduct.price}</span>{" "}
-                                    <span>
-                                        {" "}
-                                        <TbCurrencyTaka />
-                                    </span>
-                                </div>
-                                {singleProduct.discount_price ? (<div className="border-2 border-[#0b0f3b] flex-1  text-center rounded-lg py-4 text-[#184364] font-bold text-xl flex justify-center items-center">
-                                    {singleProduct.discount_price}{" "}
-                                    <span>
-                                        {" "}
-                                        <TbCurrencyTaka />
-                                    </span>
-                                </div> ): ""}
-
+                            <div className="flex  gap-2">
                                 <Link
                                     href={`/cart`}
-                                    className="border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg text-[#0b0f3b] hover:bg-[#0b0f3b] hover:text-white px-2 font-bold flex items-center"
+                                    className=" btn w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center"
                                 >
                                     <button onClick={() =>
                                         handleCart(
                                             singleProduct?.id,
                                             singleProduct?.product_name,
                                             singleProduct?.images[0],
-                                            singleProduct?.price
+                                            singleProduct?.discount_price ?? singleProduct?.price
                                         )
                                     } className="">Add to cart</button>
                                 </Link>
+                                {/* <Link href={`/purchaseOrder`} className="btn border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg text-[#0b0f3b] hover:bg-[#0b0f3b] hover:text-white px-2 font-bold flex items-cente">
+                                    <button className="">Buy it now</button>
+                                </Link> */}
                             </div>
                         </div>
                     </div>
                 </div>
             ) : (
-                <p>Loading product details...</p>
+                <div className="text-center">
+                    <Spin />
+                </div>
             )}
         </div>
     );

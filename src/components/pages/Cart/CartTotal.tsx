@@ -11,7 +11,7 @@ const CartTotal: React.FC<CartTotalProps> = ({ calculateTotal, show }) => {
     const total = calculateTotal();
 
     return (
-        <div className="font-outfit border-2 border-[rgb(162,182,195)] p-2 space-y-4 w-full lg:w-[600px] font-outfit rounded-xl">
+        <div className="font-outfit border-2 border-[rgb(162,182,195)] p-2 space-y-4 w-full font-outfit rounded-xl">
             <h1 className="text-xl font-semibold text-fade-black">
                 Cart Totals
             </h1>
@@ -32,7 +32,7 @@ const CartTotal: React.FC<CartTotalProps> = ({ calculateTotal, show }) => {
             {show && (
                 <div>
                     <Link href={"purchaseOrder"}>
-                        <button className="text-white bg-[#7a71b1] w-full p-2 rounded-lg">
+                        <button className="text-white bg-[#7a71b1] w-full p-2 rounded-lg btn">
                             Purchase Order
                         </button>
                     </Link>

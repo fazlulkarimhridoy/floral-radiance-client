@@ -42,7 +42,6 @@ const Home = () => {
       <FeaturedProducts/>
       <HowItWorks/>
       <GetBouquet/>
-      <NewFooter/>
     </div>
   );
 };
