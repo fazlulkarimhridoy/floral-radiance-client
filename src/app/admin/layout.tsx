@@ -275,6 +275,14 @@ const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           className="flex-1 flex-nowrap overflow-x-scroll scroll-smooth h-screen bg-blue-50 p-2 md:p-8 lg:p-12 pb-28 md:pb-28 lg:mb-0"
         >
+          <div className="flex items-center justify-between">
+            <h1 className="text-left text-sm font-thin italic text-gray-600 bg-[#d1e3ee] px-4 py-2 rounded-3xl">
+              Floral Radiance 🌹
+            </h1>
+            <h1 className="text-left text-sm font-thin italic text-gray-600 bg-[#d1e3ee] px-4 py-2 rounded-3xl">
+              Date: {new Date().toLocaleDateString()}{" "}
+            </h1>
+          </div>
           {children}
         </div>
       </div>
