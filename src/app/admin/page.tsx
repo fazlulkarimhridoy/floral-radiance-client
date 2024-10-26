@@ -173,10 +173,10 @@ const AdminDashboard = () => {
                 </h3>
             </div>
             {/* statistics */}
-            <div className="mt-10 px-10 2xl:px-52 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
+            <div className="mt-10 px-2 2xl:px-52 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
                 <div>
                     <Statistic
-                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl"
                         title="Total Balance (BDT)"
                         value={data?.orderStatistic?._sum?.totalPrice}
                         precision={2}
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                     <Statistic
-                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl"
                         title="Total Orders"
                         value={data?.orderStatistic?._count}
                         formatter={formatter}
@@ -193,7 +193,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                     <Statistic
-                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl"
                         title="Total Customers"
                         value={data?.customerStatistic?._count}
                         formatter={formatter}
@@ -201,7 +201,7 @@ const AdminDashboard = () => {
                 </div>
                 <div>
                     <Statistic
-                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl transition-all duration-300 hover:scale-105 cursor-pointer"
+                        className="bg-blue-200 p-5 text-center font-bold rounded-2xl"
                         title="Total Products"
                         value={data?.productStatistic?._count}
                         precision={2}
