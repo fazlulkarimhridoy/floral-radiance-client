@@ -1,6 +1,5 @@
 "use client";
 
-// import { Image   } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { Button, Input, message, Spin, Radio, Space } from "antd";
@@ -20,6 +19,7 @@ import Image from "next/image";
 import axios from "axios";
 import type { RadioChangeEvent } from 'antd';
 
+import { useRouter } from "next/navigation";
 
 interface FormData {
     mobileNumber: string;
@@ -49,6 +49,8 @@ const Page = () => {
     const [note, setNote] = useState("");
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { push } = router;
 
     // Retrieve cart data from localStorage when the component mounts
 
@@ -203,7 +205,7 @@ const Page = () => {
 
             localStorage.removeItem("cartItem");
             setCartData([]);
-            window.location.href = "/";
+            push("/success");
             setLoading(false);
             message.success("Order placed successfully!");
         } catch (error: any) {
