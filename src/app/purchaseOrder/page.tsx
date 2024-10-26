@@ -1,6 +1,5 @@
 "use client";
 
-// import { Image   } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { Button, Input, message, Spin } from "antd";
@@ -18,6 +17,7 @@ import CartTotal from "@/components/pages/Cart/CartTotal";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface FormData {
     mobileNumber: string;
@@ -38,14 +38,6 @@ interface CartItem {
 const Page = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
     const [showData, setShowData] = useState(false);
-    // const [formData, setFormData] = useState<FormData>({
-    //     mobileNumber: "",
-    //     deliveryAddress: " ",
-    //     deliveryDate: "",
-    //     deliveryTime: "",
-    //     suggetion: "",
-    //     cashOnDelivery: false,
-    // });
     const [name, setname] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -55,6 +47,8 @@ const Page = () => {
     const [note, setNote] = useState("");
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { push } = router;
 
     // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
@@ -202,7 +196,7 @@ const Page = () => {
 
             localStorage.removeItem("cartItem");
             setCartData([]);
-            window.location.href = "/";
+            push("/success");
             setLoading(false);
             message.success("Order placed successfully!");
         } catch (error: any) {

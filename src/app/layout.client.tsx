@@ -27,9 +27,9 @@ export default function LayoutClient({
             <SearchTextProvider>
               <TanstackProvider>
                 <div>
-                  {pathname.startsWith("/login") ? <></> : <Navbar />}
+                  {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <Navbar />}
                   <div>{children}</div>
-                  {pathname.startsWith("/login") ? <></> : <Footer />}
+                  {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <Footer />}
                 </div>
               </TanstackProvider>
             </SearchTextProvider>
