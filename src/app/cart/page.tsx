@@ -6,16 +6,35 @@ import { FaTrash } from "react-icons/fa";
 import ShipmentCalculator from "@/components/pages/Cart/ShipmentCalculator";
 import CartTotal from "@/components/pages/Cart/CartTotal";
 import Image from "next/image";
+import QuantitySelector from "@/components/pages/Cart/QuantitySelector";
 
 interface CartItem {
     id: string;
     product_name: string;
     images: string;
     price: number;
+    quantity:number;
 }
+
 
 const Cart: React.FC = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
+
+    const [quantity, setQuantity] = useState(1);
+
+    const handleIncrease = () => {
+        const newQuantity = quantity + 1;
+        setQuantity(newQuantity);
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            const newQuantity = quantity - 1;
+            setQuantity(newQuantity);
+
+        }
+    };
+
 
     useEffect(() => {
         // Load cart data from localStorage
@@ -37,6 +56,8 @@ const Cart: React.FC = () => {
         return cartData.reduce((total, item) => total + item.price, 0);
     };
 
+    console.log(cartData)
+
     return (
         <div className="w-full lg:w-[70%] mx-auto px-2 lg:px-0 py-4">
             <div className="overflow-x-auto scroll-smooth pt-4 mb-5 md:mb-0 ">
@@ -47,6 +68,7 @@ const Cart: React.FC = () => {
                             <th>#</th>
                             <th>Product & image</th>
                             <th>Name</th>
+                            {/* <th>Quantity</th> */}
                             <th>Price</th>
                             <th className="text-right">Delete</th>
                         </tr>
@@ -75,6 +97,23 @@ const Cart: React.FC = () => {
                                         <div className="text-gray-600 font-bold">
                                             {data?.product_name}
                                         </div>
+                                    </td>
+                                    <td>
+                                        {/* <div className="flex items-center gap-2">
+                                            <button
+                                                className="bg-gray-200 px-3 py-1 rounded-md text-lg"
+                                                onClick={handleDecrease}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="text-lg">{data.quantity}</span>
+                                            <button
+                                                className="bg-gray-200 px-3 py-1 rounded-md text-lg"
+                                                onClick={handleIncrease}
+                                            >
+                                                +
+                                            </button>
+                                        </div> */}
                                     </td>
                                     <td>
                                         <div className="text-gray-600 font-bold">
