@@ -1,9 +1,8 @@
 "use client";
 
-// import { Image   } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
-import { Button, Input, message, Spin } from "antd";
+import { Button, Input, message, Spin, Radio, Space } from "antd";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import type { DatePickerProps } from "antd";
@@ -18,6 +17,9 @@ import CartTotal from "@/components/pages/Cart/CartTotal";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import axios from "axios";
+import type { RadioChangeEvent } from 'antd';
+
+import { useRouter } from "next/navigation";
 
 interface FormData {
     mobileNumber: string;
@@ -37,15 +39,7 @@ interface CartItem {
 
 const Page = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
-    const [showData, setShowData] = useState(false);
-    // const [formData, setFormData] = useState<FormData>({
-    //     mobileNumber: "",
-    //     deliveryAddress: " ",
-    //     deliveryDate: "",
-    //     deliveryTime: "",
-    //     suggetion: "",
-    //     cashOnDelivery: false,
-    // });
+    const [showData, setShowData] = useState(true);
     const [name, setname] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -55,14 +49,23 @@ const Page = () => {
     const [note, setNote] = useState("");
     const [cashOnDelivery, setCashOnDelivery] = useState(false);
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { push } = router;
 
     // Retrieve cart data from localStorage when the component mounts
+
     useEffect(() => {
         const storedCart = localStorage.getItem("cartItem");
         if (storedCart) {
             setCartData(JSON.parse(storedCart));
         }
     }, []);
+
+    // payment onChange fn
+    const onChange = (e: RadioChangeEvent) => {
+        console.log('radio checked', e.target.value);
+        setCashOnDelivery(e.target.value);
+    };
 
     const removeFromCart = (id: number) => {
         // selected id data should be deleted from local storage
@@ -202,7 +205,7 @@ const Page = () => {
 
             localStorage.removeItem("cartItem");
             setCartData([]);
-            window.location.href = "/";
+            push("/success");
             setLoading(false);
             message.success("Order placed successfully!");
         } catch (error: any) {
@@ -226,7 +229,7 @@ const Page = () => {
             <h1 className="text-4xl font-outfit text-center font-semibold">
                 Place your order
             </h1>
-            <div className=" w-full p-0  font-outfit space-y-4 gap-4 bg-white rounded-xl box-shadow flex flex-col md:flex-row-reverse justify-center relative ">
+            <div className=" w-full p-2 font-outfit space-y-4 gap-4 bg-white rounded-xl box-shadow flex flex-col lg:flex-row-reverse justify-center relative ">
                 <div>
                     {/* Product information */}
                     <div
@@ -299,7 +302,7 @@ const Page = () => {
                             </table>
                         </div>
                     )}
-                    <div>
+                    <div className="p-2 md:p-0">
                         <CartTotal
                             calculateTotal={calculateTotal}
                             show={false}
@@ -416,38 +419,25 @@ const Page = () => {
                                 />
                             </div>
                         </div>
-                        {/* Buttons for payment method */}
-                        <div className="flex flex-col gap-4">
-                            <button
-                                onClick={handleCashOnDeliveryChange}
-                                className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 w-full text-[#7a71b1]"
-                            >
-                                <FaMoneyBillWave />
-                                Cash on Delivery
-                            </button>
-                            <button
-                                onClick={handleAdvanceChange}
-                                className="hover:bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 hover:text-white text-xl rounded-md flex items-center gap-2 text-[#7a71b1]"
-                            >
-                                Advance Payment
-                            </button>
+                        <div className="py-4 space-y-4">
+                            <Radio.Group onChange={onChange} value={cashOnDelivery}>
+                                <Space direction="vertical">
+                                    <Radio className="text-xl play-fair font-semibold" value={true}>Cash on Delivery</Radio>
+                                    <Radio className="text-xl play-fair font-semibold" value={false}>Advance payment</Radio>
+
+                                </Space>
+                            </Radio.Group>
                             <button
                                 onClick={handleSubmitData}
                                 type="submit"
-                                className="bg-[#7a71b1] border-2 border-[#7a71b1] px-3 py-2 text-white text-xl rounded-md flex items-center justify-center gap-2 text-center"
+                                className=" w-full bg-[#7a71b1] border-2 hover:bg-[#a29bd3] border-[#7a71b1] px-3 py-2 text-white text-xl rounded-md flex items-center justify-center gap-2 text-center btn"
                             >
                                 Complete order
                             </button>
                         </div>
                     </div>
                 </div>
-                {/* <Image
-          className="absolute -right-80"
-          width={600}
-          height={700}
-          src="/Icon/artOne.png"
-          alt="artImage"
-        /> */}
+
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+
 interface CartItem {
     id: number;
     product_name: string;
@@ -20,6 +21,7 @@ const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [open, setOpen] = useState(false);
     const [cartData, setCartData] = useState<CartItem[]>([]);
+
 
     // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
@@ -99,7 +101,7 @@ const Navbar = () => {
                             <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
                         </button>
                         <p className="absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">
-                            {cartData?.length}
+                            {""}
                         </p>
                     </Link>
 
@@ -113,18 +115,18 @@ const Navbar = () => {
                             open={open}
                         >
                             <ul className="text-lg space-y-2 font-poppins font-medium">
-                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li onClick={onClose} className="hover:text-pink-600 cursor-pointer transition-colors">
                                     <Link href="/">Home</Link>
                                 </li>
 
-                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
                                     <Link href="/products">Shop</Link>
                                 </li>
 
-                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
                                     <Link href="/aboutUs">About Us</Link>
                                 </li>
-                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
                                     <Link href="/contactUs">Contact Us</Link>
                                 </li>
                                 
