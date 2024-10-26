@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar/Navbar";
-import Footer from "@/components/shared/Footer/Footer";
+// import Footer from "@/components/shared/Footer/Footer";
 import TanstackProvider from "../../providers/TanstackProvider";
 import { usePathname } from "next/navigation";
 import CategoryProvider from "@/context/CategoryContext";

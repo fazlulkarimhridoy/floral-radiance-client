@@ -6,11 +6,12 @@ import axios from "axios";
 import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
-import ImageDetails from "@/components/pages/DetailsPage/ImaegDetails";
+
 import { Flex, message, Rate } from "antd";
 import { FaStar } from "react-icons/fa";
 import { Spin } from "antd";
 import { div } from "framer-motion/client";
+import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
