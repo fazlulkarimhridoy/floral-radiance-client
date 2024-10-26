@@ -87,6 +87,9 @@ const Navbar = () => {
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
                             <Link href="/aboutUs">About Us</Link>
                         </li>
+                        <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                            <Link href="/contactUs">Contact Us</Link>
+                        </li>
                     </ul>
                 </div>
 
@@ -120,6 +123,9 @@ const Navbar = () => {
 
                                 <li className="hover:text-pink-600 cursor-pointer transition-colors">
                                     <Link href="/aboutUs">About Us</Link>
+                                </li>
+                                <li className="hover:text-pink-600 cursor-pointer transition-colors">
+                                    <Link href="/contactUs">Contact Us</Link>
                                 </li>
                                 
                             </ul>
