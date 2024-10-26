@@ -2,7 +2,7 @@
 
 import CategoryRow from "@/components/dashboard/CategoryRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input } from "antd";
+import { Empty, Input, Spin } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -19,6 +19,7 @@ type CategoryType = {
 };
 
 const Categories = () => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -57,12 +58,15 @@ const Categories = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
+            setLoading(true);
             if (result.isConfirmed) {
                 axios
                     .delete(
                         `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`
                     )
                     .then(() => {
+                        refetch();
+                        setLoading(false);
                         Swal.fire({
                             title: "Deleted!",
                             text: "Category has been deleted.",
@@ -70,7 +74,6 @@ const Categories = () => {
                             timer: 1500,
                             showConfirmButton: false,
                         });
-                        refetch();
                     });
             }
         });
@@ -112,6 +115,11 @@ const Categories = () => {
             </div>
         );
     }
+
+      // show loader if uploads takes time
+  if (loading) {
+    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
+  }
 
     return (
         <div className="relative">

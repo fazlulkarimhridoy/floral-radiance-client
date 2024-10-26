@@ -79,8 +79,9 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="my-[156px]">
+        <div className="mt-60">
             <h1 className="text-center text-4xl font-bold">Admin Login</h1>
+            <p className="text-gray-400 text-center text-sm font-thin mt-5 !italic">Floral Radiance 🌹</p>
             <Form
                 className="mt-10 px-5 md:px-0"
                 initialValues={{ remember: false }}
@@ -89,7 +90,7 @@ const LoginPage = () => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                {/* category name */}
+                {/* email address */}
                 <div className="flex items-center gap-10">
                     <Form.Item<LoginType>
                         className="w-full md:w-1/2 lg:w-1/4 mx-auto"
@@ -111,7 +112,7 @@ const LoginPage = () => {
                     </Form.Item>
                 </div>
 
-                {/* category id */}
+                {/* password */}
                 <div className="flex items-center gap-2 md:gap-10">
                     <Form.Item<LoginType>
                         className="w-full md:w-1/2 lg:w-1/4 mx-auto"

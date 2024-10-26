@@ -10,39 +10,39 @@ import CategoryProvider from "@/context/CategoryContext";
 import SearchTextProvider from "@/context/SearchTextContext";
 
 export const metadata: Metadata = {
-    title: "Floral Radiance",
-    description: "Designed and developed by Himel & Hridoy",
+  title: "Floral Radiance",
+  description: "Designed and developed by Himel & Hridoy",
 };
 
 export default function LayoutClient({
-    children,
+  children,
 }: Readonly<{ children: React.ReactNode }>) {
-    const pathname = usePathname();
+  const pathname = usePathname();
 
-    return (
-        <div>
-            {!pathname.startsWith("/admin") && (
-                <>
-                    <CategoryProvider>
-                        <SearchTextProvider>
-                            <TanstackProvider>
-                                <div>
-                                    <Navbar />
-                                    <div>{children}</div>
-                                    <Footer />
-                                </div>
-                            </TanstackProvider>
-                        </SearchTextProvider>
-                    </CategoryProvider>
-                </>
-            )}
-            {pathname.startsWith("/admin") && (
-                <>
-                    <TanstackProvider>
-                        <div>{children}</div>
-                    </TanstackProvider>
-                </>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      {!pathname.startsWith("/admin") && (
+        <>
+          <CategoryProvider>
+            <SearchTextProvider>
+              <TanstackProvider>
+                <div>
+                  {pathname.startsWith("/login") ? <></> : <Navbar />}
+                  <div>{children}</div>
+                  {pathname.startsWith("/login") ? <></> : <Footer />}
+                </div>
+              </TanstackProvider>
+            </SearchTextProvider>
+          </CategoryProvider>
+        </>
+      )}
+      {pathname.startsWith("/admin") && (
+        <>
+          <TanstackProvider>
+            <div>{children}</div>
+          </TanstackProvider>
+        </>
+      )}
+    </div>
+  );
 }
