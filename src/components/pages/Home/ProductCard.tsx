@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Modal, Button } from 'antd';
 import { FaCheckCircle } from "react-icons/fa";
@@ -29,19 +29,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open, setModal1Open }) => {
 
-    // const handleOk = () => {
-    //     setLoading(true);
-    //     setTimeout(() => {
-    //       setLoading(false);
-    //       setOpen(false);
-    //     }, 3000);
-    //   };
-
-    //   const handleCancel = () => {
-    //     setOpen(false);
-    //   };
-
-
+    
     return (
         <div className="w-full min-h-[200px] md:w-[250px] flex flex-col items-stretch text-center justify-center gap-4 p-4 rounded-xl amoled-shadow bg-white lg:bg-none">
             <Link href={`products/${item.id}`}>
@@ -80,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                             item?.price
                         )
                     }
-                    className="border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit hover:bg-[#194464] hover:text-white transition-colors duration-300 text-center"
+                    className="btn border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
                 >
                     Add to cart
                 </button>
@@ -111,9 +99,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                     className="h-[400px]"
                 >
                     <div className="flex gap-4">
-                        <figure>
+                        {/* <figure>
                             <Image width={150} height={150} src={item?.images[0]} alt="flower" />
-                        </figure>
+                        </figure> */}
                         <div className="flex space-y-8">
                             <div className="space-y-4">
                                 <h1 className="font-outfit md:text-2xl font-semibold">{item?.product_name}</h1>

@@ -1,9 +1,15 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
 import { Select } from "antd";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 
 const ShipmentCalculator = () => {
+  const [shipmentCost,setShipmentCost] = useState('')
+
+
   const onChange = (value: string) => {
+    setShipmentCost(value)
     console.log(`selected ${value}`);
   };
 
@@ -21,150 +27,48 @@ const ShipmentCalculator = () => {
         onChange={onChange}
         onSearch={onSearch}
         options = {[
+
             {
-              value: "kotwali",
-              label: "Kotwali",
-            },
-            {
-              value: "mohammadpur",
+              value: "150",
               label: "mohammadpur",
             },
+
             {
-              value: "wari",
-              label: "Wari",
-            },
-            {
-              value: "jatrabari",
-              label: "Jatrabari",
-            },
-            {
-              value: "demra",
-              label: "Demra",
-            },
-            {
-              value: "gandaria",
-              label: "Gandaria",
-            },
-            {
-              value: "dhanmondi",
+              value: "150",
               label: "Dhanmondi",
             },
             {
-              value: "hazaribagh",
-              label: "Hazaribagh",
-            },
-            {
-              value: "kamrangirchar",
-              label: "Kamrangirchar",
-            },
-            {
-              value: "lalbagh",
-              label: "Lalbagh",
-            },
-            {
-              value: "chawkbazar",
-              label: "Chawkbazar",
-            },
-            {
-              value: "sutrapur",
-              label: "Sutrapur",
-            },
-            {
-              value: "shyampur",
-              label: "Shyampur",
-            },
-            {
-              value: "kadamtali",
-              label: "Kadamtali",
-            },
-            {
-              value: "bangshal",
-              label: "Bangshal",
-            },
-            {
-              value: "shahbagh",
-              label: "Shahbagh",
-            },
-            {
-              value: "new_market",
-              label: "New Market",
-            },
-            {
-              value: "kalabagan",
-              label: "Kalabagan",
-            },
-            {
-              value: "gulshan",
+              value: "150",
               label: "Gulshan",
             },
             {
-              value: "banani",
+              value: "150",
               label: "Banani",
             },
             {
-              value: "tejgaon",
-              label: "Tejgaon",
-            },
-            {
-              value: "mohakhali",
-              label: "Mohakhali",
-            },
-            {
-              value: "cantonment",
-              label: "Cantonment",
-            },
-            {
-              value: "uttara",
+              value: "250",
               label: "Uttara",
             },
             {
-              value: "turag",
-              label: "Turag",
-            },
-            {
-              value: "khilkhet",
-              label: "Khilkhet",
-            },
-            {
-              value: "badda",
+              value: "200",
               label: "Badda",
             },
             {
-              value: "rampura",
+              value: "200",
               label: "Rampura",
             },
             {
-              value: "dakhin_khan",
-              label: "Dakhin Khan",
-            },
-            {
-              value: "vatara",
-              label: "Vatara",
-            },
-            {
-              value: "pallabi",
-              label: "Pallabi",
-            },
-            {
-              value: "mirpur",
+              value: "150",
               label: "Mirpur",
-            },
-            {
-              value: "shah_ali",
-              label: "Shah Ali",
-            },
-            {
-              value: "kafrul",
-              label: "Kafrul",
             },
           ]}
       />
 
-      <h1 className="flex items-center text-lg text-fade-black">Estimate Delivery cost: 200<FaBangladeshiTakaSign className="text-sm" /></h1>
+      <h1 className="flex items-center text-lg text-fade-black">Estimate Delivery cost: {shipmentCost}<FaBangladeshiTakaSign className="text-sm" /></h1>
 
-      <div>
+      {/* <div>
         <button className="text-white bg-black w-full p-2 rounded-lg">Calculate delivery cost</button>
-      </div>
+      </div> */}
     </div>
   );
 };

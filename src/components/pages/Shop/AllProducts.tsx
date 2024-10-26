@@ -5,6 +5,7 @@ import ProductCard from "../Home/ProductCard";
 import { Empty, message, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
 
+
 interface ProductType {
     id: number;
     product_id: number;
@@ -27,7 +28,6 @@ interface CartItem {
 const AllProducts = () => {
     const { categoryName } = useCategory();
     const [modal1Open, setModal1Open] = useState(false);
-
 
     // fetch all products froom server
     const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
@@ -79,7 +79,7 @@ const AllProducts = () => {
         setCartData((prevCardData) => [
             ...prevCardData,
             { product_name, images, price, id },
-        ]);
+        ]);    
         localStorage.setItem("cartItem", JSON.stringify(cartData));
         setModal1Open(true)
     };
@@ -102,7 +102,7 @@ const AllProducts = () => {
     }
 
     return (
-        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20">
+        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-4">
             {shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (

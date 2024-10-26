@@ -7,6 +7,8 @@ import Footer from "@/components/shared/Footer/Footer";
 import TanstackProvider from "../../providers/TanstackProvider";
 import { usePathname } from "next/navigation";
 import CategoryProvider from "@/context/CategoryContext";
+import NewFooter from "@/components/pages/Home/NewFooter";
+
 
 export const metadata: Metadata = {
     title: "Floral Radiance",
@@ -22,15 +24,16 @@ export default function LayoutClient({
         <div>
             {!pathname.startsWith("/admin") && (
                 <>
-                    <CategoryProvider>
-                        <TanstackProvider>
-                            <div>
-                                <Navbar />
-                                <div>{children}</div>
-                                <Footer />
-                            </div>
-                        </TanstackProvider>
-                    </CategoryProvider>
+
+                        <CategoryProvider>
+                            <TanstackProvider>
+                                <div>
+                                    <Navbar />
+                                    <div>{children}</div>
+                                    <NewFooter />
+                                </div>
+                            </TanstackProvider>
+                        </CategoryProvider>
                 </>
             )}
             {pathname.startsWith("/admin") && (

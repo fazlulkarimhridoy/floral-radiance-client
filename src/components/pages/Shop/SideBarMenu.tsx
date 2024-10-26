@@ -31,6 +31,7 @@ const SideBarMenu = () => {
     return (
         <div className=" w-full md:w-[250px] ">
             <ul className="flex flex-col  font-roboto text-lg">
+                <li  className ="sideBar-navLink">All product</li>
                 {allCategories?.length > 0 &&
                     allCategories?.map((item) => (
                         <li

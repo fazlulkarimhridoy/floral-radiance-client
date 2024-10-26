@@ -1,9 +1,55 @@
+"use client"
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Page = () => {
+  const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
+  const [scrollY, setScrollY] = useState(0);
+  const [width, setWidth] = useState(0);
+
+  useEffect(() => {
+
+
+
+    const handleScrollLength = () => {
+      setScrollY(window.scrollY);
+    };
+
+    const handleScroll = () => {
+
+      setScrollY(window.scrollY);
+      setWidth(window.innerWidth);
+
+      if (window?.scrollY > 300) {
+        setBgColor("bg-[#b8cedc]"); // Change color when scrolled past 100px
+      }
+
+      if (window?.scrollY > 500) {
+        setBgColor("bg-white"); // Default background color
+      }
+    };
+
+      // Add event listener
+      // window.addEventListener('scroll', handleScrollLength);
+
+      // // Clean up on unmount
+      // return () => window.removeEventListener('scroll', handleScrollLength);
+
+    // Add event listener for scroll
+    window?.addEventListener("scroll", handleScroll);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  
   return (
-    <div className="bg-[#c3b2e8] space-y-10 p-4">
+    <div className={`bg-[#c3b2e8] space-y-10 p-4 ${bgColor} transition-colors duration-300 `}>
+      {/* <h1 className=" fixed border">{scrollY}</h1>
+      <h1 className=" fixed border">{width}</h1> */}
       <h1 className="playfair text-center text-4xl font-bold text-[#52225e]">
         About Us
       </h1>
@@ -17,7 +63,7 @@ const Page = () => {
         ></Image>
       </div>
 
-      <p className="font-outfit text-[#52225e] text-lg max-w-[800px] text-center mx-auto">
+      <p className="font-outfit text-[#52225e] text-2xl max-w-[800px] text-center mx-auto ">
         About Floral Radiance Founded in 2022, Floral Radiance has blossomed
         into a trusted provider of premium fresh flower bouquets. Our journey
         began with a simple mission: to bring the beauty and elegance of fresh
