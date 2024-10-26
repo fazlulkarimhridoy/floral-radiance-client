@@ -2,7 +2,7 @@
 
 import CustomerRow from "@/components/dashboard/CustomerRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input, message } from "antd";
+import { Empty, Input } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -45,24 +45,6 @@ const Products = () => {
         retry: 2,
         refetchOnWindowFocus: false,
     });
-
-    // // handle delete
-    // const handleDeleteProduct = (id: CustomerType) => {
-    //     const confirmed = window.confirm(
-    //         "Are you sure you want to delete this customer?"
-    //     );
-    //     if (confirmed) {
-    //         axios
-    //             .delete(
-    //                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/delete-customer/${id}`
-    //             )
-    //             .then((data) => {
-    //                 message.success("Successfully deleted");
-    //                 refetch();
-    //                 console.log(data);
-    //             });
-    //     }
-    // };
 
     // Handle product filter for search
     const filteredCustomers =
@@ -121,6 +103,11 @@ const Products = () => {
                         enterButton="Search"
                         size="large"
                         onSearch={onSearch}
+                        onKeyDown={(e: any) => {
+                            if (e.key === "Enter") {
+                                setSearchText(e.target.value);
+                            }
+                        }}
                     />
                 </div>
             </div>

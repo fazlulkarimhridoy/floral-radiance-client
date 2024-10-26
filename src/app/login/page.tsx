@@ -1,9 +1,10 @@
 "use client";
-import { Button, Form, FormProps, Input, message, Spin } from "antd";
+import { Button, Form, FormProps, Input, Spin } from "antd";
 import Password from "antd/es/input/Password";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 // types
 type LoginType = {
@@ -20,7 +21,6 @@ const LoginPage = () => {
     // handle form submission finish
     const onFinish: FormProps<LoginType>["onFinish"] = async (values) => {
         setLoading(true);
-        console.log("Success:", values);
         await axios
             .post(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, values, {
                 headers: {
@@ -29,21 +29,38 @@ const LoginPage = () => {
                 withCredentials: true,
             })
             .then((data) => {
-                console.log(data);
                 const token = data.data.token;
                 if (token) {
                     localStorage.setItem("token", token);
                     setLoading(false);
                     push("/admin");
-                    message.success("Login successful   ");
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Successfully logged in!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 } else {
                     setLoading(false);
-                    message.error("Invalid email or password");
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Invalid email or password!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
             })
             .catch((error) => {
                 setLoading(false);
-                message.error(error.data.message);
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: `${error.data.message}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
             });
     };
 
@@ -62,8 +79,9 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="my-[156px]">
+        <div className="mt-60">
             <h1 className="text-center text-4xl font-bold">Admin Login</h1>
+            <p className="text-gray-400 text-center text-sm font-thin mt-5 !italic">Floral Radiance 🌹</p>
             <Form
                 className="mt-10 px-5 md:px-0"
                 initialValues={{ remember: false }}
@@ -72,7 +90,7 @@ const LoginPage = () => {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
-                {/* category name */}
+                {/* email address */}
                 <div className="flex items-center gap-10">
                     <Form.Item<LoginType>
                         className="w-full md:w-1/2 lg:w-1/4 mx-auto"
@@ -94,7 +112,7 @@ const LoginPage = () => {
                     </Form.Item>
                 </div>
 
-                {/* category id */}
+                {/* password */}
                 <div className="flex items-center gap-2 md:gap-10">
                     <Form.Item<LoginType>
                         className="w-full md:w-1/2 lg:w-1/4 mx-auto"

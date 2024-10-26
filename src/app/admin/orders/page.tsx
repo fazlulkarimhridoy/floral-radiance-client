@@ -58,7 +58,6 @@ const Orders = () => {
         refetchOnWindowFocus: false,
     });
 
-    console.log(allOrders);
 
     // Handle product filter for search
     const filteredOrders =
@@ -117,6 +116,11 @@ const Orders = () => {
                         enterButton="Search"
                         size="large"
                         onSearch={onSearch}
+                        onKeyDown={(e: any) => {
+                            if (e.key === "Enter") {
+                                setSearchText(e.target.value);
+                            }
+                        }}
                     />
                 </div>
             </div>

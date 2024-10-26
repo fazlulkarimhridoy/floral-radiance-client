@@ -9,8 +9,8 @@ import {
     Image,
     Input,
     InputNumber,
-    message,
     Select,
+    Spin,
     Upload,
     UploadFile,
     UploadProps,
@@ -19,6 +19,7 @@ import TextArea from "antd/es/input/TextArea";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 
@@ -55,6 +56,7 @@ type CategoryType = {
 };
 
 const UpdateProduct = ({ params }: { params: { slug: string } }) => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -109,12 +111,12 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         enabled: id ? true : false,
     });
 
-    console.log("single product details", singleProductDetails);
 
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
     ) => {
+        setLoading(true);
         const thumbUrlsArray = fileList?.map((file) => file?.thumbUrl);
         const product_name =
             values.product_name || singleProductDetails?.product_name;
@@ -152,14 +154,21 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                 }
             )
             .then((data) => {
-                console.log(data);
+                setLoading(false);
                 if (data.data.status == "success") {
-                    message.success("Product updated successfully");
                     // go back to product list
                     push("/admin/products");
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Product updated successfully!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                 }
             })
             .catch((error) => {
+                setLoading(false);
                 console.log(error);
             });
     };
@@ -194,6 +203,12 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
             </div>
         );
     }
+
+    // show loader if uploads takes time
+  if (loading) {
+    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
+  }
+
 
     return (
         <div>
@@ -400,7 +415,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                                 fileList={fileList}
                                 onChange={handleChange}
                             >
-                                {fileList && fileList.length >= 8
+                                {fileList && fileList.length >= 5
                                     ? null
                                     : uploadButton}
                             </Upload>

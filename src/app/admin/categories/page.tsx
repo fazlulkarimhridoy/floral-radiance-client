@@ -2,10 +2,11 @@
 
 import CategoryRow from "@/components/dashboard/CategoryRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input, message } from "antd";
+import { Empty, Input, Spin } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 // types
 const { Search } = Input;
@@ -18,6 +19,7 @@ type CategoryType = {
 };
 
 const Categories = () => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -47,20 +49,34 @@ const Categories = () => {
 
     // delete category
     const handleDeleteCategory = (id: CategoryType) => {
-        const confirmed = window.confirm(
-            "Are you sure you want to delete this category?"
-        );
-        if (confirmed) {
-            axios
-                .delete(
-                    `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`
-                )
-                .then((data) => {
-                    message.success("Successfully deleted");
-                    refetch();
-                    console.log(data);
-                });
-        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            setLoading(true);
+            if (result.isConfirmed) {
+                axios
+                    .delete(
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`
+                    )
+                    .then(() => {
+                        refetch();
+                        setLoading(false);
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Category has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
+                    });
+            }
+        });
     };
 
     // Handle product filter for search
@@ -100,6 +116,11 @@ const Categories = () => {
         );
     }
 
+      // show loader if uploads takes time
+  if (loading) {
+    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
+  }
+
     return (
         <div className="relative">
             <div>
@@ -113,6 +134,11 @@ const Categories = () => {
                         enterButton="Search"
                         size="large"
                         onSearch={onSearch}
+                        onKeyDown={(e: any) => {
+                            if (e.key === "Enter") {
+                                setSearchText(e.target.value);
+                            }
+                        }}
                     />
                 </div>
             </div>
