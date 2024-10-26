@@ -3,7 +3,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="bg-[#c3b2e8] space-y-10 p-4">
+    <div className="bg-[#B8CEDC] space-y-10 p-4">
       <h1 className="playfair text-center text-4xl font-bold text-[#52225e]">
         About Us
       </h1>
