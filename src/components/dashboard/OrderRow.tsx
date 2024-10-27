@@ -1,9 +1,6 @@
-import { Button, message, Modal, Select, Spin } from "antd";
+import { Button, Modal } from "antd";
 import { useState } from "react";
-import { FaTrash } from "react-icons/fa";
 import OrderItem from "./OrderItem";
-import axios from "axios";
-import Swal from "sweetalert2";
 
 const statusOptions = [
   {
@@ -46,12 +43,13 @@ type OrderType = {
 
 const OrderRow = ({
   categoryData,
-  refetch,
+  handleOrderStatus,
+  refetch
 }: {
   categoryData: OrderType;
-  refetch: Function;
+  handleOrderStatus: any;
+  refetch: Function
 }) => {
-  const [loading, setLoading] = useState(false);
   // states and calls
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -72,52 +70,13 @@ const OrderRow = ({
     customer,
   } = categoryData;
 
-  const handleOrderStatus = async (e: any) => {
-    setLoading(true);
+  const handleStatus = (e:any) => {
+    refetch();
     const status = e.target.value;
-    // update status to server
-    await axios
-      .patch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${customerId}`,
-        {
-          orderStatus: status,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((data) => {
-        if (data.data.status == "success") {
-          refetch();
-          setLoading(false);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: `ORDER ${status}`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.log(error);
-        Swal.fire({
-            position: "center",
-            icon: "error",
-            title: `Status update ${error.response.data.status}`,
-            showConfirmButton: false,
-            timer: 1500,
-          });
-      });
-  };
-
-  // show loader if uploads takes time
-  if (loading) {
-    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
+    handleOrderStatus(customerId, status)
   }
+
+
   return (
     <tr>
       <th>{customerId}</th>
@@ -150,7 +109,7 @@ const OrderRow = ({
           } ${orderStatus === "DELIVERED" && "bg-green-100"} ${
             orderStatus === "CANCELLED" && "bg-red-100"
           } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
-          onChange={handleOrderStatus}
+          onChange={handleStatus}
           defaultValue={orderStatus}
         >
           {statusOptions
