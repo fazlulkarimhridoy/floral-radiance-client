@@ -46,8 +46,9 @@ const RecentOrders = () => {
     data: allOrders = [],
     isLoading,
     refetch,
+    isRefetching
   } = useQuery<OrderType[]>({
-    queryKey: ["allOrders"],
+    queryKey: ["recentOrders"],
     queryFn: async () => {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/recent-order`
@@ -109,7 +110,7 @@ const RecentOrders = () => {
   }
 
     // show loader if uploads takes time
-    if (loading) {
+    if (loading || isRefetching) {
       return (
           <Spin fullscreen={true} style={{ color: "white" }} size="large" />
       );

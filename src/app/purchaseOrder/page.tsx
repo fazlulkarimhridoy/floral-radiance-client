@@ -207,7 +207,6 @@ const Page = () => {
             setCartData([]);
             push("/success");
             setLoading(false);
-            message.success("Order placed successfully!");
         } catch (error: any) {
             console.error(error);
             setLoading(false);
