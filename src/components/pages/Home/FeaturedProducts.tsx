@@ -5,6 +5,7 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 import { Empty, message, Spin } from "antd";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -64,9 +65,15 @@ const FeaturedProducts = () => {
                 { product_name, images, price, id },
             ]);
             localStorage.setItem("cartItem", JSON.stringify(cartData));
-            setModal1Open(true)
+            setModal1Open(true);
         } else {
-            message.warning("Product already in the cart!");
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Product already in the cart!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
         // Use functional state update to ensure you're working with the latest state
     };

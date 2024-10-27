@@ -1,9 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
-import successImage from "../../../public/Images/bouquet-vec.jpg";
 import Image from "next/image";
 import { Button } from "antd";
 import Link from "next/link";
@@ -36,7 +34,8 @@ const Success = () => {
         <Image
           className="rounded-2xl"
           width={500}
-          src={successImage}
+          height={500}
+          src="/Images/bouquet-vec.jpg"
           alt="success-image"
         />
       </div>
