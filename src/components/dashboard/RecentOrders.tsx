@@ -2,9 +2,10 @@
 
 import OrderRow from "@/components/dashboard/OrderRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input } from "antd";
+import { Empty, Input, Spin } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 // types
 const { Search } = Input;
@@ -30,6 +31,8 @@ type OrderType = {
 };
 
 const RecentOrders = () => {
+  const [loading, setLoading] = useState(false);
+
   // check if user is logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -55,6 +58,47 @@ const RecentOrders = () => {
     refetchOnWindowFocus: false,
   });
 
+  const handleOrderStatus = async (id: any, status: any) => {
+    setLoading(true);
+    // update status to server
+    await axios
+        .patch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${id}`,
+            {
+                orderStatus: status,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .then((data) => {
+            if (data.data.status == "success") {
+                setLoading(false);
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: `ORDER ${status}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                refetch();
+            }
+        })
+        .catch((error) => {
+            setLoading(false);
+            console.log(error);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${error.response.data.data.meta.cause}`,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        });
+};
+
   // checking if loading
   if (isLoading) {
     return (
@@ -62,6 +106,13 @@ const RecentOrders = () => {
         <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
       </div>
     );
+  }
+
+    // show loader if uploads takes time
+    if (loading) {
+      return (
+          <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+      );
   }
 
   return (
@@ -92,7 +143,7 @@ const RecentOrders = () => {
                 <OrderRow
                   key={data.id}
                   categoryData={data}
-                  refetch={refetch}
+                  handleOrderStatus={handleOrderStatus}
                 ></OrderRow>
               ))
             ) : (
