@@ -2,10 +2,11 @@
 
 import OrderRow from "@/components/dashboard/OrderRow";
 import { useQuery } from "@tanstack/react-query";
-import { Empty, Input } from "antd";
+import { Empty, Input, Spin } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 // types
 const { Search } = Input;
@@ -31,6 +32,7 @@ type OrderType = {
 };
 
 const Orders = () => {
+    const [loading, setLoading] = useState(false);
     // check if user is logged in
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -46,6 +48,7 @@ const Orders = () => {
         data: allOrders = [],
         isLoading,
         refetch,
+        isRefetching
     } = useQuery<OrderType[]>({
         queryKey: ["allOrders"],
         queryFn: async () => {
@@ -57,7 +60,6 @@ const Orders = () => {
         retry: 2,
         refetchOnWindowFocus: false,
     });
-
 
     // Handle product filter for search
     const filteredOrders =
@@ -88,6 +90,47 @@ const Orders = () => {
               })
             : [];
 
+    const handleOrderStatus = async (id: any, status: any) => {
+        setLoading(true);
+        // update status to server
+        await axios
+            .patch(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/update-order/${id}`,
+                {
+                    orderStatus: status,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            .then((data) => {
+                if (data?.data?.status == "success") {
+                    refetch();
+                    setLoading(false);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `ORDER ${status}`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: `${error.response.data.data.meta.cause}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            });
+    };
+
     // handle search filed value
     const onSearch: SearchProps["onSearch"] = (value) => {
         setSearchText(value);
@@ -100,6 +143,13 @@ const Orders = () => {
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <progress className="progress w-56 bg-blue-200 h-4 lg:h-8 lg:w-80"></progress>
             </div>
+        );
+    }
+
+    // show loader if uploads takes time
+    if (loading || isRefetching) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
         );
     }
 
@@ -150,7 +200,7 @@ const Orders = () => {
                                 <OrderRow
                                     key={data.id}
                                     categoryData={data}
-                                    refetch={refetch}
+                                    handleOrderStatus={handleOrderStatus}
                                 ></OrderRow>
                             ))
                         ) : (
