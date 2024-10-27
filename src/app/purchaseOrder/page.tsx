@@ -216,9 +216,16 @@ const Page = () => {
         } catch (error: any) {
             console.error(error);
             setLoading(false);
-            message.error(
-                error.message || "An error occurred while placing the order."
-            );
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${
+                    error.message ||
+                    "An error occurred while placing the order."
+                }`,
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
     };
 
