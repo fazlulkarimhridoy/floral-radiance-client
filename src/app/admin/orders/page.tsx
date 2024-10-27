@@ -29,6 +29,8 @@ type OrderType = {
         address: string;
         customerId: string;
     };
+    note: string;
+    transactionId: string;
 };
 
 const Orders = () => {

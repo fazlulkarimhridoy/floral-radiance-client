@@ -39,6 +39,8 @@ type OrderType = {
         address: string;
         customerId: string;
     };
+    note: string;
+    transactionId: string;
 };
 
 const OrderRow = ({
@@ -66,6 +68,8 @@ const OrderRow = ({
         paymentMethod,
         items,
         customer,
+        note,
+        transactionId,
     } = categoryData;
 
     return (
@@ -93,31 +97,31 @@ const OrderRow = ({
             </th>
             {/* <td>{orderStatus}</td> */}
             <td>
-            <select
-                        style={{ width: 130 }}
-                        className={`${
-                            orderStatus === "PENDING" && "bg-yellow-100"
-                        } ${orderStatus === "SHIPPED" && "bg-blue-100"} ${
-                            orderStatus === "DELIVERED" && "bg-green-100"
-                        } ${
-                            orderStatus === "CANCELLED" && "bg-red-100"
-                        } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
-                        onChange={(e) => {
-                            handleOrderStatus(customerId, e.target.value);
-                            console.log(e.target.value);
-                        }}
-                        defaultValue={orderStatus}
-                    >
-                        {statusOptions?.map((option) => (
-                            <option
-                                className="bg-white"
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                <select
+                    style={{ width: 130 }}
+                    className={`${
+                        orderStatus === "PENDING" && "bg-yellow-100"
+                    } ${orderStatus === "SHIPPED" && "bg-blue-100"} ${
+                        orderStatus === "DELIVERED" && "bg-green-100"
+                    } ${
+                        orderStatus === "CANCELLED" && "bg-red-100"
+                    } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
+                    onChange={(e) => {
+                        handleOrderStatus(customerId, e.target.value);
+                        console.log(e.target.value);
+                    }}
+                    defaultValue={orderStatus}
+                >
+                    {statusOptions?.map((option) => (
+                        <option
+                            className="bg-white"
+                            key={option.value}
+                            value={option.value}
+                        >
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
             </td>
 
             <Modal
@@ -151,6 +155,16 @@ const OrderRow = ({
                             <p className="flex gap-2">
                                 <span className="font-semibold">Address:</span>{" "}
                                 {customer?.address}
+                            </p>
+                            <p className="flex gap-2">
+                                <span className="font-semibold">
+                                    Transaction Id:
+                                </span>{" "}
+                                {transactionId}
+                            </p>
+                            <p className="flex gap-2">
+                                <span className="font-semibold">Note:</span>{" "}
+                                {note}
                             </p>
                         </div>
                     </div>
