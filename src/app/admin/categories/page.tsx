@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Empty, Input, Spin } from "antd";
 import { SearchProps } from "antd/es/input";
 import axios from "axios";
+import { error } from "console";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -74,6 +75,17 @@ const Categories = () => {
                             timer: 1500,
                             showConfirmButton: false,
                         });
+                    })
+                    .catch((error) => {
+                        setLoading(false);
+                        console.log(error);
+                        Swal.fire({
+                            title: "Failed!",
+                            text: "Delete products related to this category!",
+                            icon: "error",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
                     });
             }
         });
@@ -116,10 +128,12 @@ const Categories = () => {
         );
     }
 
-      // show loader if uploads takes time
-  if (loading) {
-    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
-  }
+    // show loader if uploads takes time
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+        );
+    }
 
     return (
         <div className="relative">
