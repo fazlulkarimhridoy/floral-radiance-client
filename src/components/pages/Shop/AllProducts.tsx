@@ -123,7 +123,7 @@ const AllProducts = () => {
     }
 
     return (
-        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
+        <div className="flex flex-wrap items-center justify-center gap-10 mt-5 pb-5 px-5">
             {shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (
