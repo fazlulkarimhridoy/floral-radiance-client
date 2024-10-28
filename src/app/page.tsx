@@ -37,7 +37,7 @@ const Home = () => {
     }, []);
 
   return (
-    <div className={`${bgColor} transition-colors duration-300 `}>
+    <div className={`${bgColor} transition-colors duration-300 overflow-hidden`}>
       <Banner></Banner>
       <FeaturedProducts/>
       <HowItWorks/>
