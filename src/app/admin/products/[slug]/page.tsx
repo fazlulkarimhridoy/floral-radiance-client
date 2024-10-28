@@ -111,7 +111,6 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         enabled: id ? true : false,
     });
 
-
     // function for form submission on finish
     const onFinish: FormProps<SingleProductDetails>["onFinish"] = async (
         values: any
@@ -205,10 +204,11 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     }
 
     // show loader if uploads takes time
-  if (loading) {
-    return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
-  }
-
+    if (loading) {
+        return (
+            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
+        );
+    }
 
     return (
         <div>
@@ -394,6 +394,8 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                             ]}
                         >
                             <TextArea
+                                minLength={150}
+                                maxLength={300}
                                 rows={4}
                                 className="w-full"
                                 placeholder="Enter product description..."
@@ -437,7 +439,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                     </div>
 
                     {/* submit button */}
-                    <div className="absolute right-0 w-full md:w-[25%]">
+                    <div className="absolute right-0 w-full md:w-[50%] lg:w-[25%]">
                         <Form.Item className="w-full">
                             <Button
                                 className="w-full"
