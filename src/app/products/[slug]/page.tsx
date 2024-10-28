@@ -10,6 +10,7 @@ import { Flex, Rate } from "antd";
 import { Spin } from "antd";
 import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -65,6 +66,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
         refetchOnWindowFocus: false,
     });
 
+    const [cartData, setCartData] = useState<CartItem[]>([]);
+
     useEffect(() => {
         // Load cart data from localStorage
         const storedData = localStorage.getItem("cartItem");
@@ -73,21 +76,30 @@ const Page = ({ params }: { params: { slug: string } }) => {
         }
     }, []);
 
-    const [cartData, setCartData] = useState<CartItem[]>([]);
-
     const handleCart = async (
         id: number,
         product_name: string,
         images: string,
         price: number
     ) => {
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            setModal1Open(true);
+        } else {
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Product already in the cart!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
         // Use functional state update to ensure you're working with the latest state
-        setCartData((prevCardData) => [
-            ...prevCardData,
-            { product_name, images, price, id },
-        ]);
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-        setModal1Open(true);
     };
     // Synchronize localStorage whenever the cardData state changes
     useEffect(() => {
@@ -182,10 +194,11 @@ const Page = ({ params }: { params: { slug: string } }) => {
                             </div>
                             <div className="space-y-4 max-w-[400px] ">
                                 <div className="flex  gap-2">
-                                    <div className="btn w-full lg:w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center">
-                                        <button onClick={handleAddToCart}>
-                                            Add to cart
-                                        </button>
+                                    <div
+                                        onClick={handleAddToCart}
+                                        className="btn w-full lg:w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center"
+                                    >
+                                        <button>Add to cart</button>
                                     </div>
                                 </div>
                             </div>
