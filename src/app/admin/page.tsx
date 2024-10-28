@@ -5,7 +5,7 @@ import RecentOrders from "@/components/dashboard/RecentOrders";
 import { useQuery } from "@tanstack/react-query";
 import { Statistic, StatisticProps, Tooltip } from "antd";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import CountUp from "react-countup";
 
 const formatter: StatisticProps["formatter"] = (value) => (
@@ -81,11 +81,11 @@ const AdminDashboard = () => {
       {/* header */}
       <div>
         <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
-          Admin Dashboard
+          Dashboard
         </h3>
       </div>
       {/* statistics */}
-      <div className="mt-10 px-2 2xl:px-52 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
+      <div className="mt-10 px-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-5 lg:gap-10">
         <div>
           <Statistic
             className="bg-blue-200 p-5 text-center font-bold rounded-2xl"

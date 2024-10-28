@@ -32,7 +32,7 @@ const Page = () => {
             </div>
             <div
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                className=" space-y-4 flex flex-col h-screen overflow-scroll"
+                className="space-y-4 flex flex-col overflow-scroll pb-5"
             >
                 <div className="flex flex-col md:flex-row  gap-4 md:items-center">
                     <Search></Search>
@@ -41,7 +41,7 @@ const Page = () => {
                 <div className="w-full">
                     <Banner images={images}></Banner>
                 </div>
-                <div className="bg-[#f4f4f4]">
+                <div className="bg-[#f4f4f4] rounded-2xl">
                     <AllProducts />
                 </div>
             </div>

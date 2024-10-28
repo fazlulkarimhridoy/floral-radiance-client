@@ -407,7 +407,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                     {/* upload images */}
                     <div className="flex items-center gap-10">
                         <Form.Item<FieldType>
-                            label="Upload Five Images"
+                            label="Upload Five Images (Size: 1080px*1080px)"
                             required
                             valuePropName="fileList"
                             name="images"
