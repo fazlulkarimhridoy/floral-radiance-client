@@ -3,15 +3,13 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { FaPlus } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
 import Link from "next/link";
 
-import { Flex, message, Rate } from "antd";
-import { FaStar } from "react-icons/fa";
+import { Flex, Rate } from "antd";
 import { Spin } from "antd";
-import { div } from "framer-motion/client";
 import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
+import { useRouter } from "next/navigation";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -35,8 +33,8 @@ interface CartItem {
 }
 
 const Page = ({ params }: { params: { slug: string } }) => {
-    console.log(params.slug);
-
+    const router = useRouter();
+    const { push } = router;
     const [modal1Open, setModal1Open] = useState(false);
     const [activeButton, setActiveButton] = useState<number | null>(null);
     // const [singleProduct , setSingleProduct] = useState<Array<string>>([])
@@ -97,9 +95,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
         localStorage.setItem("cartItem", JSON.stringify(cartData));
     }, [cartData]);
 
-    console.log("single product", singleProduct);
-
-    // show loader if data loads
+    // handle cart clikc
+    const handleAddToCart = () => {
+        handleCart(
+            singleProduct?.id ?? 0,
+            singleProduct?.product_name ?? "",
+            singleProduct?.images[0] ?? "",
+            singleProduct?.discount_price ?? (singleProduct?.price || 0)
+        );
+        push("/cart");
+    };
 
     return (
         <div className=" md:w-[90%] mx-auto lg:p-4">
@@ -177,27 +182,11 @@ const Page = ({ params }: { params: { slug: string } }) => {
                             </div>
                             <div className="space-y-4 max-w-[400px] ">
                                 <div className="flex  gap-2">
-                                    <Link
-                                        href={`/cart`}
-                                        className="btn w-full lg:w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center"
-                                    >
-                                        <button
-                                            onClick={() =>
-                                                handleCart(
-                                                    singleProduct?.id,
-                                                    singleProduct?.product_name,
-                                                    singleProduct?.images[0],
-                                                    singleProduct?.discount_price ??
-                                                        singleProduct?.price
-                                                )
-                                            }
-                                        >
+                                    <div className="btn w-full lg:w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center">
+                                        <button onClick={handleAddToCart}>
                                             Add to cart
                                         </button>
-                                    </Link>
-                                    {/* <Link href={`/purchaseOrder`} className="btn border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg text-[#0b0f3b] hover:bg-[#0b0f3b] hover:text-white px-2 font-bold flex items-cente">
-                                <button className="">Buy it now</button>
-                            </Link> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
