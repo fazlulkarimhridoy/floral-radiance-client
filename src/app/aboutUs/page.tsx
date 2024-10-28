@@ -1,7 +1,9 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Page = () => {
   const [bgColor, setBgColor] = useState("bg-[#b8cedc]");
@@ -9,15 +11,15 @@ const Page = () => {
   const [width, setWidth] = useState(0);
 
   useEffect(() => {
+    AOS.init({});
+  }, []);
 
-
-
+  useEffect(() => {
     const handleScrollLength = () => {
       setScrollY(window.scrollY);
     };
 
     const handleScroll = () => {
-
       setScrollY(window.scrollY);
       setWidth(window.innerWidth);
 
@@ -30,11 +32,11 @@ const Page = () => {
       }
     };
 
-      // Add event listener
-      // window.addEventListener('scroll', handleScrollLength);
+    // Add event listener
+    // window.addEventListener('scroll', handleScrollLength);
 
-      // // Clean up on unmount
-      // return () => window.removeEventListener('scroll', handleScrollLength);
+    // // Clean up on unmount
+    // return () => window.removeEventListener('scroll', handleScrollLength);
 
     // Add event listener for scroll
     window?.addEventListener("scroll", handleScroll);
@@ -45,15 +47,18 @@ const Page = () => {
     };
   }, []);
 
-  
   return (
-    <div className={`bg-[#c3b2e8] space-y-10 p-4 ${bgColor} transition-colors duration-300 `}>
+    <div
+      className={`bg-[#c3b2e8] space-y-10 p-4 ${bgColor} transition-colors duration-300 `}
+    >
       {/* <h1 className=" fixed border">{scrollY}</h1>
       <h1 className=" fixed border">{width}</h1> */}
       <h1 className="playfair text-center text-4xl font-bold text-[#52225e]">
         About Us
       </h1>
-      <div className="flex justify-center ">
+      <div  data-aos="zoom-in"
+        data-aos-delay="500"
+        data-aos-easing="ease-in-out" className="flex justify-center ">
         <Image
           src={`/Images/miraz.jfif`}
           alt="image"
