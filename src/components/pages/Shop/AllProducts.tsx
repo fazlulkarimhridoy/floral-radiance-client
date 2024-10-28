@@ -95,11 +95,11 @@ const AllProducts = () => {
             setModal1Open(true);
         } else {
             Swal.fire({
-              position: "center",
-              icon: "warning",
-              title: "Product already in the cart!",
-              showConfirmButton: false,
-              timer: 1500,
+                position: "center",
+                icon: "warning",
+                title: "Product already in the cart!",
+                showConfirmButton: false,
+                timer: 1500,
             });
         }
         // Use functional state update to ensure you're working with the latest state
@@ -109,22 +109,12 @@ const AllProducts = () => {
         // Store the entire updated cart into localStorage
         localStorage.setItem("cartItem", JSON.stringify(cartData));
     }, [cartData]);
-    // show loader if data loads
-    if (isLoading) {
-        return (
-            <div className="flex flex-col items-center justify-center gap-5 absolute top-[75%] left-[55%] lg:left-[60%] transform -translate-x-1/2 -translate-y-1/2">
-                <Spin
-                    className="text-white bg-white"
-                    style={{ color: "white" }}
-                    size="large"
-                />
-            </div>
-        );
-    }
 
     return (
-        <div className="flex flex-wrap items-center justify-center gap-10 mt-5 pb-5 px-5">
-            {shopProducts?.length > 0 ? (
+        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
+            {isLoading ? (
+                <Spin size="large" />
+            ) : shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (
                         <ProductCard

@@ -31,7 +31,7 @@ const CartTotal: React.FC<CartTotalProps> = ({ calculateTotal, show }) => {
             </div>
             {show && (
                 <div>
-                    <Link href={"purchaseOrder"}>
+                    <Link href="/purchaseOrder">
                         <button className="text-white bg-[#7a71b1] w-full p-2 rounded-lg btn">
                             Purchase Order
                         </button>

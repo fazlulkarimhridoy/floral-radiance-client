@@ -56,7 +56,6 @@ const Cart: React.FC = () => {
         return cartData.reduce((total, item) => total + item.price, 0);
     };
 
-    console.log(cartData)
 
     return (
         <div className="w-full lg:w-[70%] mx-auto px-2 lg:px-0 py-4">
