@@ -2,13 +2,11 @@
 
 import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-
+import { FiMenu } from "react-icons/fi";
 
 interface CartItem {
     id: number;
@@ -21,7 +19,6 @@ const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [open, setOpen] = useState(false);
     const [cartData, setCartData] = useState<CartItem[]>([]);
-
 
     // Retrieve cart data from localStorage when the component mounts
     useEffect(() => {
@@ -95,7 +92,7 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                <div className="flex gap-6 ">
+                <div className="flex items-center justify-center">
                     <Link className="relative" href={"/cart"}>
                         <button>
                             <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
@@ -107,29 +104,36 @@ const Navbar = () => {
 
                     {/* Hamburger menu */}
                     <div className="lg:hidden block">
-                        <MenuOutlined onClick={showDrawer} />
-                        <Drawer
-                            width={240}
-                            title=""
-                            onClose={onClose}
-                            open={open}
-                        >
+                        {/* <MenuOutlined className="w-10 h-10" size={25}  /> */}
+                        <FiMenu size={25} onClick={showDrawer} />
+                        <Drawer width={240} onClose={onClose} open={open}>
                             <ul className="text-lg space-y-2 font-poppins font-medium">
-                                <li onClick={onClose} className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li
+                                    onClick={onClose}
+                                    className="hover:text-pink-600 cursor-pointer transition-colors"
+                                >
                                     <Link href="/">Home</Link>
                                 </li>
 
-                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li
+                                    onClick={onClose}
+                                    className="hover:text-pink-600 cursor-pointer transition-colors"
+                                >
                                     <Link href="/products">Shop</Link>
                                 </li>
 
-                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li
+                                    onClick={onClose}
+                                    className="hover:text-pink-600 cursor-pointer transition-colors"
+                                >
                                     <Link href="/aboutUs">About Us</Link>
                                 </li>
-                                <li onClick={onClose}  className="hover:text-pink-600 cursor-pointer transition-colors">
+                                <li
+                                    onClick={onClose}
+                                    className="hover:text-pink-600 cursor-pointer transition-colors"
+                                >
                                     <Link href="/contactUs">Contact Us</Link>
                                 </li>
-                                
                             </ul>
                         </Drawer>
                     </div>
