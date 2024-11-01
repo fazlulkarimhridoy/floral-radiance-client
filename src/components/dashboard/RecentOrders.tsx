@@ -145,7 +145,7 @@ const RecentOrders = () => {
                 ))
               ) : (
                 <Empty
-                  className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  className="fixed top-[90%] md:top-[75%] xl:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                   description="No customer found!"
                 />
               )}
