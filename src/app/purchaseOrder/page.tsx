@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { FaTrash, FaUser } from "react-icons/fa";
-import { Button, Input, message, Spin, Radio, Space } from "antd";
+import { Button, Input, Spin } from "antd";
 import { FaMobileAlt } from "react-icons/fa";
 import { FaBangladeshiTakaSign, FaLocationDot } from "react-icons/fa6";
 import type { DatePickerProps } from "antd";
@@ -12,12 +12,10 @@ import { TimePicker } from "antd";
 import { FaCalendar } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
-import { FaMoneyBillWave } from "react-icons/fa";
 import CartTotal from "@/components/pages/Cart/CartTotal";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import axios from "axios";
-import type { RadioChangeEvent } from "antd";
 
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
@@ -157,6 +155,18 @@ const Page = () => {
                 position: "center",
                 icon: "warning",
                 title: "Your cart is empty.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+
+        if (phone.length !== 11) {
+            setLoading(false);
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Number must be of 11 digits.",
                 showConfirmButton: false,
                 timer: 1500,
             });
