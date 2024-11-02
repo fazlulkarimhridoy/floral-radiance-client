@@ -59,6 +59,7 @@ const OrderRow = ({
         setIsModalOpen(false);
     };
     const {
+        id,
         customerId,
         totalPrice,
         deliveryDate,
@@ -107,7 +108,7 @@ const OrderRow = ({
                         orderStatus === "CANCELLED" && "bg-red-100"
                     } w-full px-3 py-1 rounded-md border border-gray-300 cursor-pointer hover:border-blue-500 hover:text-blue-500`}
                     onChange={(e) => {
-                        handleOrderStatus(customerId, e.target.value);
+                        handleOrderStatus(id, e.target.value);
                         console.log(e.target.value);
                     }}
                     defaultValue={orderStatus}

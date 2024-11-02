@@ -50,7 +50,7 @@ const Orders = () => {
         data: allOrders = [],
         isLoading,
         refetch,
-        isRefetching
+        isRefetching,
     } = useQuery<OrderType[]>({
         queryKey: ["allOrders"],
         queryFn: async () => {
@@ -93,6 +93,8 @@ const Orders = () => {
             : [];
 
     const handleOrderStatus = async (id: any, status: any) => {
+        console.log("id", id);
+        console.log("status", status);
         setLoading(true);
         // update status to server
         await axios
