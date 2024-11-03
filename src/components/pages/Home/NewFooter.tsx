@@ -30,8 +30,8 @@ const NewFooter = () => {
             Contact us
           </p>
           <div>
-            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4"><FaMobileScreen />01304-035398</p>
-            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4">floralradiancee@gmail.com</p>
+            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4"><FaMobileScreen />  <a href="tel:+8801304-035398">+880 1304-035398</a></p>
+            <Link href={`/contactUs`} ><p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4">floralradiancee@gmail.com</p></Link>
           </div>
         </div>
 
