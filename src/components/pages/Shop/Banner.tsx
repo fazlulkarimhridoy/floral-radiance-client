@@ -38,7 +38,7 @@ const Banner: React.FC<CarouselProps> = ({ images }) => {
     }, [currentIndex, images.length, goToNext]);
 
     return (
-        <div className="carousel relative rounded-2xl w-[360px] md:w-full  overflow-hidden">
+        <div className="carousel relative rounded-2xl w-full  overflow-hidden">
 
             <div
                 className={`flex transition ease-in-out duration-1000`}
@@ -56,13 +56,13 @@ const Banner: React.FC<CarouselProps> = ({ images }) => {
             </div>
 
             <div className="carousel-button">
-                <button onClick={goToPrevious} className=" left">
+                <button onClick={goToPrevious} className="left">
                     <FaAngleLeft />
                 </button>
                 <p>
                     {currentIndex + 1} / {images.length}
                 </p>
-                <button onClick={goToNext} className=" right">
+                <button onClick={goToNext} className="right">
                     <FaAngleRight />
                 </button>
             </div>

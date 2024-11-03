@@ -3,7 +3,7 @@ import React from "react";
 
 const Template = () => {
   return (
-    <div className="flex w-[350px]  md:w-full  justify-between items-center bg-[#b8cedc] rounded-2xl relative  h-full  p-4 ">
+    <div className="flex w-full  justify-between items-center bg-[#b8cedc] rounded-2xl relative  h-full  p-4 ">
       <p className="font-dm text-2xl font-semibold self-end text-[#52225e] text-wrap">Send birthday Gift with flowers</p>
       <div className="">
         <Image

@@ -5,126 +5,134 @@ import ProductCard from "../Home/ProductCard";
 import { Empty, message, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
 import { useSearchText } from "@/context/SearchTextContext";
+import Swal from "sweetalert2";
 
 interface ProductType {
-  id: number;
-  product_id: number;
-  images: string[];
-  product_name: string;
-  price: number;
-  discount_price: number;
-  description: string;
-  rating: number;
-  category: string;
+    id: number;
+    product_id: number;
+    images: string[];
+    product_name: string;
+    price: number;
+    discount_price: number;
+    description: string;
+    rating: number;
+    category: string;
 }
 
 interface CartItem {
-  id: number;
-  product_name: string;
-  images: string;
-  price: number;
+    id: number;
+    product_name: string;
+    images: string;
+    price: number;
 }
 
 const AllProducts = () => {
-  const { categoryName } = useCategory();
-  const { searchText } = useSearchText();
-  const [modal1Open, setModal1Open] = useState(false);
+    const { categoryName } = useCategory();
+    const { searchText } = useSearchText();
+    const [modal1Open, setModal1Open] = useState(false);
 
-  // fetch all products froom server
-  const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
-    queryKey: ["featuredProducts"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
-      );
-      return res.data.data;
-    },
-    retry: 2,
-    refetchOnWindowFocus: false,
-  });
-
-  // Handle product filter for search
-  const filteredProducts =
-    shopProducts?.length > 0
-      ? shopProducts?.filter((product) => {
-          const searchingText = categoryName || searchText;
-          if (searchingText) {
-            const searchString = searchingText.toLowerCase();
-
-            // Check product name, category (strings), and productId (number)
-            return (
-              product?.category?.toLowerCase()?.includes(searchString) ||
-              product?.product_name?.toLowerCase()?.includes(searchString) ||
-              product?.description?.toLowerCase()?.includes(searchString)
+    // fetch all products froom server
+    const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
+        queryKey: ["featuredProducts"],
+        queryFn: async () => {
+            const res = await axios.get(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
             );
-          }
-          return true; // If no searchText, return all products
-        })
-      : [];
+            return res.data.data;
+        },
+        retry: 2,
+        refetchOnWindowFocus: false,
+    });
 
-  const [cartData, setCartData] = useState<CartItem[]>([]);
+    // Handle product filter for search
+    const filteredProducts =
+        shopProducts?.length > 0
+            ? shopProducts?.filter((product) => {
+                  const searchingText = categoryName || searchText;
+                  if (searchingText) {
+                      const searchString = searchingText.toLowerCase();
 
-  useEffect(() => {
-    // Load cart data from localStorage
-    const storedData = localStorage.getItem("cartItem");
-    if (storedData) {
-      setCartData(JSON.parse(storedData));
-    }
-  }, []);
+                      // Check product name, category (strings), and productId (number)
+                      return (
+                          product?.category
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          product?.product_name
+                              ?.toLowerCase()
+                              ?.includes(searchString) ||
+                          product?.description
+                              ?.toLowerCase()
+                              ?.includes(searchString)
+                      );
+                  }
+                  return true; // If no searchText, return all products
+              })
+            : [];
 
-  const handleCart = async (
-    id: number,
-    product_name: string,
-    images: string,
-    price: number
-  ) => {
-    // Use functional state update to ensure you're working with the latest state
-    setCartData((prevCardData) => [
-      ...prevCardData,
-      { product_name, images, price, id },
-    ]);
-    localStorage.setItem("cartItem", JSON.stringify(cartData));
-    setModal1Open(true);
-  };
-  // Synchronize localStorage whenever the cardData state changes
-  useEffect(() => {
-    // Store the entire updated cart into localStorage
-    localStorage.setItem("cartItem", JSON.stringify(cartData));
-  }, [cartData]);
-  // show loader if data loads
-  if (isLoading) {
+    const [cartData, setCartData] = useState<CartItem[]>([]);
+
+    useEffect(() => {
+        // Load cart data from localStorage
+        const storedData = localStorage.getItem("cartItem");
+        if (storedData) {
+            setCartData(JSON.parse(storedData));
+        }
+    }, []);
+
+    const handleCart = async (
+        id: number,
+        product_name: string,
+        images: string,
+        price: number
+    ) => {
+        const existingProduct = cartData.find((item) => item.id === id);
+        if (!existingProduct) {
+            setCartData((prevCardData) => [
+                ...prevCardData,
+                { product_name, images, price, id },
+            ]);
+            localStorage.setItem("cartItem", JSON.stringify(cartData));
+            setModal1Open(true);
+        } else {
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Product already in the cart!",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+        // Use functional state update to ensure you're working with the latest state
+    };
+    // Synchronize localStorage whenever the cardData state changes
+    useEffect(() => {
+        // Store the entire updated cart into localStorage
+        localStorage.setItem("cartItem", JSON.stringify(cartData));
+    }, [cartData]);
+
     return (
-      <div className="flex flex-col items-center justify-center gap-5 absolute top-[75%] left-[55%] lg:left-[60%] transform -translate-x-1/2 -translate-y-1/2">
-        <Spin
-          className="text-white bg-white"
-          style={{ color: "white" }}
-          size="large"
-        />
-      </div>
+        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
+            {isLoading ? (
+                <Spin size="large" />
+            ) : shopProducts?.length > 0 ? (
+                filteredProducts?.length > 0 ? (
+                    filteredProducts?.map((item) => (
+                        <ProductCard
+                            key={item?.id}
+                            item={item}
+                            handleCart={handleCart}
+                            modal1Open={modal1Open}
+                            setModal1Open={setModal1Open}
+                        />
+                    ))
+                ) : (
+                    <Empty description="No product for this category!" />
+                )
+            ) : (
+                <Empty description="No product added yet!" />
+            )}
+        </div>
     );
-  }
-
-  return (
-    <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
-      {shopProducts?.length > 0 ? (
-        filteredProducts?.length > 0 ? (
-          filteredProducts?.map((item) => (
-            <ProductCard
-              key={item?.id}
-              item={item}
-              handleCart={handleCart}
-              modal1Open={modal1Open}
-              setModal1Open={setModal1Open}
-            />
-          ))
-        ) : (
-          <Empty description="No product for this category!" />
-        )
-      ) : (
-        <Empty description="No product added yet!" />
-      )}
-    </div>
-  );
 };
 
 export default AllProducts;

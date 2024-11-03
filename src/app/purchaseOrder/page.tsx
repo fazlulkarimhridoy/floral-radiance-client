@@ -1,11 +1,10 @@
 "use client";
 
-// import { Image   } from "antd";
 import React, { useEffect, useState } from "react";
-import { FaTrash } from "react-icons/fa";
-import { Button, Input, message, Spin, Radio, Space } from "antd";
+import { FaTrash, FaUser } from "react-icons/fa";
+import { Button, Input, Spin } from "antd";
 import { FaMobileAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaBangladeshiTakaSign, FaLocationDot } from "react-icons/fa6";
 import type { DatePickerProps } from "antd";
 import { DatePicker } from "antd";
 import type { TimePickerProps } from "antd";
@@ -13,13 +12,13 @@ import { TimePicker } from "antd";
 import { FaCalendar } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
-import { FaMoneyBillWave } from "react-icons/fa";
 import CartTotal from "@/components/pages/Cart/CartTotal";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import axios from "axios";
-import type { RadioChangeEvent } from 'antd';
 
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 interface FormData {
     mobileNumber: string;
@@ -47,8 +46,11 @@ const Page = () => {
     const [deliveryDate, setDeliveryDate] = useState<string | string[]>([]);
     const [deliveryTime, setDeliveryTime] = useState<string | string[]>([]);
     const [note, setNote] = useState("");
-    const [cashOnDelivery, setCashOnDelivery] = useState(false);
+    // const [cashOnDelivery, setCashOnDelivery] = useState(false);
+    const [transactionId, setTransactionId] = useState("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { push } = router;
 
     // Retrieve cart data from localStorage when the component mounts
 
@@ -58,12 +60,6 @@ const Page = () => {
             setCartData(JSON.parse(storedCart));
         }
     }, []);
-
-    // payment onChange fn
-    const onChange = (e: RadioChangeEvent) => {
-        console.log('radio checked', e.target.value);
-        setCashOnDelivery(e.target.value);
-    };
 
     const removeFromCart = (id: number) => {
         // selected id data should be deleted from local storage
@@ -95,6 +91,12 @@ const Page = () => {
         console.log(e.target.value);
     };
 
+    // handle transection id
+    const handleTransactionId = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTransactionId(e.target.value);
+        console.log(e.target.value);
+    };
+
     // handle full name
     const handleCustomerNameChange = (
         e: React.ChangeEvent<HTMLInputElement>
@@ -117,18 +119,6 @@ const Page = () => {
         console.log(e.target.value);
     };
 
-    // handle cash on delivery
-    const handleCashOnDeliveryChange = () => {
-        setCashOnDelivery(true);
-        console.log("cash on delivery", cashOnDelivery);
-    };
-
-    // handle cash on delivery
-    const handleAdvanceChange = () => {
-        setCashOnDelivery(false);
-        console.log("cash on delivery", cashOnDelivery);
-    };
-
     // handle email
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -143,16 +133,43 @@ const Page = () => {
             !email ||
             !address ||
             !deliveryDate ||
-            !deliveryTime
+            !deliveryTime ||
+            !note ||
+            !transactionId ||
+            !cartData
         ) {
             setLoading(false);
-            message.error("Please fill in all required fields.");
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Please fill in all required fields.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
             return;
         }
 
         if (cartData.length === 0) {
             setLoading(false);
-            message.error("Your cart is empty.");
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Your cart is empty.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+
+        if (phone.length !== 11) {
+            setLoading(false);
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Number must be of 11 digits.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
             return;
         }
 
@@ -190,8 +207,9 @@ const Page = () => {
                         quantity: 1,
                         price: item.price,
                     })),
-                    paymentMethod: cashOnDelivery ? "CASHON" : "BKASH",
-                    // note,
+                    paymentMethod: "BKASH",
+                    note,
+                    transactionId,
                 }
             );
 
@@ -203,15 +221,21 @@ const Page = () => {
 
             localStorage.removeItem("cartItem");
             setCartData([]);
-            window.location.href = "/";
+            push("/success");
             setLoading(false);
-            message.success("Order placed successfully!");
         } catch (error: any) {
             console.error(error);
             setLoading(false);
-            message.error(
-                error.message || "An error occurred while placing the order."
-            );
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: `${
+                    error.message ||
+                    "An error occurred while placing the order."
+                }`,
+                showConfirmButton: false,
+                timer: 1500,
+            });
         }
     };
 
@@ -315,7 +339,7 @@ const Page = () => {
                             <div className="flex flex-col gap-2 w-full">
                                 <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
-                                    Full Name:
+                                    <FaUser /> Full Name:
                                 </label>
                                 <Input
                                     required
@@ -417,14 +441,33 @@ const Page = () => {
                                 />
                             </div>
                         </div>
-                        <div className="py-4 space-y-4">
-                            <Radio.Group onChange={onChange} value={cashOnDelivery}>
-                                <Space direction="vertical">
-                                    <Radio className="text-xl play-fair font-semibold" value={true}>Cash on Delivery</Radio>
-                                    <Radio className="text-xl play-fair font-semibold" value={false}>Advance payment</Radio>
-
-                                </Space>
-                            </Radio.Group>
+                        <div>
+                            <p>
+                                Please pay the advance amount 200 Taka to
+                                confirm the order.{" "}
+                                <br className="hidden md:flex" /> Pay via send
+                                money to this number{" "}
+                                <span className="text-red-600">
+                                    01634468473
+                                </span>{" "}
+                                (Bkash) and fill the transaction id below.
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-2 w-full">
+                            <label className="text-xl flex gap-2 items-center text-[#3d4349]">
+                                {" "}
+                                <FaBangladeshiTakaSign /> Bkash Transection Id:
+                            </label>
+                            <Input
+                                required
+                                type="string"
+                                maxLength={20}
+                                placeholder="Transection id"
+                                className="w-full"
+                                onChange={handleTransactionId}
+                            />
+                        </div>
+                        <div className="space-y-4 ">
                             <button
                                 onClick={handleSubmitData}
                                 type="submit"
@@ -435,7 +478,6 @@ const Page = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
