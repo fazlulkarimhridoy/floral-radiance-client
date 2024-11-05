@@ -7,7 +7,7 @@ import { FaMobileScreen } from "react-icons/fa6";
 
 const NewFooter = () => {
   return (
-    <div className="pb-10 px-4 bg-[#b8cedc] py-4 rounded-xl">
+    <div className="pb-10 mt-4 px-4 bg-[#b8cedc] py-4 rounded-xl">
       <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[500px_500px_308px] place-content-center md:grid-rows-2 md:max-w-[90%] mx-auto gap-4">
         <div className=" row-span-2 bg-white rounded-xl ">
           <p className="playfair text-[#184363] font-bold text-4xl p-4">
@@ -30,8 +30,8 @@ const NewFooter = () => {
             Contact us
           </p>
           <div>
-            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4"><FaMobileScreen />01304-035398</p>
-            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4">floralradiancee@gmail.com</p>
+            <p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4"><FaMobileScreen />  <a href="tel:+8801304-035398">+880 1304-035398</a></p>
+            <Link href={`/contactUs`} ><p className="flex items-center text-2xl font-semibold font-outfit gap-2 text-center p-4">floralradiancee@gmail.com</p></Link>
           </div>
         </div>
 
