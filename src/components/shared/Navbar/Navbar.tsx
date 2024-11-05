@@ -76,7 +76,7 @@ const Navbar = () => {
                     </div>
                 </Link>
                 <div className="mr-10 hidden lg:block">
-                    <ul className="flex text-lg gap-4 font-poppins">
+                    <ul className="flex text-lg gap-6 font-poppins">
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
                             <Link href="/">Home</Link>
                         </li>

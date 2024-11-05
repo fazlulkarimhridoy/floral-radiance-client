@@ -81,8 +81,12 @@ const AddProduct = () => {
     };
 
     // handle file change
-    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    const handleChange: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
         setFileList(newFileList);
+        // console.log("filelist", fileList);
+    };
 
     // image upload button
     const uploadButton = (
