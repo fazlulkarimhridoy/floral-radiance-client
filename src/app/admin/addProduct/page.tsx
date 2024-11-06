@@ -54,6 +54,17 @@ const getBase64 = (file: FileType): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
+// base64 without promise
+const getNewBase64 = (
+    file: FileType,
+    callback: (result: string | null) => void
+) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => callback(reader.result as string);
+    reader.onerror = () => callback(null);
+};
+
 const AddProduct = () => {
     const [loading, setLoading] = useState(false);
     // check if user is logged in
@@ -68,13 +79,18 @@ const AddProduct = () => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [imageArray, setImageArray] = useState([]);
     const formRef = React.useRef<FormInstance<FieldType>>(null);
 
     // handle preview
     const handlePreview = async (file: UploadFile) => {
+        console.log("file from preview", file);
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj as FileType);
         }
+
+        const dataUrl = await getBase64(file.originFileObj as FileType);
+        console.log("dataUrl", dataUrl);
 
         setPreviewImage(file.url || (file.preview as string));
         setPreviewOpen(true);
@@ -85,7 +101,29 @@ const AddProduct = () => {
         fileList: newFileList,
     }) => {
         setFileList(newFileList);
-        // console.log("filelist", fileList);
+        const dataUrlArray: any = []; // Array to store the results
+        let completedRequests = 0; // To track completed requests
+
+        newFileList.forEach((file, index) => {
+            getNewBase64(file.originFileObj as FileType, (result) => {
+                if (result) {
+                    dataUrlArray[index] = result; // Store result at the correct index
+                } else {
+                    console.error("Failed to convert file to base64.");
+                    dataUrlArray[index] = null; // Or handle the error as needed
+                }
+
+                // Increment the completed requests counter
+                completedRequests++;
+
+                // Once all requests have completed
+                if (completedRequests === fileList.length) {
+                    const finalResult = dataUrlArray.filter(Boolean).join(","); // Join non-null results with commas
+                    console.log("Final Base64 String:", finalResult);
+                }
+            });
+        });
+        setImageArray(dataUrlArray);
     };
 
     // image upload button
@@ -99,7 +137,6 @@ const AddProduct = () => {
     // handle form submission finish
     const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
         setLoading(true);
-        const thumbUrlsArray = fileList.map((file) => file.thumbUrl);
         const product_name = values.product_name;
         const price = values.price;
         const discount_price = values.discounted_price;
@@ -108,7 +145,7 @@ const AddProduct = () => {
         const description = values.description;
         const rating = values.rating;
         const productId = values.productId;
-        const images = thumbUrlsArray;
+        const images = imageArray;
 
         // Extract the selected category ID
         const selectedCategoryId =

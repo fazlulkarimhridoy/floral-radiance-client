@@ -6,6 +6,7 @@ import {
     Button,
     Form,
     FormProps,
+    GetProp,
     Image,
     Input,
     InputNumber,
@@ -22,6 +23,8 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const { Option } = Select;
+
+type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
 // types
 type FieldType = {
@@ -55,6 +58,27 @@ type CategoryType = {
     description: string;
 };
 
+const getNewBase64 = (
+    file: FileType,
+    callback: (result: string | null) => void
+): void => {
+    if (!(file instanceof File)) {
+        console.error("Invalid file object");
+        callback(null);
+        return;
+    }
+
+    try {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => callback(reader.result as string);
+        reader.onerror = () => callback(null);
+    } catch (error) {
+        console.error("Error reading file:", error);
+        callback(null);
+    }
+};
+
 const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const [loading, setLoading] = useState(false);
     // check if user is logged in
@@ -68,6 +92,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [imageArray, setImageArray] = useState([]);
     const router = useRouter();
     const { push } = router;
 
@@ -76,8 +101,41 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const id = Number(idString);
 
     // file upload changes
-    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+    const handleChange: UploadProps["onChange"] = ({
+        fileList: newFileList,
+    }) => {
+        console.log("files", fileList);
+        console.log("new file", newFileList);
         setFileList(newFileList);
+        const dataUrlArray: any = []; // Array to store the results
+        let completedRequests = 0; // To track completed requests
+
+        fileList.forEach((file, index) => {
+            if (!file.originFileObj) {
+                console.error("Invalid file object");
+                dataUrlArray[index] = file.thumbUrl; // Or handle the error as needed
+                return;
+            }
+            getNewBase64(file.originFileObj as FileType, (result) => {
+                if (result) {
+                    dataUrlArray[index] = result; // Store result at the correct index
+                } else {
+                    console.error("Failed to convert file to base64.");
+                    dataUrlArray[index] = null; // Or handle the error as needed
+                }
+
+                // Increment the completed requests counter
+                completedRequests++;
+
+                // Once all requests have completed
+                if (completedRequests === fileList.length) {
+                    const finalResult = dataUrlArray.filter(Boolean).join(","); // Join non-null results with commas
+                    console.log("Final Base64 String:", finalResult);
+                }
+            });
+        });
+        setImageArray(dataUrlArray);
+    };
 
     // file upload button
     const uploadButton = (
@@ -128,7 +186,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
             values.description || singleProductDetails?.description;
         const rating = values.rating || singleProductDetails?.rating;
         const productId = values.productId || singleProductDetails?.productId;
-        const images = thumbUrlsArray;
+        const images = imageArray;
 
         const productUpdateData = {
             product_name,
