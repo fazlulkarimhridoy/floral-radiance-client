@@ -1,3 +1,5 @@
+"use client";
+
 import { useCategory } from "@/context/CategoryContext";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
