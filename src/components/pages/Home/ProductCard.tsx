@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { FaCheckCircle } from "react-icons/fa";
-import { useRouter } from 'next/router';
-import { div } from "framer-motion/client";
 
 interface Item {
     id: number;
