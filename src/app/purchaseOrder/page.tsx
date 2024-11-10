@@ -395,7 +395,7 @@ const Page = () => {
                         </div>
                         {/* delivery date and time */}
                         <div className="flex flex-col md:flex-row gap-4">
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2 w-full">
                                 <label
                                     htmlFor=""
                                     className="text-xl flex gap-2 items-center text-[#3d4349]"
@@ -404,11 +404,11 @@ const Page = () => {
                                     <FaCalendar /> Delivey date:
                                 </label>
                                 <DatePicker
-                                    className="w-[300px]"
+                                    className="w-full"
                                     onChange={onChangeDate}
                                 />
                             </div>
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2 w-full">
                                 <label
                                     htmlFor=""
                                     className="text-xl flex gap-2 items-center text-[#3d4349]"
@@ -419,7 +419,7 @@ const Page = () => {
                                 <TimePicker
                                     use12Hours
                                     onChange={onChangeTime}
-                                    className="w-[300px]"
+                                    className="w-full"
                                 />
                             </div>
                         </div>
