@@ -21,9 +21,10 @@ const ShipmentCalculator: React.FC<ShipmentCalculatorProps> = ({ shipmentCost, s
   };
 
   return (
-    <div className="font-outfit border-2 border-[rgb(162,182,195)] p-2 space-y-4 w-full lg:w-[600px] rounded-xl">
+    <div className="font-outfit border-2 border-[rgb(162,182,195)] p-2 space-y-4 w-full lg:w-full rounded-xl">
       <h1 className="font-semibold text-xl text-[#3d4349]">Getting shipment estimates</h1>
       <Select
+
         className="w-full"
         showSearch
         placeholder="Select a place In Dhaka"
@@ -34,10 +35,10 @@ const ShipmentCalculator: React.FC<ShipmentCalculatorProps> = ({ shipmentCost, s
           { value: "200", label: "Rampura" },
           { value: "160", label: "Mohammadpur" },
           { value: "170", label: "Dhanmondi" },
-          { value: "200", label: "Gulshan" },
+          { value: "220", label: "Gulshan" },
           { value: "180", label: "Banani" },
           { value: "250", label: "Uttara" },
-          { value: "200", label: "Badda" },
+          { value: "210", label: "Badda" },
           { value: "150", label: "Mirpur" },
         ]}
       />
