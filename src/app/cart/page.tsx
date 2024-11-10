@@ -97,8 +97,8 @@ const Cart: React.FC = () => {
                                             {data?.product_name}
                                         </div>
                                     </td>
-                                    <td>
-                                        {/* <div className="flex items-center gap-2">
+                                    {/* <td>
+                                        <div className="flex items-center gap-2">
                                             <button
                                                 className="bg-gray-200 px-3 py-1 rounded-md text-lg"
                                                 onClick={handleDecrease}
@@ -112,8 +112,8 @@ const Cart: React.FC = () => {
                                             >
                                                 +
                                             </button>
-                                        </div> */}
-                                    </td>
+                                        </div>
+                                    </td> */}
                                     <td>
                                         <div className="text-gray-600 font-bold">
                                             {data?.price}

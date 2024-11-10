@@ -14,7 +14,7 @@ const HowItWorks = () => {
       </h1>
       <div  className="grid  grid-cols-1 md:grid-cols-3 md:grid-rows-3 p-2 md:p-0 md:w-[90%] lg:w-[70%] mx-auto gap-4 m-10">
         {/* card one */}
-        <div data-aos="flip-left" data-aos-delay="500" data-aos-easing="ease-in-out"
+        <div data-aos="flip-left" data-aos-delay="1000" data-aos-easing="ease-in-out"
         data-aos-duration="400" className=" md:row-span-2  bg-[#c3b2e8] rounded-xl p-4 flex flex-col gap-2 justify-center items-center text-center  amoled-shadow relative">
           <Image
             className="rounded-full bg-none md:absolute md:-top-20 border-2 border-purple-700"
@@ -38,7 +38,7 @@ const HowItWorks = () => {
           />
         </div>
         {/* Card two */}
-        <div data-aos="flip-right" data-aos-delay="500" data-aos-duration="800" className=" md:col-span-2  bg-[#f682a5] rounded-xl p-4  amoled-shadow">
+        <div data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800" className=" md:col-span-2  bg-[#f682a5] rounded-xl p-4  amoled-shadow">
           <div className="space-y-4 flex flex-col-reverse text-center justify-between items-center">
             <div>
               <h1 className="playfair text-2xl font-bold text-[#4c2366]">
@@ -58,7 +58,7 @@ const HowItWorks = () => {
           </div>
         </div>
         {/* card three */}
-        <div data-aos="flip-up" data-aos-delay="500" data-aos-duration="800" className="  bg-[#c4d68c] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
+        <div data-aos="flip-up" data-aos-delay="1000" data-aos-duration="800" className="  bg-[#c4d68c] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
           <Image
             className="rounded-xl bg-none object-fill bg-slate-800"
             src={"/Images/place-order.jpg"}
@@ -74,7 +74,7 @@ const HowItWorks = () => {
           </p>
         </div>
         {/* card four */}
-        <div data-aos="flip-right" data-aos-delay="500" data-aos-duration="800" className=" bg-[#ffdf70] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
+        <div data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800" className=" bg-[#ffdf70] rounded-xl p-4 space-y-2  amoled-shadow flex flex-col justify-center items-center ">
           <Image
             className="rounded-xl bg-none object-fill bg-slate-800"
             src={"/Images/payment.jpg"}
@@ -90,7 +90,7 @@ const HowItWorks = () => {
           </p>
         </div>
         {/* card five */}
-        <div data-aos="flip-right" data-aos-delay="500" data-aos-duration="800" className="md:col-span-2  bg-[#f8a475] rounded-xl p-4 relative flex flex-row-reverse  amoled-shadow  justify-center items-center ">
+        <div data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800" className="md:col-span-2  bg-[#f8a475] rounded-xl p-4 relative flex flex-row-reverse  amoled-shadow  justify-center items-center ">
           <div >
             <Image
               className="rounded-full bg-none object-fill bg-slate-800  right-4"
@@ -111,7 +111,7 @@ const HowItWorks = () => {
           </div>
         </div>
         {/* card six  */}
-        <div data-aos="flip-right" data-aos-delay="500" data-aos-duration="800" className="  bg-[#b8cedc] rounded-xl p-4 flex flex-col justify-center  amoled-shadow items-center ">
+        <div data-aos="flip-right" data-aos-delay="1000" data-aos-duration="800" className="  bg-[#b8cedc] rounded-xl p-4 flex flex-col justify-center  amoled-shadow items-center ">
           <Image
             className="rounded-full bg-none object-fill bg-slate-800  right-4"
             src={"/Images/share.jpg"}
