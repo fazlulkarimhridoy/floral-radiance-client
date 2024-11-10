@@ -336,12 +336,12 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                             label="Discounted Price"
                             name="discount_price"
                             initialValue={singleProductDetails?.discount_price}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter discounted price!",
-                                },
-                            ]}
+                            // rules={[
+                            //     {
+                            //         required: true,
+                            //         message: "Please enter discounted price!",
+                            //     },
+                            // ]}
                         >
                             <InputNumber
                                 className="w-full"
