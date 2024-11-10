@@ -200,6 +200,13 @@ const AddProduct = () => {
             })
             .catch((error) => {
                 setLoading(false);
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Product upload failed!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
                 console.log(error);
             });
     };
