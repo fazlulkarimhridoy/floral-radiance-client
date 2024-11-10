@@ -110,7 +110,7 @@ const RecentOrders = () => {
   return (
     <div className="relative">
       <div
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        // style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
       >
         {isLoading ? (
