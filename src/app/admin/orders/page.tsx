@@ -179,7 +179,7 @@ const Orders = () => {
                 </div>
             </div>
             <div
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                // style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-auto scroll-smooth bg-blue-50 mt-5 mb-5 md:mb-0"
             >
                 <table className="table whitespace-nowrap">

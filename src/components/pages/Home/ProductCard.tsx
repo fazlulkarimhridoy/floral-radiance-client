@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
                         alt={`Image`}
                         width={120}
                         height={100}
-                        className="w-full rounded-lg"
+                        className="w-full h-[230px] rounded-lg"
                     />
                 </div>
                 <div className="border-[#194464] flex flex-col gap-2">
