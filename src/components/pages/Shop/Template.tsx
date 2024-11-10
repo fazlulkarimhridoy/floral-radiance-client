@@ -8,7 +8,7 @@ const Template = () => {
       <div className="">
         <Image
           className="bg-[#b8cedc]  "
-          src={"/images/flowerImg2.png"}
+          src="/images/flowerImg2.png"
           alt="flower"
           width={250}
           height={100}
