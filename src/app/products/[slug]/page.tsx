@@ -11,6 +11,8 @@ import { Spin } from "antd";
 import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { MdCategory } from "react-icons/md";
+import { FaThumbsUp } from "react-icons/fa";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -180,15 +182,20 @@ const Page = ({ params }: { params: { slug: string } }) => {
                                 <p className="text-xl font-outfit font-semibold ">
                                     {singleProduct?.description}
                                 </p>
-                                <Flex gap="middle" className="mt-2">
-                                    <Rate
-                                        className="flex items-center justify-center text-base text-pink-600"
-                                        tooltips={desc}
-                                        value={singleProduct?.rating}
-                                    />
-                                </Flex>
+                                <div className="flex items-center gap-2 mt-2">
+                                    <FaThumbsUp />
+                                    <Flex gap="middle">
+                                        <Rate
+                                            className="flex items-center justify-center text-base text-pink-600"
+                                            tooltips={desc}
+                                            value={singleProduct?.rating}
+                                        />
+                                    </Flex>
+                                </div>
                                 <p className="flex items-center gap-2 text-2xl font-semibold">
-                                    <span>Category:</span>
+                                    <span>
+                                        <MdCategory />{" "}
+                                    </span>
                                     {singleProduct?.category}
                                 </p>
                             </div>
