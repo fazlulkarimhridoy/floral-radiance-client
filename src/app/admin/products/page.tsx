@@ -165,7 +165,7 @@ const Products = () => {
                 </div>
             </div>
             <div
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                // style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="overflow-x-auto scroll-smooth bg-blue-50 pt-4 mb-5 md:mb-0"
             >
                 <table className="table whitespace-nowrap">
