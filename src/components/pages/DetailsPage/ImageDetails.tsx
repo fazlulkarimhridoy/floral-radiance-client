@@ -30,38 +30,46 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                 className="flex justify-around overflow-x-scroll"
             >
-                <div className="p-2">
-                    <Image
-                        className="rounded-lg"
-                        width={90}
-                        alt="product"
-                        src={srcList[1]}
-                    />
-                </div>
-                <div className="p-2">
-                    <Image
-                        className="rounded-lg"
-                        width={90}
-                        alt="product"
-                        src={srcList[2]}
-                    />
-                </div>
-                <div className="p-2">
-                    <Image
-                        className="rounded-lg"
-                        width={90}
-                        alt="product"
-                        src={srcList[3]}
-                    />
-                </div>
-                <div className="p-2">
-                    <Image
-                        className="rounded-lg"
-                        width={90}
-                        alt="product"
-                        src={srcList[4]}
-                    />
-                </div>
+                {srcList[1] && (
+                    <div className="p-2">
+                        <Image
+                            className="rounded-lg"
+                            width={90}
+                            alt="product"
+                            src={srcList[1]}
+                        />
+                    </div>
+                )}
+                {srcList[2] && (
+                    <div className="p-2">
+                        <Image
+                            className="rounded-lg"
+                            width={90}
+                            alt="product"
+                            src={srcList[2]}
+                        />
+                    </div>
+                )}
+                {srcList[3] && (
+                    <div className="p-2">
+                        <Image
+                            className="rounded-lg"
+                            width={90}
+                            alt="product"
+                            src={srcList[3]}
+                        />
+                    </div>
+                )}
+                {srcList[4] && (
+                    <div className="p-2">
+                        <Image
+                            className="rounded-lg"
+                            width={90}
+                            alt="product"
+                            src={srcList[4]}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

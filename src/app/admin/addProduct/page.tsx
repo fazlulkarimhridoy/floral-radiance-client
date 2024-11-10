@@ -307,12 +307,12 @@ const AddProduct = () => {
                             className="w-full"
                             label="Discounted Price"
                             name="discounted_price"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter discounted price!",
-                                },
-                            ]}
+                            // rules={[
+                            //     {
+                            //         required: true,
+                            //         message: "Please enter discounted price!",
+                            //     },
+                            // ]}
                         >
                             <InputNumber
                                 className="w-full"
