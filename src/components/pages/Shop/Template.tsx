@@ -3,12 +3,12 @@ import React from "react";
 
 const Template = () => {
   return (
-    <div className="flex w-full  justify-between items-center bg-[#b8cedc] rounded-2xl relative  h-full  p-4 ">
+    <div className="flex w-full  justify-between items-center bg-[#b8cedc] rounded-2xl relative  h-full  p-4">
       <p className="font-dm text-2xl font-semibold self-end text-[#52225e] text-wrap">Send birthday Gift with flowers</p>
       <div className="">
         <Image
           className="bg-[#b8cedc]  "
-          src="/images/flowerImg2.png"
+          src="https://res.cloudinary.com/dmit5qbfo/image/upload/v1731226736/flowerImg2_gllr6z.png"
           alt="flower"
           width={250}
           height={100}
