@@ -226,6 +226,13 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
             })
             .catch((error) => {
                 setLoading(false);
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Product update failed!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
                 console.log(error);
             });
     };
