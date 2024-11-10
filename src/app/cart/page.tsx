@@ -139,7 +139,7 @@ const Cart: React.FC = () => {
                 </table>
             </div>
             <div className="flex flex-col md:flex-row justify-center gap-10 my-[22px]">
-                <ShipmentCalculator />
+
                 {cartData?.length > 0 && (
                     <CartTotal calculateTotal={calculateTotal} show={true} />
                 )}

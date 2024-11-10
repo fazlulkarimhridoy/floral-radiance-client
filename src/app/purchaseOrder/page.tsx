@@ -19,6 +19,7 @@ import axios from "axios";
 
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import ShipmentCalculator from "@/components/pages/Cart/ShipmentCalculator";
 
 interface FormData {
     mobileNumber: string;
@@ -39,6 +40,7 @@ interface CartItem {
 const Page = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
     const [showData, setShowData] = useState(true);
+    const [shipmentCost,setShipmentCost] = useState(0)
     const [name, setname] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -442,15 +444,18 @@ const Page = () => {
                             </div>
                         </div>
                         <div>
+                            <ShipmentCalculator shipmentCost={shipmentCost} setShipmentCost={setShipmentCost} />
+                        </div>
+                        <div>
                             <p>
-                                Please pay the advance amount 200 Taka to
+                                Please pay the advance amount {shipmentCost} Taka to
                                 confirm the order.{" "}
                                 <br className="hidden md:flex" /> Pay via send
                                 money to this number{" "}
                                 <span className="text-red-600">
-                                    01634468473
+                                    01304035398
                                 </span>{" "}
-                                (Bkash) and fill the transaction id below.
+                                (Bkash , Nagad) and fill the transaction id below.
                             </p>
                         </div>
                         <div className="flex flex-col gap-2 w-full">
