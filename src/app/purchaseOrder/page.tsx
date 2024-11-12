@@ -16,19 +16,8 @@ import CartTotal from "@/components/pages/Cart/CartTotal";
 import { FaAngleDown } from "react-icons/fa";
 import Image from "next/image";
 import axios from "axios";
-
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import ShipmentCalculator from "@/components/pages/Cart/ShipmentCalculator";
-
-interface FormData {
-    mobileNumber: string;
-    deliveryAddress: string;
-    deliveryDate: string;
-    deliveryTime: string;
-    suggetion: string;
-    cashOnDelivery: boolean;
-}
 
 interface CartItem {
     id: number;
@@ -40,7 +29,6 @@ interface CartItem {
 const Page = () => {
     const [cartData, setCartData] = useState<CartItem[]>([]);
     const [showData, setShowData] = useState(true);
-    const [shipmentCost,setShipmentCost] = useState(0)
     const [name, setname] = useState("");
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
@@ -48,7 +36,6 @@ const Page = () => {
     const [deliveryDate, setDeliveryDate] = useState<string | string[]>([]);
     const [deliveryTime, setDeliveryTime] = useState<string | string[]>([]);
     const [note, setNote] = useState("");
-    // const [cashOnDelivery, setCashOnDelivery] = useState(false);
     const [transactionId, setTransactionId] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -169,6 +156,18 @@ const Page = () => {
                 position: "center",
                 icon: "warning",
                 title: "Number must be of 11 digits.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+
+        if (transactionId.length !== 10) {
+            setLoading(false);
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Transaction ID must be of 10 digits.",
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -443,30 +442,31 @@ const Page = () => {
                                 />
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <ShipmentCalculator shipmentCost={shipmentCost} setShipmentCost={setShipmentCost} />
-                        </div>
+                        </div> */}
                         <div>
                             <p>
-                                Please pay the advance amount {shipmentCost} Taka to
+                                Please pay the advance amount <span className="font-bold text-blue-400">150</span> Taka to
                                 confirm the order.{" "}
                                 <br className="hidden md:flex" /> Pay via send
                                 money to this number{" "}
                                 <span className="text-red-600">
                                     01304035398
                                 </span>{" "}
-                                (Bkash , Nagad) and fill the transaction id below.
+                                (Bkash , Nagad) and fill the transaction id
+                                below.
                             </p>
                         </div>
                         <div className="flex flex-col gap-2 w-full">
                             <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                 {" "}
-                                <FaBangladeshiTakaSign /> Bkash Transection Id:
+                                <FaBangladeshiTakaSign /> Bkash Transection Id (10 digits):
                             </label>
                             <Input
                                 required
                                 type="string"
-                                maxLength={20}
+                                maxLength={10}
                                 placeholder="Transection id"
                                 className="w-full"
                                 onChange={handleTransactionId}
