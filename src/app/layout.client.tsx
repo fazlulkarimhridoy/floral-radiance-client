@@ -26,17 +26,17 @@ export default function LayoutClient({
       {!pathname.startsWith("/admin") && (
         <>
 
-              <CategoryProvider>
+          <CategoryProvider>
             <SearchTextProvider>
-                  <TanstackProvider>
-                    <div>
-                      {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <Navbar />}
-                      <div>{children}</div>
-                      {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <NewFooter />}
-                    </div>
-                  </TanstackProvider>
+              <TanstackProvider>
+                <div>
+                  {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <Navbar />}
+                  <div>{children}</div>
+                  {(pathname.startsWith("/login") || pathname.startsWith("/success")) ? <></> : <NewFooter />}
+                </div>
+              </TanstackProvider>
             </SearchTextProvider>
-              </CategoryProvider>
+          </CategoryProvider>
         </>
       )}
       {pathname.startsWith("/admin") && (
