@@ -61,20 +61,23 @@ const Navbar = () => {
             }
         >
             <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
-                <Link href="/">
-                    <div className="flex items-center">
-                        <Image
-                            width={120}
-                            height={120}
-                            src="/Images/logo.png"
-                            alt="logo"
-                            className="bg-none w-[80px]"
-                        />
-                        <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
-                            Floral Radiance
-                        </p>
-                    </div>
-                </Link>
+                <div
+                    onClick={() => {
+                        window.location.href = "/";
+                    }}
+                    className="flex items-center cursor-pointer"
+                >
+                    <Image
+                        width={120}
+                        height={120}
+                        src="/Images/logo.png"
+                        alt="logo"
+                        className="bg-none w-[80px]"
+                    />
+                    <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+                        Floral Radiance
+                    </p>
+                </div>
                 <div className="mr-10 hidden lg:block">
                     <ul className="flex text-lg gap-6 font-poppins">
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
