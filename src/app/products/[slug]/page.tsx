@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { MdCategory } from "react-icons/md";
 import { FaThumbsUp } from "react-icons/fa";
+import { useCart } from "@/context/CartProvider";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -28,20 +29,14 @@ interface ProductType {
     category: string;
 }
 
-interface CartItem {
-    id: number;
-    product_name: string;
-    images: string;
-    price: number;
-}
 
 const Page = ({ params }: { params: { slug: string } }) => {
+    const {addToCart} = useCart()
     const router = useRouter();
     const { push } = router;
     const [modal1Open, setModal1Open] = useState(false);
     const [activeButton, setActiveButton] = useState<number | null>(null);
-    // const [singleProduct , setSingleProduct] = useState<Array<string>>([])
-    // const [quantity, setQuantity] = useState(10)
+
     const [price, setPrice] = useState(250);
 
     const handlePrice = (quantity: number) => {
@@ -68,55 +63,16 @@ const Page = ({ params }: { params: { slug: string } }) => {
         refetchOnWindowFocus: false,
     });
 
-    const [cartData, setCartData] = useState<CartItem[]>([]);
+    const singleObj = {
+        id :  singleProduct?.id ?? 0,
+        product_name :  singleProduct?.product_name ?? "",
+        image :  singleProduct?.images[0] ?? "",
+        price :  singleProduct?.discount_price ?? (singleProduct?.price || 0)
+    }
 
-    useEffect(() => {
-        // Load cart data from localStorage
-        const storedData = localStorage.getItem("cartItem");
-        if (storedData) {
-            setCartData(JSON.parse(storedData));
-        }
-    }, []);
-
-    const handleCart = async (
-        id: number,
-        product_name: string,
-        images: string,
-        price: number
-    ) => {
-        const existingProduct = cartData.find((item) => item.id === id);
-        if (!existingProduct) {
-            setCartData((prevCardData) => [
-                ...prevCardData,
-                { product_name, images, price, id },
-            ]);
-            localStorage.setItem("cartItem", JSON.stringify(cartData));
-            setModal1Open(true);
-        } else {
-            Swal.fire({
-                position: "center",
-                icon: "warning",
-                title: "Product already in the cart!",
-                showConfirmButton: false,
-                timer: 1500,
-            });
-        }
-        // Use functional state update to ensure you're working with the latest state
-    };
-    // Synchronize localStorage whenever the cardData state changes
-    useEffect(() => {
-        // Store the entire updated cart into localStorage
-        localStorage.setItem("cartItem", JSON.stringify(cartData));
-    }, [cartData]);
-
-    // handle cart clikc
+    // handle cart click
     const handleAddToCart = () => {
-        handleCart(
-            singleProduct?.id ?? 0,
-            singleProduct?.product_name ?? "",
-            singleProduct?.images[0] ?? "",
-            singleProduct?.discount_price ?? (singleProduct?.price || 0)
-        );
+        addToCart(singleObj)
         push("/cart");
     };
 
@@ -179,10 +135,10 @@ const Page = ({ params }: { params: { slug: string } }) => {
                                         )}
                                     </div>
                                 </div>
-                                <p className="text-xl font-outfit font-semibold ">
+                                <p className="text-xl font-outfit font-semibold max-w-[300px] text-wrap">
                                     {singleProduct?.description}
                                 </p>
-                                <div className="flex items-center gap-2 mt-2">
+                                <div className="flex items-center gap-2 mt-2 w-full">
                                     <FaThumbsUp />
                                     <Flex gap="middle">
                                         <Rate

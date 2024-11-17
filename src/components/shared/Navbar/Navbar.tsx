@@ -7,27 +7,13 @@ import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
 import { FiMenu } from "react-icons/fi";
+import { useCart } from "@/context/CartProvider";
 
-interface CartItem {
-    id: number;
-    product_name: string;
-    images: string;
-    price: number;
-}
 
 const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [open, setOpen] = useState(false);
-    const [cartData, setCartData] = useState<CartItem[]>([]);
-
-    // Retrieve cart data from localStorage when the component mounts
-    useEffect(() => {
-        const storedCart = localStorage.getItem("cartItem");
-        console.log(storedCart);
-        if (storedCart) {
-            setCartData(JSON.parse(storedCart));
-        }
-    }, []);
+    const {cartData} = useCart()
 
     const showDrawer = () => {
         setOpen(true);
@@ -98,7 +84,7 @@ const Navbar = () => {
                             <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
                         </button>
                         <p className="absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">
-                            {""}
+                            {cartData.length}
                         </p>
                     </Link>
 

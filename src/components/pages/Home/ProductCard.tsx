@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Modal } from 'antd';
 import { FaCheckCircle } from "react-icons/fa";
+import { useCart } from "@/context/CartProvider";
 
 interface Item {
     id: number;
@@ -20,13 +21,22 @@ interface Item {
 
 interface ProductCardProps {
     item: Item;
-    handleCart: Function;
     modal1Open: boolean;
     setModal1Open: Function;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open, setModal1Open }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Open }) => {
 
+
+
+    const {addToCart} = useCart()
+
+    const itemObject = {
+        id : item?.id,
+        product_name : item?.product_name,
+        image : item?.images[0],
+        price : item?.price
+    }
     
     return (
         <div className="min-h-[200px] w-[250px] flex flex-col items-stretch text-center justify-center gap-4 px-4 pt-4 pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
@@ -59,12 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, handleCart, modal1Open,
             <div>
                 <button
                     onClick={() =>
-                        handleCart(
-                            item?.id,
-                            item?.product_name,
-                            item?.images[0],
-                            item?.price
-                        )
+                        addToCart(itemObject)
                     }
                     className="btn border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
                 >
