@@ -8,6 +8,7 @@ import { Empty, message, Spin } from "antd";
 import { useCategory } from "@/context/CategoryContext";
 import { useSearchText } from "@/context/SearchTextContext";
 import Swal from "sweetalert2";
+import { useCart } from "@/context/CartProvider";
 
 interface ProductType {
     id: number;
@@ -31,7 +32,7 @@ interface CartItem {
 const AllProducts = () => {
     const { categoryName } = useCategory();
     const { searchText } = useSearchText();
-    const [modal1Open, setModal1Open] = useState(false);
+    const {modal1Open, setModal1Open} = useCart();
 
     // fetch all products froom server
     const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({

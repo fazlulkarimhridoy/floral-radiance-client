@@ -1,5 +1,5 @@
 // contexts/CartContext.tsx
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 import Swal from 'sweetalert2';
 
 type CartItem = {
@@ -11,10 +11,12 @@ type CartItem = {
 
 type CartContextType = {
     cartData: CartItem[];
+    setCartData: Dispatch<SetStateAction<CartItem[]>>;
     addToCart: (item: CartItem) => void;
     removeFromCart: (id: number) => void;
     clearCart: () => void;
-     // New function type for removing items
+    modal1Open: boolean; // New state to track modal open/close status
+    setModal1Open: Dispatch<SetStateAction<boolean>>; // Function to update modal state
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -22,7 +24,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
     const [cartData, setCartData] = useState<CartItem[]>([]);
     const [isInitialized, setIsInitialized] = useState(false);
+    const [modal1Open, setModal1Open] = useState(false); // New modal state
 
+    // Load cart data from localStorage on initial render
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const storedData = localStorage.getItem("cartItems");
@@ -33,6 +37,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
+    // Save cart data to localStorage whenever it changes, after initial load
     useEffect(() => {
         if (isInitialized) {
             localStorage.setItem("cartItems", JSON.stringify(cartData));
@@ -43,6 +48,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const existingProduct = cartData.find(cartItem => cartItem.id === item.id);
         if (!existingProduct) {
             setCartData(prevCartData => [...prevCartData, item]);
+            setModal1Open(true); // Open the modal when a new item is added
         } else {
             Swal.fire({
                 position: "center",
@@ -54,17 +60,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    // Function to remove item from cart
     const removeFromCart = (id: number) => {
         setCartData(prevCartData => prevCartData.filter(item => item.id !== id));
     };
 
     const clearCart = () => {
-        setCartData([]); // Set cartData to an empty array
+        setCartData([]); // Clear all items in the cart
     };
 
     return (
-        <CartContext.Provider value={{ cartData, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ cartData, setCartData, addToCart, removeFromCart, clearCart, modal1Open, setModal1Open }}>
             {children}
         </CartContext.Provider>
     );

@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import { Empty, message, Spin } from "antd";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useCart } from "@/context/CartProvider";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -22,7 +23,7 @@ interface ProductType {
 
 
 const FeaturedProducts = () => {
-    const [modal1Open, setModal1Open] = useState(false);
+    const {modal1Open, setModal1Open} = useCart();
     // fetch all products from server
     const { data: featuredProducts = [], isLoading } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],
