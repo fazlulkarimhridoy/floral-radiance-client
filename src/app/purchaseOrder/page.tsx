@@ -263,7 +263,7 @@ const Page = () => {
                     </div>
                     {showData && (
                         <div className="overflow-x-auto scroll-smooth pt-4 mb-5 md:mb-0">
-                            <table className="table">
+                            <table className="table whitespace-nowrap">
                                 {/* head */}
                                 <thead>
                                     <tr>
