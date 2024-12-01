@@ -7,6 +7,7 @@ import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Modal } from 'antd';
 import { FaCheckCircle } from "react-icons/fa";
 import { useCart } from "@/context/CartProvider";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 interface Item {
     id: number;
@@ -29,18 +30,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
 
 
 
-    const {addToCart} = useCart()
+    const { addToCart } = useCart()
 
     const itemObject = {
-        id : item?.id,
-        product_name : item?.product_name,
-        image : item?.images[0],
-        price : item?.price
+        id: item?.id,
+        product_name: item?.product_name,
+        image: item?.images[0],
+        price: item?.price
     }
-    
+
     return (
         <div className="min-h-[200px] w-[250px] flex flex-col items-stretch text-center justify-center gap-4 px-4 pt-4 pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
-            <Link href={`products/${item.id}`}>
+            <Link href={`/products/${item.id}`}>
                 <div className="p-4">
                     <Image
                         src={item?.images[0]}
@@ -57,11 +58,40 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
                     <p className="font-outfit text-sm text-[#194464] max-h-14 overflow-hidden">
                         {item?.description}
                     </p>
-                    <div className="flex items-center justify-center text-center">
-                        <p className="text-lg font-outfit font-bold">
-                            Price: {item?.price}
-                        </p>
-                        <FaBangladeshiTakaSign className="text-sm" />
+                    {/* price ...............................*/}
+                    <div className="flex flex-col items-center font-semibold text-xl">
+                        <div
+                            className={`flex flex-col-reverse ${item.discount_price
+                                ? "flex-row-reverse justify-end items-center "
+                                : ""
+                                }`}
+                        >
+                            <div className="text-center rounded-lg  text-[#184364] font-bold text-lg flex justify-center items-center">
+                                <span
+                                    className={`${item?.discount_price
+                                        ? "line-through text-red-500 text-xl"
+                                        : ""
+                                        } text-lg font-semibold`}
+                                >
+                                    {item?.price}
+                                </span>{" "}
+                                <span>
+                                    {" "}
+                                    <TbCurrencyTaka />
+                                </span>
+                            </div>
+                            {item?.discount_price ? (
+                                <div className="t text-center rounded-lg  text-[#184364] font-bold text-xl flex justify-center items-center">
+                                    Price : {item?.discount_price}{" "}
+                                    <span>
+                                        {" "}
+                                        <TbCurrencyTaka />
+                                    </span>
+                                </div>
+                            ) : (
+                                ""
+                            )}
+                        </div>
                     </div>
                 </div>
             </Link>
