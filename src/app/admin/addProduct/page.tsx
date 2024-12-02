@@ -330,12 +330,12 @@ const AddProduct = () => {
                             className="w-full"
                             label="Stock"
                             name="stock"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Please enter stock!",
-                                },
-                            ]}
+                            // rules={[
+                            //     {
+                            //         required: true,
+                            //         message: "Please enter stock!",
+                            //     },
+                            // ]}
                         >
                             <InputNumber
                                 className="w-full"
