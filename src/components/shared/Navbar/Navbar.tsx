@@ -7,27 +7,13 @@ import { motion } from "framer-motion";
 import { Drawer } from "antd";
 import Link from "next/link";
 import { FiMenu } from "react-icons/fi";
+import { useCart } from "@/context/CartProvider";
 
-interface CartItem {
-    id: number;
-    product_name: string;
-    images: string;
-    price: number;
-}
 
 const Navbar = () => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [open, setOpen] = useState(false);
-    const [cartData, setCartData] = useState<CartItem[]>([]);
-
-    // Retrieve cart data from localStorage when the component mounts
-    useEffect(() => {
-        const storedCart = localStorage.getItem("cartItem");
-        console.log(storedCart);
-        if (storedCart) {
-            setCartData(JSON.parse(storedCart));
-        }
-    }, []);
+    const {cartData} = useCart()
 
     const showDrawer = () => {
         setOpen(true);
@@ -61,20 +47,23 @@ const Navbar = () => {
             }
         >
             <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
-                <Link href="/">
-                    <div className="flex items-center">
-                        <Image
-                            width={120}
-                            height={120}
-                            src="/Images/logo.png"
-                            alt="logo"
-                            className="bg-none w-[80px]"
-                        />
-                        <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
-                            Floral Radiance
-                        </p>
-                    </div>
-                </Link>
+                <div
+                    onClick={() => {
+                        window.location.href = "/";
+                    }}
+                    className="flex items-center cursor-pointer"
+                >
+                    <Image
+                        width={120}
+                        height={120}
+                        src="/Images/logo.png"
+                        alt="logo"
+                        className="bg-none w-[80px]"
+                    />
+                    <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+                        Floral Radiance
+                    </p>
+                </div>
                 <div className="mr-10 hidden lg:block">
                     <ul className="flex text-lg gap-6 font-poppins">
                         <li className="hover:text-pink-600 cursor-pointer transition-colors">
@@ -98,7 +87,7 @@ const Navbar = () => {
                             <ShoppingCartOutlined className="text-3xl font-bold hover:text-pink-600 transition-colors mr-8" />
                         </button>
                         <p className="absolute -top-3 left-4 bg-pink-600 rounded-full w-5 text-center  text-white">
-                            {""}
+                            {cartData.length}
                         </p>
                     </Link>
 
