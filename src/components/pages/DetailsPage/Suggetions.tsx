@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AllProducts from "../Shop/AllProducts";
 import { Empty, Spin } from "antd";
 import ProductCard from "../Home/ProductCard";
 import { useQuery } from "@tanstack/react-query";
