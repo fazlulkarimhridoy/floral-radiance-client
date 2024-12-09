@@ -40,22 +40,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
     }
 
     return (
-        <div className="min-h-[200px] w-[250px] flex flex-col items-stretch text-center justify-center gap-4 px-4 pt-4 pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
+        <div className="  min-h-[200px]  md:w-[250px]  flex flex-col items-stretch text-center justify-center gap-4 px-2 lg:px-4 pt-4 pb-4 lg:pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
             <Link href={`/products/${item.id}`}>
-                <div className="p-4">
+                <div className="p-2 lg:p-4">
                     <Image
                         src={item?.images[0]}
                         alt={`Image`}
-                        width={120}
+                        width={100}
                         height={100}
-                        className="w-full h-[230px] rounded-lg"
+                        className="w-full lg:h-[230px] rounded-lg object-cover"
                     />
                 </div>
-                <div className="border-[#194464] flex flex-col gap-2">
+                <div className="border-[#194464] flex flex-col lg:gap-2">
                     <p className="truncate font-outfit text-base font-bold text-[#194464]">
                         {item?.product_name}
                     </p>
-                    <p className="font-outfit text-sm text-[#194464] max-h-14 overflow-hidden">
+                    <p className="hidden md:block font-outfit text-sm text-[#194464] max-h-14 overflow-hidden">
                         {item?.description}
                     </p>
                     {/* price ...............................*/}
@@ -81,7 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
                                 </span>
                             </div>
                             {item?.discount_price ? (
-                                <div className="t text-center rounded-lg  text-[#184364] font-bold text-xl flex justify-center items-center">
+                                <div className=" text-center rounded-lg  text-[#184364] font-bold text-xl flex justify-center items-center">
                                     Price : {item?.discount_price}{" "}
                                     <span>
                                         {" "}
@@ -101,7 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
                     onClick={() =>
                         addToCart(itemObject)
                     }
-                    className="btn border-2 border-[#194464] px-2 py-2 rounded-xl text-base font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
+                    className="btn border-2 border-[#194464] px-2 py-2 rounded-xl text-xs font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
                 >
                     Add to cart
                 </button>
@@ -149,3 +149,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
 };
 
 export default ProductCard;
+
+
+// min-h-[200px] w-[250px] flex flex-col items-stretch text-center justify-center gap-4 px-4 pt-4 pb-8 rounded-xl amoled-shadow bg-white lg:bg-none

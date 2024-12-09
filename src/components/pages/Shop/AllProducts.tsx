@@ -74,7 +74,7 @@ const AllProducts = () => {
 
  
     return (
-        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3   justify-center gap-2 lg:gap-10 mt-20 pb-20 px-2 lg:px-4 ">
             {isLoading ? (
                 <Spin size="large" />
             ) : shopProducts?.length > 0 ? (
@@ -85,6 +85,7 @@ const AllProducts = () => {
                             item={item}
                             modal1Open={modal1Open}
                             setModal1Open={setModal1Open}
+                            
                         />
                     ))
                 ) : (
@@ -98,3 +99,5 @@ const AllProducts = () => {
 };
 
 export default AllProducts;
+
+// flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5

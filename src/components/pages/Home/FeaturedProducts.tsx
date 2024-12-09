@@ -38,7 +38,7 @@ const FeaturedProducts = () => {
     });
 
     return (
-        <div className="max-w-[70%] mx-auto my-20 relative ">
+        <div className="max-w-[90%] mx-auto my-20 relative ">
             <div className="">
                 <h3 className="text-center italic font-medium">
                     Wonderful gifts
@@ -47,7 +47,7 @@ const FeaturedProducts = () => {
                     Featured Products
                 </h1>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4   justify-center gap-2 lg:gap-10 mt-20 pb-20 px-2 lg:px-4 ">
                 {isLoading ? (
                     <Spin style={{ color: "white" }} size="large" />
                 ) : featuredProducts?.length > 0 ? (

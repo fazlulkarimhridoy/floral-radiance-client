@@ -2,6 +2,7 @@
 
 import AllProducts from "@/components/pages/Shop/AllProducts";
 import Banner from "@/components/pages/Shop/Banner";
+import CategoryDropdown from "@/components/pages/Shop/CategoryDropDown";
 import ButtonGroup from "@/components/pages/Shop/ScrollBarSlider";
 import Search from "@/components/pages/Shop/Search";
 import SideBarMenu from "@/components/pages/Shop/SideBarMenu";
@@ -29,6 +30,7 @@ const Page = () => {
             {/* <h1 className="text-xl"> All Products</h1> */}
             <div className="border-r-2 ">
                 <SideBarMenu></SideBarMenu>
+                {/* <CategoryDropdown /> */}
             </div>
             <div
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
@@ -38,9 +40,10 @@ const Page = () => {
                     <Search></Search>
                     <ButtonGroup></ButtonGroup>
                 </div>
-                <div className="w-full">
+              
+                {/* <div className="w-full">
                     <Banner images={images}></Banner>
-                </div>
+                </div> */}
                 <div className="bg-[#f4f4f4] rounded-2xl">
                     <AllProducts />
                 </div>
