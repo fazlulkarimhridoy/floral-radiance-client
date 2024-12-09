@@ -53,14 +53,14 @@ const Navbar = () => {
                     }}
                     className="flex items-center cursor-pointer"
                 >
-                    <Image
+                    {/* <Image
                         width={120}
                         height={120}
                         src="/Images/logo.png"
                         alt="logo"
                         className="bg-none w-[80px]"
-                    />
-                    <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+                    /> */}
+                    <p className="dancing-style text-lg md:text-xl ml-8">
                         Floral Radiance
                     </p>
                 </div>
