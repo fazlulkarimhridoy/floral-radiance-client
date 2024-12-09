@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "antd";
+import { Button, Empty } from "antd";
 import { FaTrash } from "react-icons/fa";
 import ShipmentCalculator from "@/components/pages/Cart/ShipmentCalculator";
 import CartTotal from "@/components/pages/Cart/CartTotal";
@@ -124,6 +124,18 @@ const Cart: React.FC = () => {
                                     </td>
                                 </tr>
                             ))}
+                            {cartData?.length < 1 && (
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    {" "}
+                                    <Empty className="my-[50px]" description="No items in cart." />
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

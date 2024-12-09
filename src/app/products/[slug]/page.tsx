@@ -36,24 +36,8 @@ const Page = ({ params }: { params: { slug: string } }) => {
     const { addToCart } = useCart()
     const router = useRouter();
     const { push } = router;
-    const [modal1Open, setModal1Open] = useState(false);
-    const [activeButton, setActiveButton] = useState<number | null>(null);
 
-    const [price, setPrice] = useState(250);
-
-    const handlePrice = (quantity: number) => {
-        if (price > 0) {
-            setPrice(0);
-        }
-        setPrice(quantity * 250);
-    };
-
-    const handleClick = (buttonIndex: number): void => {
-        setActiveButton(buttonIndex);
-        handlePrice(buttonIndex);
-    };
-
-    const { data: singleProduct, isLoading } = useQuery<ProductType>({
+    const { data: singleProduct, isLoading, isSuccess } = useQuery<ProductType>({
         queryKey: ["singleProduct"],
         queryFn: async () => {
             const res = await axios.get(
@@ -183,7 +167,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
                 )
             )}
             <div>
-                <Suggetions />
+                <Suggetions isSuccess={isSuccess} />
             </div>
         </div>
     );
