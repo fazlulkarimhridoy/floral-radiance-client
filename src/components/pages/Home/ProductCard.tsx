@@ -101,7 +101,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
                     onClick={() =>
                         addToCart(itemObject)
                     }
-                    className="btn border-2 border-[#194464] px-2 py-2 rounded-xl text-xs font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
+                    className="btn border-2 border-[#194464] px-4 py-2 rounded-xl text-xs font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
                 >
                     Add to cart
                 </button>

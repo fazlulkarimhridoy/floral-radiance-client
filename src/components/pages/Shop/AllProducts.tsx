@@ -74,9 +74,9 @@ const AllProducts = () => {
 
  
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3   justify-center gap-2 lg:gap-10 mt-20 pb-20 px-2 lg:px-4 ">
+        <div className={`relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-center gap-2 lg:gap-10 ${isLoading ? "mt-10 pb-16": "mt-2 pb-2"} md:mt-4 md:pb-20 px-2 lg:px-4`}>
             {isLoading ? (
-                <Spin size="large" />
+                <Spin className="absolute left-1/2 transform -translate-x-1/2" size="large" />
             ) : shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (
