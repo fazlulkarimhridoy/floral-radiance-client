@@ -12,11 +12,11 @@ interface CategoryType {
     description: string;
 }
 
-const SideBarMenu = () => {
+const SideBarMenu = ({isSuccess}: {isSuccess: any}) => {
     const { setCategoryName } = useCategory();
 
     // Fetch all categories from server
-    const { data: allCategories = [], isLoading } = useQuery<CategoryType[]>({
+    const { data: allCategories = [] } = useQuery<CategoryType[]>({
         queryKey: ["categories"],
         queryFn: async () => {
             const res = await axios.get(
@@ -24,6 +24,7 @@ const SideBarMenu = () => {
             );
             return res?.data?.data;
         },
+        enabled: isSuccess,
         retry: 2,
         refetchOnWindowFocus: false,
     });

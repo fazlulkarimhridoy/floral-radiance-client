@@ -46,8 +46,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
                     <Image
                         src={item?.images[0]}
                         alt={`Image`}
-                        width={100}
-                        height={100}
+                        width={500}
+                        height={500}
                         className="w-full lg:h-[230px] rounded-lg object-cover"
                     />
                 </div>
