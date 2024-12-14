@@ -15,6 +15,7 @@ import { MdCategory } from "react-icons/md";
 import { FaThumbsUp } from "react-icons/fa";
 import { useCart } from "@/context/CartProvider";
 import Suggetions from "@/components/pages/DetailsPage/Suggetions";
+import Carousel from "@/components/pages/DetailsPage/Carousel";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -78,9 +79,10 @@ const Page = ({ params }: { params: { slug: string } }) => {
                         {/* image component */}
                         <div>
                             <ImageDetails srcList={singleProduct?.images} />
+                            {/* <Carousel images={singleProduct?.images} /> */}
                         </div>
                         {/* details */}
-                        <div className="mt-3 space-y-4">
+                        <div className="mt-10 space-y-4">
                             <h1 className="text-left text-sm font-thin italic text-gray-600">
                                 Floral Radiance 🌹
                             </h1>
