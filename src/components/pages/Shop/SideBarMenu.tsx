@@ -12,10 +12,11 @@ interface CategoryType {
     description: string;
 }
 
-const SideBarMenu = () => {
+const SideBarMenu = ({ isSuccess }: { isSuccess: any }) => {
     const { setCategoryName } = useCategory();
-    // fetch all products from server
-    const { data: allCategories = [], isLoading } = useQuery<CategoryType[]>({
+
+    // Fetch all categories from server
+    const { data: allCategories = [] } = useQuery<CategoryType[]>({
         queryKey: ["categories"],
         queryFn: async () => {
             const res = await axios.get(
@@ -23,6 +24,7 @@ const SideBarMenu = () => {
             );
             return res?.data?.data;
         },
+        enabled: isSuccess,
         retry: 2,
         refetchOnWindowFocus: false,
     });
@@ -30,33 +32,58 @@ const SideBarMenu = () => {
     const handleCategoryClick = (name: string) => {
         setCategoryName(name);
     };
-    return (
-        <div className=" w-full md:w-[250px] ">
-            <ul className="flex flex-col  font-roboto text-lg">
-                <li
-                    onClick={() => handleCategoryClick("")}
-                    className="sideBar-navLink"
-                >
-                    All product
-                </li>
-                {allCategories?.length > 0 &&
-                    allCategories?.map((item) => (
-                        <li
-                            onClick={() => handleCategoryClick(item?.name)}
-                            key={item?.id}
-                            className="sideBar-navLink"
-                        >
-                            {item?.name}
-                        </li>
-                    ))}
 
-                {/* <li className="sideBar-navLink">
-                    Add something to your bouqet
-                </li>
-                <li className="sideBar-navLink">Bouqet size</li>
-                <li className="sideBar-navLink">Customize</li> */}
-            </ul>
-        </div>
+    const handleSelectChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+        handleCategoryClick(event.target.value);
+    };
+
+    return (
+        <>
+            {/* Desktop Sidebar */}
+            <div className="w-full md:w-[250px] hidden md:block">
+                <ul className="flex flex-col font-roboto text-lg">
+                    <li
+                        onClick={() => handleCategoryClick("")}
+                        className="sideBar-navLink"
+                    >
+                        All products
+                    </li>
+                    {allCategories?.length > 0 &&
+                        allCategories?.map((item) => (
+                            <li
+                                onClick={() => handleCategoryClick(item?.name)}
+                                key={item?.id}
+                                className="sideBar-navLink"
+                            >
+                                {item?.name}
+                            </li>
+                        ))}
+                </ul>
+            </div>
+
+            {/* Mobile Dropdown */}
+            <div className="w-full md:w-[250px] block md:hidden rounded-xl border-2 bg-[#f4f4f4] p-2">
+                <select
+                    className="font-roboto text-base bg-[#f4f4f4] outline-none w-full"
+                    onChange={handleSelectChange}
+                >
+                    <option value="">
+                        All products
+                    </option>
+                    {allCategories?.length > 0 &&
+                        allCategories?.map((item) => (
+                            <option
+                                key={item?.id}
+                                value={item?.name}
+                            >
+                                {item?.name}
+                            </option>
+                        ))}
+                </select>
+            </div>
+        </>
     );
 };
 

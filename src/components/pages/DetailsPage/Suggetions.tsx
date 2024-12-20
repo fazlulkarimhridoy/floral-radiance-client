@@ -46,7 +46,7 @@ export default function Suggetions({ isSuccess }: { isSuccess: any }) {
                     shuffledArray[i],
                 ];
             }
-            setRandomProducts(shuffledArray.slice(0, 4));
+            setRandomProducts(shuffledArray.slice(0, 6));
         }
     }, [recentProducts]);
 

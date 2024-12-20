@@ -444,6 +444,7 @@ const AddProduct = () => {
                             name="images"
                         >
                             <Upload
+                            multiple
                                 listType="picture-card"
                                 fileList={fileList}
                                 onPreview={handlePreview}
