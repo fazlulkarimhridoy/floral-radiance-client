@@ -40,7 +40,7 @@ const Home = () => {
     <div className={`${bgColor} transition-colors duration-300 overflow-hidden`}>
       <Banner></Banner>
       <FeaturedProducts/>
-      <HowItWorks/>
+      {/* <HowItWorks/> */}
       <GetBouquet/>
     </div>
   );

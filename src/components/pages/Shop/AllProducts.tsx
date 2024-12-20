@@ -29,13 +29,13 @@ interface CartItem {
     price: number;
 }
 
-const AllProducts = () => {
+const AllProducts = ({ handleSuccess }: { handleSuccess: any }) => {
     const { categoryName } = useCategory();
     const { searchText } = useSearchText();
-    const {modal1Open, setModal1Open} = useCart();
+    const { modal1Open, setModal1Open } = useCart();
 
     // fetch all products froom server
-    const { data: shopProducts = [], isLoading } = useQuery<ProductType[]>({
+    const { data: shopProducts = [], isLoading, isSuccess } = useQuery<ProductType[]>({
         queryKey: ["featuredProducts"],
         queryFn: async () => {
             const res = await axios.get(
@@ -46,6 +46,12 @@ const AllProducts = () => {
         retry: 2,
         refetchOnWindowFocus: false,
     });
+
+    useEffect(() => {
+        if (isSuccess) {
+            handleSuccess(isSuccess);
+        }
+    }, [isSuccess]);
 
     // Handle product filter for search
     const filteredProducts =
@@ -72,11 +78,17 @@ const AllProducts = () => {
               })
             : [];
 
- 
     return (
-        <div className="flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5">
+        <div
+            className={`relative grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-center gap-2 lg:gap-10 ${
+                isLoading ? "mt-10 pb-16" : "mt-2 pb-2"
+            } md:mt-4 md:pb-20 px-2 lg:px-4`}
+        >
             {isLoading ? (
-                <Spin size="large" />
+                <Spin
+                    className="absolute left-1/2 transform -translate-x-1/2"
+                    size="large"
+                />
             ) : shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
                     filteredProducts?.map((item) => (
@@ -98,3 +110,5 @@ const AllProducts = () => {
 };
 
 export default AllProducts;
+
+// flex flex-wrap justify-center gap-10 mt-20 pb-20 px-5

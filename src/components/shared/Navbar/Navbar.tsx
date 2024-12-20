@@ -42,8 +42,8 @@ const Navbar = () => {
         <motion.div
             className={
                 showNavbar
-                    ? "bg-[#9bc4df] sticky top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
-                    : "bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
+                    ? "bg-[#9bc4df] sticky py-1.5 top-0 z-50 ease-in duration-200 animate-appear shadow-[0_0_60px_-0_rgba(0,0,0,0.3)]"
+                    : "py-1.5 bg-transparent shadow-[0_0_60px_-0_rgba(0,0,0,0.3)"
             }
         >
             <div className="flex items-center justify-between px-2 md:px-2 py-2 font-semibold">
@@ -53,14 +53,14 @@ const Navbar = () => {
                     }}
                     className="flex items-center cursor-pointer"
                 >
-                    <Image
+                    {/* <Image
                         width={120}
                         height={120}
                         src="/Images/logo.png"
                         alt="logo"
                         className="bg-none w-[80px]"
-                    />
-                    <p className="dancing-style text-lg md:text-xl -ml-4 md:-ml-6">
+                    /> */}
+                    <p className="dancing-style text-lg md:text-xl ml-2">
                         Floral Radiance
                     </p>
                 </div>

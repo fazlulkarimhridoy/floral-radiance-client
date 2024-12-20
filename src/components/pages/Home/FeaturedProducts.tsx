@@ -38,18 +38,18 @@ const FeaturedProducts = () => {
     });
 
     return (
-        <div className="max-w-[70%] mx-auto my-20 relative ">
+        <div className="mx-auto mt-5 md:mt-20 relative ">
             <div className="">
                 <h3 className="text-center italic font-medium">
                     Wonderful gifts
                 </h3>
-                <h1 className="text-center text-5xl font-medium">
+                <h1 className="text-center text-4xl md:text-5xl font-medium">
                     Featured Products
                 </h1>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-10 mt-20">
+            <div className="relative w-[95%] mx-auto grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 md:place-items-center gap-2 lg:gap-10 mt-5 md:mt-20 pb-5 md:pb-20 px-2 lg:px-4 ">
                 {isLoading ? (
-                    <Spin style={{ color: "white" }} size="large" />
+                    <Spin className="absolute left-1/2 transform -translate-x-1/2" style={{ color: "white" }} size="large" />
                 ) : featuredProducts?.length > 0 ? (
                     featuredProducts?.map((item) => (
                         <ProductCard

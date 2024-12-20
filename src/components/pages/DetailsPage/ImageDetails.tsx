@@ -9,13 +9,11 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
 interface SrcType {
     srcList: string[];
 }
-
-
 
 const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
     if (!srcList || srcList.length === 0) {
@@ -31,40 +29,45 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
                 <CarouselContent>
                     {srcList.map((item, idx) => {
                         return (
-                            <CarouselItem key={idx}><Image
-                                className="rounded-lg w-full"
-                             
-                                alt="product"
-                                src={item}
-                            /></CarouselItem>
-                        )
-                    }
-                    )}
-                    
+                            <CarouselItem key={idx}>
+                                <Image
+                                    className="rounded-lg w-full"
+                                    alt="product"
+                                    src={item}
+                                />
+                            </CarouselItem>
+                        );
+                    })}
                 </CarouselContent>
-                <div className="hidden lg:block"><CarouselPrevious className="w-"  /></div>
-                <div className=" hidden lg:block ">  <CarouselNext /></div>
-                
-              
+                <div className="hidden lg:block">
+                    <CarouselPrevious className="w-" />
+                </div>
+                <div className=" hidden lg:block ">
+                    {" "}
+                    <CarouselNext />
+                </div>
             </Carousel>
-
         </div>
     );
 };
 
 export default ImageDetails;
 
-
-{/* <div className="p-2 flex justify-center">
+{
+    /* <div className="p-2 flex justify-center">
 <Image
     className="rounded-lg"
     width={450}
     alt="product"
     src={srcList[0]}
 />
-</div> */}
-{/* packaging image */ }
-{/* <div
+</div> */
+}
+{
+    /* packaging image */
+}
+{
+    /* <div
 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
 className="flex justify-around overflow-x-scroll"
 >
@@ -108,4 +111,5 @@ className="flex justify-around overflow-x-scroll"
         />
     </div>
 )}
-</div> */}
+</div> */
+}

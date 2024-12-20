@@ -2,9 +2,11 @@
 
 import AllProducts from "@/components/pages/Shop/AllProducts";
 import Banner from "@/components/pages/Shop/Banner";
+import CategoryDropdown from "@/components/pages/Shop/CategoryDropDown";
 import ButtonGroup from "@/components/pages/Shop/ScrollBarSlider";
 import Search from "@/components/pages/Shop/Search";
 import SideBarMenu from "@/components/pages/Shop/SideBarMenu";
+import { useState } from "react";
 
 interface ProductType {
     product_id: number;
@@ -17,18 +19,25 @@ interface ProductType {
 }
 
 const Page = () => {
-    const images = [
-        "/images/flowerVector.png",
-        "/images/floweOne.jpeg",
-        "/images/flowerTwo.jpeg",
-        "/images/flowerThree.jpeg",
-    ];
+    // const images = [
+    //     "/images/flowerVector.png",
+    //     "/images/floweOne.jpeg",
+    //     "/images/flowerTwo.jpeg",
+    //     "/images/flowerThree.jpeg",
+    // ];
+
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const handleSuccess = (success: boolean) => {
+        setIsSuccess(success);
+    };
 
     return (
         <div className="flex flex-col-reverse  lg:flex-row  gap-4 max-w-[1440px] mx-auto px-2 no-scrollbar">
             {/* <h1 className="text-xl"> All Products</h1> */}
             <div className="border-r-2 ">
-                <SideBarMenu></SideBarMenu>
+                <SideBarMenu isSuccess={isSuccess}></SideBarMenu>
+                {/* <CategoryDropdown /> */}
             </div>
             <div
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
@@ -38,11 +47,12 @@ const Page = () => {
                     <Search></Search>
                     <ButtonGroup></ButtonGroup>
                 </div>
-                <div className="w-full">
+              
+                {/* <div className="w-full">
                     <Banner images={images}></Banner>
-                </div>
+                </div> */}
                 <div className="bg-[#f4f4f4] rounded-2xl">
-                    <AllProducts />
+                    <AllProducts handleSuccess={handleSuccess}/>
                 </div>
             </div>
         </div>
