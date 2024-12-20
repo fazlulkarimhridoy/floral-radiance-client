@@ -12,7 +12,7 @@ interface CategoryType {
     description: string;
 }
 
-const SideBarMenu = ({isSuccess}: {isSuccess: any}) => {
+const SideBarMenu = ({ isSuccess }: { isSuccess: any }) => {
     const { setCategoryName } = useCategory();
 
     // Fetch all categories from server
@@ -33,7 +33,9 @@ const SideBarMenu = ({isSuccess}: {isSuccess: any}) => {
         setCategoryName(name);
     };
 
-    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSelectChange = (
+        event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
         handleCategoryClick(event.target.value);
     };
 
@@ -67,10 +69,15 @@ const SideBarMenu = ({isSuccess}: {isSuccess: any}) => {
                     className="font-roboto text-base bg-[#f4f4f4] outline-none w-full"
                     onChange={handleSelectChange}
                 >
-                    <option value="">All products</option>
+                    <option value="">
+                        All products
+                    </option>
                     {allCategories?.length > 0 &&
                         allCategories?.map((item) => (
-                            <option key={item?.id} value={item?.name}>
+                            <option
+                                key={item?.id}
+                                value={item?.name}
+                            >
                                 {item?.name}
                             </option>
                         ))}

@@ -200,6 +200,8 @@ const Page = () => {
                 throw new Error("Failed to create order.");
             }
 
+            
+
             localStorage.removeItem("cartItem");
             clearCart();
             push("/success");

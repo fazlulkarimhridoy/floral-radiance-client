@@ -476,6 +476,7 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                             name="images"
                         >
                             <Upload
+                                multiple
                                 listType="picture-card"
                                 fileList={fileList}
                                 onChange={handleChange}
