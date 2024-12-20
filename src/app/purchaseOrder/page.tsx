@@ -20,10 +20,8 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useCart } from "@/context/CartProvider";
 
-
-
 const Page = () => {
-    const {cartData, removeFromCart, clearCart} = useCart()
+    const { cartData, removeFromCart, clearCart } = useCart();
     const [showData, setShowData] = useState(true);
     const [name, setname] = useState("");
     const [phone, setPhone] = useState("");
@@ -171,7 +169,7 @@ const Page = () => {
                 throw new Error("Failed to create customer.");
             }
 
-            console.log("customer", customerResponse);
+            // console.log("customer", customerResponse);
             const customerId = customerResponse.data.data.id;
 
             // Create order
@@ -194,13 +192,29 @@ const Page = () => {
                 }
             );
 
-            console.log(orderResponse);
+            const mailResponse = await axios.post(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
+                {
+                    name,
+                    phone,
+                    email,
+                    address,
+                    deliveryDate,
+                    deliveryTime,
+                    note,
+                    transactionId,
+                    cartData,
+                    totalPrice: calculateTotal(),
+                }
+            );
+
+            console.log("mail response", mailResponse);
+
+            // console.log(orderResponse);
             if (orderResponse.data.status !== "success") {
                 setLoading(false);
                 throw new Error("Failed to create order.");
             }
-
-            
 
             localStorage.removeItem("cartItem");
             clearCart();
@@ -429,8 +443,11 @@ const Page = () => {
                         </div> */}
                         <div>
                             <p>
-                                Please pay the advance amount <span className="font-bold text-blue-400">150</span> Taka to
-                                confirm the order.{" "}
+                                Please pay the advance amount{" "}
+                                <span className="font-bold text-blue-400">
+                                    150
+                                </span>{" "}
+                                Taka to confirm the order.{" "}
                                 <br className="hidden md:flex" /> Pay via send
                                 money to this number{" "}
                                 <span className="text-red-600">
@@ -443,7 +460,8 @@ const Page = () => {
                         <div className="flex flex-col gap-2 w-full">
                             <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                 {" "}
-                                <FaBangladeshiTakaSign /> Bkash Transection Id (10 digits):
+                                <FaBangladeshiTakaSign /> Bkash Transection Id
+                                (10 digits):
                             </label>
                             <Input
                                 required
