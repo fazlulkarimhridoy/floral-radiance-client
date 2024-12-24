@@ -50,17 +50,21 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
 export default ImageDetails;
 
 
-
-{/* <div className="p-2 flex justify-center">
+{
+    /* <div className="p-2 flex justify-center">
 <Image
     className="rounded-lg"
     width={450}
     alt="product"
     src={srcList[0]}
 />
-</div> */}
-{/* packaging image */ }
-{/* <div
+</div> */
+}
+{
+    /* packaging image */
+}
+{
+    /* <div
 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
 className="flex justify-around overflow-x-scroll"
 >
@@ -104,4 +108,5 @@ className="flex justify-around overflow-x-scroll"
         />
     </div>
 )}
-</div> */}
+</div> */
+}
