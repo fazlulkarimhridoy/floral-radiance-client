@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ item, modal1Open, setModal1Op
     }
 
     return (
-        <div className="  min-h-[200px]  md:w-[250px]  flex flex-col items-stretch text-center justify-center gap-4 px-2 lg:px-4 pt-4 pb-4 lg:pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
+        <div className="  min-h-[200px] sm:w-[180px]  md:w-[250px]  flex flex-col items-stretch text-center justify-center gap-4 px-2 lg:px-4 pt-4 pb-4 lg:pb-8 rounded-xl amoled-shadow bg-white lg:bg-none">
             <Link href={`/products/${item.id}`}>
                 <div className="p-2 lg:p-4">
                     <Image

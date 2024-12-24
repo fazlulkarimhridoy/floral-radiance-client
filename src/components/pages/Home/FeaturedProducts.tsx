@@ -47,7 +47,7 @@ const FeaturedProducts = () => {
                     Featured Products
                 </h1>
             </div>
-            <div className=" w-[95%] mx-auto grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 md:place-items-center gap-2 lg:gap-10 mt-20 pb-20 px-2 lg:px-4 ">
+            <div className=" lg:w-[85%] mx-auto grid grid-cols-2  sm:grid-cols-3 xl:grid-cols-4 md:place-items-center gap-2 lg:gap-10 mt-20 pb-20 px-2 lg:px-4 ">
                 {isLoading ? (
                     <Spin style={{ color: "white" }} size="large" />
                 ) : featuredProducts?.length > 0 ? (
