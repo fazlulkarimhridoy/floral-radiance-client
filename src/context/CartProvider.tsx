@@ -1,6 +1,6 @@
 // contexts/CartContext.tsx
-import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
-import Swal from 'sweetalert2';
+import { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from "react";
+import Swal from "sweetalert2";
 
 type CartItem = {
     id: number;
@@ -28,7 +28,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     // Load cart data from localStorage on initial render
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
             const storedData = localStorage.getItem("cartItems");
             if (storedData) {
                 setCartData(JSON.parse(storedData));
@@ -45,11 +45,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }, [cartData, isInitialized]);
 
     const addToCart = (item: CartItem) => {
-        const existingProduct = cartData.find(cartItem => cartItem.id === item.id);
+        const existingProduct = cartData.find((cartItem) => cartItem.id === item.id);
         if (!existingProduct) {
-            setCartData(prevCartData => [...prevCartData, item]);
+            setCartData((prevCartData) => [...prevCartData, item]);
             setModal1Open(true); // Open the modal when a new item is added
         } else {
+            setModal1Open(false);
             Swal.fire({
                 position: "center",
                 icon: "warning",
@@ -61,7 +62,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
 
     const removeFromCart = (id: number) => {
-        setCartData(prevCartData => prevCartData.filter(item => item.id !== id));
+        setCartData((prevCartData) => prevCartData.filter((item) => item.id !== id));
     };
 
     const clearCart = () => {
@@ -69,7 +70,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <CartContext.Provider value={{ cartData, setCartData, addToCart, removeFromCart, clearCart, modal1Open, setModal1Open }}>
+        <CartContext.Provider
+            value={{ cartData, setCartData, addToCart, removeFromCart, clearCart, modal1Open, setModal1Open }}
+        >
             {children}
         </CartContext.Provider>
     );

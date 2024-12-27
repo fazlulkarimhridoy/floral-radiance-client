@@ -16,6 +16,7 @@ interface ProductType {
   rating: number;
   category: string;
   product_id: number;
+  stock: number
 }
 
 export default function Suggetions({ isSuccess }: { isSuccess: any }) {
@@ -64,8 +65,6 @@ export default function Suggetions({ isSuccess }: { isSuccess: any }) {
                             <ProductCard
                                 key={item?.id}
                                 item={item}
-                                modal1Open={modal1Open}
-                                setModal1Open={setModal1Open}
                             />
                         ))
                     ) : (
