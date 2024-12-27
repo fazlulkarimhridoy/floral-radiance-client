@@ -19,9 +19,7 @@ const SideBarMenu = ({ isSuccess }: { isSuccess: any }) => {
     const { data: allCategories = [] } = useQuery<CategoryType[]>({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`);
             return res?.data?.data;
         },
         enabled: isSuccess,
@@ -33,21 +31,16 @@ const SideBarMenu = ({ isSuccess }: { isSuccess: any }) => {
         setCategoryName(name);
     };
 
-    const handleSelectChange = (
-        event: React.ChangeEvent<HTMLSelectElement>
-    ) => {
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         handleCategoryClick(event.target.value);
     };
 
     return (
         <>
             {/* Desktop Sidebar */}
-            <div className="w-full md:w-[250px] hidden md:block">
+            <div className="w-full md:w-[250px] hidden lg:block">
                 <ul className="flex flex-col font-roboto text-lg">
-                    <li
-                        onClick={() => handleCategoryClick("")}
-                        className="sideBar-navLink"
-                    >
+                    <li onClick={() => handleCategoryClick("")} className="sideBar-navLink">
                         All products
                     </li>
                     {allCategories?.length > 0 &&
@@ -64,20 +57,15 @@ const SideBarMenu = ({ isSuccess }: { isSuccess: any }) => {
             </div>
 
             {/* Mobile Dropdown */}
-            <div className="w-full md:w-[250px] block md:hidden rounded-xl border-2 bg-[#f4f4f4] p-2">
+            <div className="w-full lg:w-[250px] block lg:hidden rounded-xl border-2 bg-[#f4f4f4] p-2">
                 <select
                     className="font-roboto text-base bg-[#f4f4f4] outline-none w-full"
                     onChange={handleSelectChange}
                 >
-                    <option value="">
-                        All products
-                    </option>
+                    <option value="">All products</option>
                     {allCategories?.length > 0 &&
                         allCategories?.map((item) => (
-                            <option
-                                key={item?.id}
-                                value={item?.name}
-                            >
+                            <option key={item?.id} value={item?.name}>
                                 {item?.name}
                             </option>
                         ))}

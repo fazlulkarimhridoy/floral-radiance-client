@@ -14,7 +14,7 @@ interface ProductType {
     discount_price: number;
     description: string;
     rating: number;
-    stock: number;
+    stock: string;
     created_at: string;
     updated_at: string;
     category: string;
@@ -51,19 +51,12 @@ const ProductRow = ({
                 <div className="flex items-center gap-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <Image
-                                width={500}
-                                height={500}
-                                src={images[0]}
-                                alt="Avatar Tailwind CSS Component"
-                            />
+                            <Image width={500} height={500} src={images[0]} alt="Avatar Tailwind CSS Component" />
                         </div>
                     </div>
                     <div>
                         <div className="font-bold">{product_name}</div>
-                        <div className="text-sm opacity-50">
-                            {category || "No Category"}
-                        </div>
+                        <div className="text-sm opacity-50">{category || "No Category"}</div>
                     </div>
                 </div>
             </td>
@@ -125,10 +118,7 @@ const ProductRow = ({
                 </Link>
             </td>
             <td>
-                <Button
-                    onClick={() => handleDeleteProduct(id)}
-                    className="btn btn-circle btn-outline btn-sm"
-                >
+                <Button onClick={() => handleDeleteProduct(id)} className="btn btn-circle btn-outline btn-sm">
                     <FaTrash className="text-red-600"></FaTrash>
                 </Button>
             </td>

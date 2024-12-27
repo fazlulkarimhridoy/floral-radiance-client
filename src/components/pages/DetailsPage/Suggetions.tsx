@@ -6,16 +6,17 @@ import axios from "axios";
 import { useCart } from "@/context/CartProvider";
 
 interface ProductType {
-  id: number;
-  productId: number;
-  images: string[];
-  product_name: string;
-  price: number;
-  discount_price: number;
-  description: string;
-  rating: number;
-  category: string;
-  product_id: number;
+    id: number;
+    productId: number;
+    images: string[];
+    product_name: string;
+    price: number;
+    discount_price: number;
+    description: string;
+    rating: number;
+    category: string;
+    product_id: number;
+    stock: string;
 }
 
 export default function Suggetions({ isSuccess }: { isSuccess: any }) {
@@ -26,9 +27,7 @@ export default function Suggetions({ isSuccess }: { isSuccess: any }) {
     const { data: recentProducts = [], isLoading } = useQuery<ProductType[]>({
         queryKey: ["recentProducts"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`);
             return res.data.data;
         },
         enabled: isSuccess,
@@ -41,10 +40,7 @@ export default function Suggetions({ isSuccess }: { isSuccess: any }) {
             const shuffledArray = [...recentProducts];
             for (let i = shuffledArray.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [shuffledArray[i], shuffledArray[j]] = [
-                    shuffledArray[j],
-                    shuffledArray[i],
-                ];
+                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
             }
             setRandomProducts(shuffledArray.slice(0, 6));
         }
@@ -52,22 +48,13 @@ export default function Suggetions({ isSuccess }: { isSuccess: any }) {
 
     return (
         <div className="border-t py-4">
-            <h1 className="text-center text-3xl font-semibold md:text-4xl font-outfit ">
-                You may also like
-            </h1>
+            <h1 className="text-center text-3xl font-semibold md:text-4xl font-outfit ">You may also like</h1>
             <div className="flex flex-wrap justify-center items-center gap-2 md:gap-10 my-5 px-1 md:my-20 md:px-5">
                 {isLoading ? (
                     <Spin size="large" />
                 ) : recentProducts?.length > 0 ? (
                     recentProducts?.length > 0 ? (
-                        randomProducts?.map((item) => (
-                            <ProductCard
-                                key={item?.id}
-                                item={item}
-                                modal1Open={modal1Open}
-                                setModal1Open={setModal1Open}
-                            />
-                        ))
+                        randomProducts?.map((item) => <ProductCard key={item?.id} item={item} />)
                     ) : (
                         <Empty description="No product for this category!" />
                     )
