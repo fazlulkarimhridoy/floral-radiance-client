@@ -37,15 +37,12 @@ const Search = () => {
                 ref={inputRef}
                 type="text"
                 placeholder="Search"
-                className={`input-element outline-none bg-[#f4f4f4] ${
-                    isFocused ? "focused" : ""
-                }`}
+                className={`input-element outline-none bg-[#f4f4f4] ${isFocused ? "focused" : ""}`}
                 onKeyDown={(e: any) => {
                     if (e.key === "Enter") {
                         setSearchText(e.target.value);
                     }
                 }}
-                
             />
             <style jsx>{`
                 .input-container {
@@ -64,8 +61,11 @@ const Search = () => {
                     width: 100%; /* Width when focused */
                 }
                 @media (min-width: 768px) {
+                    .input-element {
+                        width: 750px; /* Width when focused */
+                    }
                     .input-element.focused {
-                        width: 500px; /* Width when focused */
+                        width: 100%; /* Width when focused */
                     }
                 }
             `}</style>

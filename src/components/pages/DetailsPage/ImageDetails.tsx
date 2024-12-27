@@ -4,54 +4,51 @@ import React from "react";
 import { Image } from "antd";
 
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 interface SrcType {
-    srcList: string[];
+  srcList: string[];
 }
 
 const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
-    if (!srcList || srcList.length === 0) {
-        return <p>No images available</p>;
-    }
+  if (!srcList || srcList.length === 0) {
+    return <p>No images available</p>;
+  }
 
-    console.log(srcList);
+  console.log(srcList);
 
-    // const images = typeof srcList === "string" ? JSON.parse(item.images) : [];
-    return (
-        <div className=" max-w-[450px] mx-auto space-y-4 p-4 relative">
-            <Carousel>
-                <CarouselContent>
-                    {srcList.map((item, idx) => {
-                        return (
-                            <CarouselItem key={idx}>
-                                <Image
-                                    className="rounded-lg w-full"
-                                    alt="product"
-                                    src={item}
-                                />
-                            </CarouselItem>
-                        );
-                    })}
-                </CarouselContent>
-                <div className="hidden lg:block">
-                    <CarouselPrevious className="w-" />
-                </div>
-                <div className=" hidden lg:block ">
-                    {" "}
-                    <CarouselNext />
-                </div>
-            </Carousel>
+  return (
+    <div className="max-w-[450px] mx-auto space-y-4 p-4 relative">
+      <Carousel>
+        <CarouselContent>
+          {srcList.map((item, idx) => (
+            <CarouselItem key={idx}>
+              <Image
+                className="rounded-lg w-full"
+                alt="product"
+                src={item}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        {/* Centered Navigation Buttons */}
+        <div className="absolute -bottom-4 left-0 right-0 flex justify-center space-x-4 w-16 mx-auto">
+          <CarouselPrevious className="bg-[#b8cedc] text-white p-2 rounded-full hover:bg-white transition duration-300" />
+          <CarouselNext className="bg-[#b8cedc] text-white p-2 rounded-full hover:bg-white transition duration-300" />
         </div>
-    );
+      </Carousel>
+    </div>
+  );
 };
 
 export default ImageDetails;
+
 
 {
     /* <div className="p-2 flex justify-center">
