@@ -17,7 +17,7 @@ interface ProductType {
     discount_price: number;
     description: string;
     rating: number;
-    stock: number;
+    stock: string;
     created_at: string;
     updated_at: string;
     category: string;
@@ -45,9 +45,7 @@ const Products = () => {
     } = useQuery<ProductType[]>({
         queryKey: ["allProducts"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/all-products`);
             return res.data.data;
         },
         retry: 2,
@@ -68,9 +66,7 @@ const Products = () => {
             if (result.isConfirmed) {
                 setLoading(true);
                 axios
-                    .delete(
-                        `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product/${id}`
-                    )
+                    .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/delete-product/${id}`)
                     .then(() => {
                         refetch();
                         setLoading(false);
@@ -106,16 +102,9 @@ const Products = () => {
 
                       // Check product name, category (strings), and productId (number)
                       return (
-                          product?.product_name
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          product?.category
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          product?.productId
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString)
+                          product?.product_name?.toLowerCase()?.includes(searchString) ||
+                          product?.category?.toLowerCase()?.includes(searchString) ||
+                          product?.productId?.toString()?.toLowerCase()?.includes(searchString)
                       );
                   }
                   return true; // If no searchText, return all products
@@ -138,17 +127,13 @@ const Products = () => {
 
     // show loader if uploads takes time
     if (loading) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
+        return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
     }
 
     return (
         <div>
             <div>
-                <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
-                    Manage Products
-                </h3>
+                <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">Manage Products</h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
                         placeholder="search by id, name, category..."
