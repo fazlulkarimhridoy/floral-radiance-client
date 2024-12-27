@@ -31,7 +31,7 @@ type FieldType = {
     product_name: string;
     price: number;
     discounted_price: number;
-    stock: number;
+    stock: string;
     category: string;
     description: string;
     rating: number;
@@ -55,10 +55,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     });
 
 // base64 without promise
-const getNewBase64 = (
-    file: FileType,
-    callback: (result: string | null) => void
-) => {
+const getNewBase64 = (file: FileType, callback: (result: string | null) => void) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => callback(reader.result as string);
@@ -97,9 +94,7 @@ const AddProduct = () => {
     };
 
     // handle file change
-    const handleChange: UploadProps["onChange"] = ({
-        fileList: newFileList,
-    }) => {
+    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
         setFileList(newFileList);
         const dataUrlArray: any = []; // Array to store the results
         let completedRequests = 0; // To track completed requests
@@ -148,9 +143,7 @@ const AddProduct = () => {
         const images = imageArray;
 
         // Extract the selected category ID
-        const selectedCategoryId =
-            allCategories?.length > 0 &&
-            allCategories?.find((cat) => cat.name === category)?.id;
+        const selectedCategoryId = allCategories?.length > 0 && allCategories?.find((cat) => cat.name === category)?.id;
 
         if (!selectedCategoryId) {
             setLoading(false);
@@ -174,16 +167,12 @@ const AddProduct = () => {
         console.log(productData);
 
         await axios
-            .post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/add-product`,
-                productData,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    timeout: 120000, // Set timeout to 60 seconds (60000 milliseconds)
-                }
-            )
+            .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/add-product`, productData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                timeout: 120000, // Set timeout to 60 seconds (60000 milliseconds)
+            })
             .then((data) => {
                 if (data.data.status == "success") {
                     setLoading(false);
@@ -214,9 +203,7 @@ const AddProduct = () => {
     };
 
     // handle form submission failure
-    const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-        errorInfo
-    ) => {
+    const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
 
@@ -224,9 +211,7 @@ const AddProduct = () => {
     const { data: allCategories = [], isLoading } = useQuery<CategoryType[]>({
         queryKey: ["allCategories"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`);
             return res.data.data;
         },
         retry: 2,
@@ -244,17 +229,13 @@ const AddProduct = () => {
 
     // show loader if uploads takes time
     if (loading) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
+        return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
     }
 
     return (
         <div>
             <div>
-                <h3 className="text-center pt-2 text-blue-200 text-4xl font-bold">
-                    Add Product
-                </h3>
+                <h3 className="text-center pt-2 text-blue-200 text-4xl font-bold">Add Product</h3>
             </div>
             <div className="mt-5 w-[90%] 2xl:w-[65%] mx-auto relative">
                 <Form
@@ -278,11 +259,7 @@ const AddProduct = () => {
                                 },
                             ]}
                         >
-                            <Input
-                                className="w-full"
-                                placeholder="Enter product name..."
-                                size="large"
-                            />
+                            <Input className="w-full" placeholder="Enter product name..." size="large" />
                         </Form.Item>
                     </div>
 
@@ -299,11 +276,7 @@ const AddProduct = () => {
                                 },
                             ]}
                         >
-                            <InputNumber
-                                className="w-full"
-                                placeholder="Enter price..."
-                                size="large"
-                            />
+                            <InputNumber className="w-full" placeholder="Enter price..." size="large" />
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
@@ -316,11 +289,7 @@ const AddProduct = () => {
                             //     },
                             // ]}
                         >
-                            <InputNumber
-                                className="w-full"
-                                placeholder="Enter discounted..."
-                                size="large"
-                            />
+                            <InputNumber className="w-full" placeholder="Enter discounted..." size="large" />
                         </Form.Item>
                     </div>
 
@@ -337,11 +306,15 @@ const AddProduct = () => {
                             //     },
                             // ]}
                         >
-                            <InputNumber
+                            <Select
+                                defaultValue="available"
                                 className="w-full"
-                                placeholder="Enter stock..."
+                                placeholder="Select Availability..."
                                 size="large"
-                            />
+                            >
+                                <Option value="available">Aavailable</Option>
+                                <Option value="unavailable">Unavailable</Option>
+                            </Select>
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
@@ -355,17 +328,10 @@ const AddProduct = () => {
                                 },
                             ]}
                         >
-                            <Select
-                                className="w-full"
-                                placeholder="Select category..."
-                                size="large"
-                            >
+                            <Select className="w-full" placeholder="Select category..." size="large">
                                 {allCategories?.length > 0 &&
                                     allCategories?.map((item) => (
-                                        <Option
-                                            key={item?.id}
-                                            value={item?.name}
-                                        >
+                                        <Option key={item?.id} value={item?.name}>
                                             {item?.name}
                                         </Option>
                                     ))}
@@ -386,11 +352,7 @@ const AddProduct = () => {
                                 },
                             ]}
                         >
-                            <InputNumber
-                                className="w-full"
-                                placeholder="Enter rating (1~5)"
-                                size="large"
-                            />
+                            <InputNumber className="w-full" placeholder="Enter rating (1~5)" size="large" />
                         </Form.Item>
                         <Form.Item<FieldType>
                             className="w-full"
@@ -399,8 +361,7 @@ const AddProduct = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message:
-                                        "Please enter product id as number!",
+                                    message: "Please enter product id as number!",
                                 },
                             ]}
                         >
@@ -437,14 +398,9 @@ const AddProduct = () => {
 
                     {/* upload images */}
                     <div className="flex items-center gap-10">
-                        <Form.Item<FieldType>
-                            label="Upload Images"
-                            required
-                            valuePropName="fileList"
-                            name="images"
-                        >
+                        <Form.Item<FieldType> label="Upload Images" required valuePropName="fileList" name="images">
                             <Upload
-                            multiple
+                                multiple
                                 listType="picture-card"
                                 fileList={fileList}
                                 onPreview={handlePreview}
@@ -458,10 +414,8 @@ const AddProduct = () => {
                                     wrapperStyle={{ display: "none" }}
                                     preview={{
                                         visible: previewOpen,
-                                        onVisibleChange: (visible) =>
-                                            setPreviewOpen(visible),
-                                        afterOpenChange: (visible) =>
-                                            !visible && setPreviewImage(""),
+                                        onVisibleChange: (visible) => setPreviewOpen(visible),
+                                        afterOpenChange: (visible) => !visible && setPreviewImage(""),
                                     }}
                                     src={previewImage}
                                 />
@@ -472,12 +426,7 @@ const AddProduct = () => {
                     {/* submit button */}
                     <div className="absolute right-0 w-full md:w-[50%] lg:w-[25%]">
                         <Form.Item className="w-full">
-                            <Button
-                                className="w-full"
-                                type="primary"
-                                size="large"
-                                htmlType="submit"
-                            >
+                            <Button className="w-full" type="primary" size="large" htmlType="submit">
                                 Submit
                             </Button>
                         </Form.Item>

@@ -15,7 +15,7 @@ interface ProductType {
     discount_price: number;
     description: string;
     rating: number;
-    stock: number;
+    stock: string;
 }
 
 const FeaturedProducts = () => {

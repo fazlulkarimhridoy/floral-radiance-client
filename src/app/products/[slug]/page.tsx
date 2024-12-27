@@ -29,21 +29,23 @@ interface ProductType {
     description: string;
     rating: number;
     category: string;
+    stock: string;
 }
-
 
 const Page = ({ params }: { params: { slug: string } }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const { addToCart } = useCart()
+    const { addToCart } = useCart();
     const router = useRouter();
     const { push } = router;
 
-    const { data: singleProduct, isLoading, isSuccess } = useQuery<ProductType>({
+    const {
+        data: singleProduct,
+        isLoading,
+        isSuccess,
+    } = useQuery<ProductType>({
         queryKey: ["singleProduct"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${params.slug}`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${params.slug}`);
             return res.data.data;
         },
         retry: 2,
@@ -54,18 +56,18 @@ const Page = ({ params }: { params: { slug: string } }) => {
         id: singleProduct?.id ?? 0,
         product_name: singleProduct?.product_name ?? "",
         image: singleProduct?.images[0] ?? "",
-        price: singleProduct?.discount_price ?? (singleProduct?.price || 0)
-    }
+        price: singleProduct?.discount_price ?? (singleProduct?.price || 0),
+    };
 
     // handle cart click
     const handleAddToCart = () => {
-        addToCart(singleObj)
+        addToCart(singleObj);
         push("/cart");
     };
 
     const toggleReadMore = () => {
         setIsExpanded(!isExpanded);
-    }
+    };
 
     return (
         <div className=" md:w-[90%] mx-auto lg:p-4">
@@ -83,9 +85,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
                         </div>
                         {/* details */}
                         <div className="mt-10 space-y-4">
-                            <h1 className="text-left text-sm font-thin italic text-gray-600">
-                                Floral Radiance 🌹
-                            </h1>
+                            <h1 className="text-left text-sm font-thin italic text-gray-600">Floral Radiance 🌹</h1>
                             <div className="space-y-3">
                                 <h1 className="text-4xl font-semibold font-outfit text-[#0b0f3b]">
                                     {singleProduct?.product_name}
@@ -93,17 +93,19 @@ const Page = ({ params }: { params: { slug: string } }) => {
                                 {/* price ...............................*/}
                                 <div className="flex items-center font-semibold text-2xl">
                                     <div
-                                        className={`max-w-52 flex gap-2 ${singleProduct.discount_price
-                                            ? "flex-row-reverse justify-end items-center "
-                                            : ""
-                                            }`}
+                                        className={`max-w-52 flex gap-2 ${
+                                            singleProduct.discount_price
+                                                ? "flex-row-reverse justify-end items-center "
+                                                : ""
+                                        }`}
                                     >
                                         <div className="text-center rounded-lg py-4 text-[#184364] font-bold text-xl flex justify-center items-center">
                                             <span
-                                                className={`${singleProduct?.discount_price
-                                                    ? "line-through text-red-500 text-xl"
-                                                    : ""
-                                                    } text-3xl font-semibold`}
+                                                className={`${
+                                                    singleProduct?.discount_price
+                                                        ? "line-through text-red-500 text-xl"
+                                                        : ""
+                                                } text-3xl font-semibold`}
                                             >
                                                 {singleProduct?.price}
                                             </span>{" "}
@@ -126,17 +128,14 @@ const Page = ({ params }: { params: { slug: string } }) => {
                                     </div>
                                 </div>
                                 <div className="text-xl font-outfit font-semibold max-w-[600px] text-wrap">
-                                    {isExpanded ? singleProduct?.description : `${singleProduct?.description.slice(0, 150)}...`}
-                                    <button
-                                        onClick={toggleReadMore}
-                                        className="text-blue-500 ml-2"
-                                    >
-                                        {isExpanded ? 'See Less' : 'See More'}
+                                    {isExpanded
+                                        ? singleProduct?.description
+                                        : `${singleProduct?.description.slice(0, 150)}...`}
+                                    <button onClick={toggleReadMore} className="text-blue-500 ml-2">
+                                        {isExpanded ? "See Less" : "See More"}
                                     </button>
                                 </div>
-                                <p className="">
-                                    
-                                </p>
+                                <p className=""></p>
                                 <div className="flex items-center gap-2 mt-2 w-full">
                                     <FaThumbsUp />
                                     <Flex gap="middle">
@@ -156,12 +155,13 @@ const Page = ({ params }: { params: { slug: string } }) => {
                             </div>
                             <div className="space-y-4 max-w-[400px] ">
                                 <div className="flex  gap-2">
-                                    <div
+                                    <button
+                                        disabled={singleProduct?.stock === "unavailable"}
                                         onClick={handleAddToCart}
                                         className="btn w-full lg:w-36 border-2 flex-shrink-0 border-[#0b0f3b] rounded-lg hover:text-white bg-[#0b0f3b]   text-white px-2 font-bold flex items-center"
                                     >
-                                        <button>Add to cart</button>
-                                    </div>
+                                        Add to cart
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ interface Item {
     discount_price: number;
     description: string;
     rating: number;
-    stock: number;
+    stock: string;
 }
 
 interface ProductCardProps {
@@ -54,16 +54,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
                         height={500}
                         className={`w-full md:w-[200px] rounded-lg`}
                     />
-                    {/* {stock === 0 && (
+                    {stock === "unavailable" && (
                         <div className="absolute inset-0 md:inset-4 rounded-lg bg-gray-800 opacity-50 flex items-center justify-center">
                             <span className="text-red-600 italic text-xl font-semibold">Stock Out</span>
                         </div>
-                    )} */}
+                    )}
                 </div>
                 <div className="border-[#194464] flex flex-col gap-1 md:px-4 mt-2">
-                    <p className="truncate font-outfit text-sm lg:text-base font-bold text-[#194464]">
-                        {product_name}
-                    </p>
+                    <p className="truncate font-outfit text-sm lg:text-base font-bold text-[#194464]">{product_name}</p>
                     <p className="font-outfit text-xs md:text-sm text-[#194464] max-h-14 overflow-hidden truncate md:whitespace-normal">
                         {description}
                     </p>
@@ -98,12 +96,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
 
             <div className="md:px-4">
                 <button
-                    // disabled={stock === 0}
+                    disabled={stock === "unavailable"}
                     onClick={handleAddToCart}
                     className="w-full btn btn-sm md:btn-md border-2 border-[#194464] p-1 md:p-2 rounded-lg md:rounded-xl text-sm md:text-base font-semibold font-outfit bg-[#194464] text-white transition-colors duration-300 text-center"
                 >
-                    {/* {stock === 0 ? "Stock Out" : "Add to cart"} */}
-                    Add to cart
+                    {stock === "unavailable" ? "Stock Out" : "Add to cart"}
                 </button>
 
                 <Modal
