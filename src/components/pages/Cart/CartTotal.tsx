@@ -22,10 +22,17 @@ const CartTotal: React.FC<CartTotalProps> = ({ calculateTotal, show }) => {
                     <FaBangladeshiTakaSign className="text-sm" />
                 </span>{" "}
             </h1>
+            <h1 className="text-lg font-semibold text-fade-black flex justify-between">
+                <span>Delivery charge:</span>{" "}
+                <span className="flex items-center">
+                    <p>150</p>
+                    <FaBangladeshiTakaSign className="text-sm" />
+                </span>{" "}
+            </h1>
             <div className="text-lg font-semibold text-fade-black flex justify-between">
                 <span>Total:</span>{" "}
                 <span className="flex items-center">
-                    <p>{total}</p>
+                    <p>{total + 150}</p>
                     <FaBangladeshiTakaSign className="text-sm" />
                 </span>{" "}
             </div>
