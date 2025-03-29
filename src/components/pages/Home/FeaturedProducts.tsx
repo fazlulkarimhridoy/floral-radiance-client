@@ -41,7 +41,9 @@ const FeaturedProducts = () => {
                 {isLoading ? (
                     <Spin style={{ color: "white" }} size="large" />
                 ) : featuredProducts?.length > 0 ? (
-                    featuredProducts?.map((item) => <ProductCard key={item?.id} item={item} />)
+                    featuredProducts
+                        ?.filter((item: ProductType) => item.stock === "available")
+                        ?.map((item) => <ProductCard key={item?.id} item={item} />)
                 ) : (
                     <Empty
                         className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16"
