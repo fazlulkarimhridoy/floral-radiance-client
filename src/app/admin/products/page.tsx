@@ -163,7 +163,7 @@ const Products = () => {
                             <th>Price</th>
                             <th>Offer Price</th>
                             <th>Rating</th>
-                            <th>Stock</th>
+                            <th>Active</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>View</th>
