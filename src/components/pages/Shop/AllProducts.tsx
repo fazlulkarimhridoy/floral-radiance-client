@@ -78,7 +78,9 @@ const AllProducts = ({ handleSuccess }: { handleSuccess: any }) => {
                 <Spin size="large" />
             ) : shopProducts?.length > 0 ? (
                 filteredProducts?.length > 0 ? (
-                    filteredProducts?.map((item: ProductType) => <ProductCard key={item?.id} item={item} />)
+                    filteredProducts
+                        ?.filter((item: ProductType) => item.stock === "available")
+                        ?.map((item: ProductType) => <ProductCard key={item?.id} item={item} />)
                 ) : (
                     <Empty description="No product for this category!" />
                 )
