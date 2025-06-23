@@ -51,9 +51,7 @@ const Page = () => {
     };
     const { TextArea } = Input;
 
-    const onChangeNote = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+    const onChangeNote = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setNote(e.target.value);
         console.log(e.target.value);
     };
@@ -65,17 +63,13 @@ const Page = () => {
     };
 
     // handle full name
-    const handleCustomerNameChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleCustomerNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setname(e.target.value);
         console.log(e.target.value);
     };
 
     // handle phone
-    const handlePhoneNumberChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPhone(e.target.value);
         console.log(e.target.value);
     };
@@ -154,15 +148,12 @@ const Page = () => {
 
         try {
             // Create customer
-            const customerResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/add-customer`,
-                {
-                    name,
-                    phone,
-                    email,
-                    address,
-                }
-            );
+            const customerResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/add-customer`, {
+                name,
+                phone,
+                email,
+                address,
+            });
 
             if (customerResponse.data.status !== "success") {
                 setLoading(false);
@@ -173,24 +164,21 @@ const Page = () => {
             const customerId = customerResponse.data.data.id;
 
             // Create order
-            const orderResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/add-order`,
-                {
-                    customerId,
-                    totalPrice: calculateTotal(),
-                    deliveryDate,
-                    deliveryTime,
-                    orderStatus: "PENDING",
-                    items: cartData.map((item) => ({
-                        productId: item.id,
-                        quantity: 1,
-                        price: item.price,
-                    })),
-                    paymentMethod: "BKASH",
-                    note,
-                    transactionId,
-                }
-            );
+            const orderResponse = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/order/add-order`, {
+                customerId,
+                totalPrice: calculateTotal() + 150,
+                deliveryDate,
+                deliveryTime,
+                orderStatus: "PENDING",
+                items: cartData.map((item) => ({
+                    productId: item.id,
+                    quantity: 1,
+                    price: item.price,
+                })),
+                paymentMethod: "BKASH",
+                note,
+                transactionId,
+            });
 
             const mailResponse = await axios.post(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
@@ -204,7 +192,7 @@ const Page = () => {
                     note,
                     transactionId,
                     cartData,
-                    totalPrice: calculateTotal(),
+                    totalPrice: calculateTotal() + 150,
                 }
             );
 
@@ -226,10 +214,7 @@ const Page = () => {
             Swal.fire({
                 position: "center",
                 icon: "error",
-                title: `${
-                    error.message ||
-                    "An error occurred while placing the order."
-                }`,
+                title: `${error.message || "An error occurred while placing the order."}`,
                 showConfirmButton: false,
                 timer: 1500,
             });
@@ -238,16 +223,12 @@ const Page = () => {
 
     // show loader if data loads
     if (loading) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
+        return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
     }
 
     return (
         <div className="bg-[#f2f6f9] p-4 space-y-4">
-            <h1 className="text-4xl font-outfit text-center font-semibold">
-                Place your order
-            </h1>
+            <h1 className="text-4xl font-outfit text-center font-semibold">Place your order</h1>
             <div className=" w-full p-2 font-outfit space-y-4 gap-4 bg-white rounded-xl box-shadow flex flex-col lg:flex-row-reverse justify-center relative ">
                 <div>
                     {/* Product information */}
@@ -283,9 +264,7 @@ const Page = () => {
                                                                 <Image
                                                                     width={500}
                                                                     height={500}
-                                                                    src={
-                                                                        data?.image
-                                                                    }
+                                                                    src={data?.image}
                                                                     alt="product-image"
                                                                 />
                                                             </div>
@@ -293,23 +272,15 @@ const Page = () => {
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div className="text-gray-600 font-bold">
-                                                        {data?.product_name}
-                                                    </div>
+                                                    <div className="text-gray-600 font-bold">{data?.product_name}</div>
                                                 </td>
                                                 <td>
-                                                    <div className="text-gray-600 font-bold">
-                                                        {data?.price}
-                                                    </div>
+                                                    <div className="text-gray-600 font-bold">{data?.price}</div>
                                                 </td>
 
                                                 <td>
                                                     <Button
-                                                        onClick={() =>
-                                                            removeFromCart(
-                                                                data?.id
-                                                            )
-                                                        }
+                                                        onClick={() => removeFromCart(data?.id)}
                                                         className="btn btn-circle btn-outline btn-sm"
                                                     >
                                                         <FaTrash className="text-red-600"></FaTrash>
@@ -322,10 +293,7 @@ const Page = () => {
                         </div>
                     )}
                     <div className="p-2 md:p-0">
-                        <CartTotal
-                            calculateTotal={calculateTotal}
-                            show={false}
-                        ></CartTotal>
+                        <CartTotal calculateTotal={calculateTotal} show={false}></CartTotal>
                     </div>
                 </div>
                 <div className="md:border-r-2 md:border-black">
@@ -367,12 +335,7 @@ const Page = () => {
                                 {" "}
                                 <FaMobileAlt /> Email Address:
                             </label>
-                            <Input
-                                required
-                                type="string"
-                                placeholder="abc@example.com"
-                                onChange={handleEmailChange}
-                            />
+                            <Input required type="string" placeholder="abc@example.com" onChange={handleEmailChange} />
                         </div>
                         {/* Delivery address */}
                         <div className="flex flex-col gap-2">
@@ -391,40 +354,24 @@ const Page = () => {
                         {/* delivery date and time */}
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex flex-col gap-2 w-full">
-                                <label
-                                    htmlFor=""
-                                    className="text-xl flex gap-2 items-center text-[#3d4349]"
-                                >
+                                <label htmlFor="" className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
                                     <FaCalendar /> Delivey date:
                                 </label>
-                                <DatePicker
-                                    className="w-full"
-                                    onChange={onChangeDate}
-                                />
+                                <DatePicker className="w-full" onChange={onChangeDate} />
                             </div>
                             <div className="flex flex-col gap-2 w-full">
-                                <label
-                                    htmlFor=""
-                                    className="text-xl flex gap-2 items-center text-[#3d4349]"
-                                >
+                                <label htmlFor="" className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
                                     <FaClock /> Delivey time:
                                 </label>
-                                <TimePicker
-                                    use12Hours
-                                    onChange={onChangeTime}
-                                    className="w-full"
-                                />
+                                <TimePicker use12Hours onChange={onChangeTime} className="w-full" />
                             </div>
                         </div>
                         {/* Customer Notes for gifts */}
                         <div className="flex flex-col gap-4 ">
                             <div>
-                                <label
-                                    htmlFor=""
-                                    className="text-xl flex gap-2 items-center text-[#3d4349]"
-                                >
+                                <label htmlFor="" className="text-xl flex gap-2 items-center text-[#3d4349]">
                                     {" "}
                                     <GiNotebook /> Any notes for this gift:
                                 </label>
@@ -443,25 +390,16 @@ const Page = () => {
                         </div> */}
                         <div>
                             <p>
-                                Please pay the advance amount{" "}
-                                <span className="font-bold text-blue-400">
-                                    150
-                                </span>{" "}
-                                Taka to confirm the order.{" "}
-                                <br className="hidden md:flex" /> Pay via send
-                                money to this number{" "}
-                                <span className="text-red-600">
-                                    01304035398
-                                </span>{" "}
-                                (Bkash , Nagad) and fill the transaction id
-                                below.
+                                Please pay the advance amount <span className="font-bold text-blue-400">150</span> Taka
+                                to confirm the order. <br className="hidden md:flex" /> Pay via send money to this
+                                number <span className="text-red-600">01304035398</span> (Bkash , Nagad) and fill the
+                                transaction id below.
                             </p>
                         </div>
                         <div className="flex flex-col gap-2 w-full">
                             <label className="text-xl flex gap-2 items-center text-[#3d4349]">
                                 {" "}
-                                <FaBangladeshiTakaSign /> Bkash Transection Id
-                                (10 digits):
+                                <FaBangladeshiTakaSign /> Bkash Transection Id (10 digits):
                             </label>
                             <Input
                                 required
