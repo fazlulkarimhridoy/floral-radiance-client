@@ -87,7 +87,7 @@ const AdminDashboard = () => {
     return (
         <div>
             {/* statistics */}
-            <div className="text-nowrap mt-4 md:mt-10 px-2 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-5 lg:gap-10">
+            <div className="text-nowrap mt-4 md:mt-9 px-2 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-5 lg:gap-10">
                 {statsConfig.map((item) => (
                     <div key={item.key} className={`relative p-5 rounded-lg ${item.bg}`}>
                         <div className="absolute top-3 left-4 text-sm">{item.title}</div>
