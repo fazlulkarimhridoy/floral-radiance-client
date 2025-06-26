@@ -37,9 +37,7 @@ const Products = () => {
     } = useQuery<CustomerType[]>({
         queryKey: ["allCustomers"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/all-customer`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/customer/all-customer`);
             return res.data.data;
         },
         retry: 2,
@@ -55,20 +53,10 @@ const Products = () => {
 
                       // Check product name, category (strings), and productId (number)
                       return (
-                          customer?.name
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          customer?.email
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          customer?.phone
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          customer?.customerId
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString)
+                          customer?.name?.toLowerCase()?.includes(searchString) ||
+                          customer?.email?.toLowerCase()?.includes(searchString) ||
+                          customer?.phone?.toString()?.toLowerCase()?.includes(searchString) ||
+                          customer?.customerId?.toString()?.toLowerCase()?.includes(searchString)
                       );
                   }
                   return true; // If no searchText, return all products
@@ -94,7 +82,7 @@ const Products = () => {
         <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
-                    Manage Customer
+                    Customers <span className="text-sm text-red-200 -ml-2">{filteredCustomers?.length}</span>
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
@@ -131,10 +119,7 @@ const Products = () => {
                         {/* rows */}
                         {allCustomers.length > 0 ? (
                             filteredCustomers?.map((data) => (
-                                <CustomerRow
-                                    key={data.id}
-                                    customerData={data}
-                                ></CustomerRow>
+                                <CustomerRow key={data.id} customerData={data}></CustomerRow>
                             ))
                         ) : (
                             <Empty
