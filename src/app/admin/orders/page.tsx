@@ -54,9 +54,7 @@ const Orders = () => {
     } = useQuery<OrderType[]>({
         queryKey: ["allOrders"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/all-order`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/order/all-order`);
             return res.data.data;
         },
         retry: 2,
@@ -72,20 +70,10 @@ const Orders = () => {
 
                       // Check product name, category (strings), and productId (number)
                       return (
-                          order?.customer.name
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          order?.customer.email
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          order?.customer.phone
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          order?.customerId
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString)
+                          order?.customer.name?.toLowerCase()?.includes(searchString) ||
+                          order?.customer.email?.toLowerCase()?.includes(searchString) ||
+                          order?.customer.phone?.toString()?.toLowerCase()?.includes(searchString) ||
+                          order?.customerId?.toString()?.toLowerCase()?.includes(searchString)
                       );
                   }
                   return true; // If no searchText, return all products
@@ -152,16 +140,14 @@ const Orders = () => {
 
     // show loader if uploads takes time
     if (loading || isRefetching) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
+        return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
     }
 
     return (
         <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
-                    Manage Order
+                    Orders <span className="text-sm text-red-200 -ml-2">{filteredOrders?.length}</span>
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
