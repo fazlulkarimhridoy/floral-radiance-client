@@ -39,9 +39,7 @@ const Categories = () => {
     } = useQuery<CategoryType[]>({
         queryKey: ["allCategories"],
         queryFn: async () => {
-            const res = await axios.get(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`
-            );
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category/all-category`);
             return res.data.data;
         },
         retry: 2,
@@ -62,9 +60,7 @@ const Categories = () => {
             setLoading(true);
             if (result.isConfirmed) {
                 axios
-                    .delete(
-                        `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`
-                    )
+                    .delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category/${id}`)
                     .then(() => {
                         refetch();
                         setLoading(false);
@@ -100,13 +96,8 @@ const Categories = () => {
 
                       // Check product name, category (strings), and productId (number)
                       return (
-                          category?.name
-                              ?.toLowerCase()
-                              ?.includes(searchString) ||
-                          category?.categoryId
-                              ?.toString()
-                              ?.toLowerCase()
-                              ?.includes(searchString)
+                          category?.name?.toLowerCase()?.includes(searchString) ||
+                          category?.categoryId?.toString()?.toLowerCase()?.includes(searchString)
                       );
                   }
                   return true; // If no searchText, return all products
@@ -130,16 +121,14 @@ const Categories = () => {
 
     // show loader if uploads takes time
     if (loading) {
-        return (
-            <Spin fullscreen={true} style={{ color: "white" }} size="large" />
-        );
+        return <Spin fullscreen={true} style={{ color: "white" }} size="large" />;
     }
 
     return (
         <div className="relative">
             <div>
                 <h3 className="text-center pt-4 text-blue-200 text-4xl font-bold">
-                    Manage Category
+                    Categories <span className="text-sm text-red-200 -ml-2">{filteredCustomers?.length}</span>
                 </h3>
                 <div className="mt-5 w-full xl:w-1/2 mx-auto">
                     <Search
