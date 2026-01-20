@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Image } from "antd";
-import { resolveBackendAssetUrl } from "@/lib/assetUrl";
+import { normalizeBackendImages, resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 import {
   Carousel,
@@ -13,21 +13,21 @@ import {
 } from "@/components/ui/carousel";
 
 interface SrcType {
-  srcList: string[];
+  srcList?: string[] | string | null;
 }
 
 const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
-  if (!srcList || srcList.length === 0) {
+  const normalizedList = normalizeBackendImages(srcList);
+
+  if (normalizedList.length === 0) {
     return <p>No images available</p>;
   }
-
-  console.log(srcList);
 
   return (
     <div className="max-w-[450px] mx-auto space-y-4 p-4 relative">
       <Carousel>
         <CarouselContent>
-          {srcList.map((item, idx) => (
+          {normalizedList.map((item, idx) => (
             <CarouselItem key={idx}>
               <Image
                 className="rounded-lg w-full"
@@ -50,9 +50,8 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
 
 export default ImageDetails;
 
-
 {
-    /* <div className="p-2 flex justify-center">
+  /* <div className="p-2 flex justify-center">
 <Image
     className="rounded-lg"
     width={450}
@@ -62,10 +61,10 @@ export default ImageDetails;
 </div> */
 }
 {
-    /* packaging image */
+  /* packaging image */
 }
 {
-    /* <div
+  /* <div
 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
 className="flex justify-around overflow-x-scroll"
 >

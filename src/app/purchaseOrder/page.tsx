@@ -181,23 +181,23 @@ const Page = () => {
                 transactionId,
             });
 
-            // const mailResponse = await axios.post(
-            //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
-            //     {
-            //         name,
-            //         phone,
-            //         email,
-            //         address,
-            //         deliveryDate,
-            //         deliveryTime,
-            //         note,
-            //         transactionId,
-            //         cartData,
-            //         totalPrice: calculateTotal() + 150,
-            //     }
-            // );
+            const mailResponse = await axios.post(
+                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
+                {
+                    name,
+                    phone,
+                    email,
+                    address,
+                    deliveryDate,
+                    deliveryTime,
+                    note,
+                    transactionId,
+                    cartData,
+                    totalPrice: calculateTotal() + 150,
+                }
+            );
 
-            // console.log("mail response", mailResponse);
+            console.log("mail response", mailResponse);
 
             // console.log(orderResponse);
             if (orderResponse.data.status !== "success") {
