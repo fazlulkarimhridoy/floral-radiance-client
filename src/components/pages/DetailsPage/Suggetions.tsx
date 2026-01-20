@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Empty, Spin } from "antd";
 import ProductCard from "../Home/ProductCard";

@@ -21,6 +21,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 const { Option } = Select;
 
@@ -58,23 +59,13 @@ type CategoryType = {
     description: string;
 };
 
-const getNewBase64 = (file: FileType, callback: (result: string | null) => void): void => {
-    if (!(file instanceof File)) {
-        console.error("Invalid file object");
-        callback(null);
-        return;
-    }
-
-    try {
+const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => callback(reader.result as string);
-        reader.onerror = () => callback(null);
-    } catch (error) {
-        console.error("Error reading file:", error);
-        callback(null);
-    }
-};
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (err) => reject(err);
+    });
 
 const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const [loading, setLoading] = useState(false);
@@ -89,7 +80,8 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const [imageArray, setImageArray] = useState([]);
+    const [existingImagePaths, setExistingImagePaths] = useState<string[]>([]);
+    const [removedExistingImagePaths, setRemovedExistingImagePaths] = useState<string[]>([]);
     const router = useRouter();
     const { push } = router;
 
@@ -98,38 +90,15 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
     const id = Number(idString);
 
     // file upload changes
-    const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-        console.log("files", fileList);
-        console.log("new file", newFileList);
+    const handleChange: UploadProps["onChange"] = ({ file, fileList: newFileList }) => {
         setFileList(newFileList);
-        const dataUrlArray: any = []; // Array to store the results
-        let completedRequests = 0; // To track completed requests
 
-        fileList.forEach((file, index) => {
-            if (!file.originFileObj) {
-                console.error("Invalid file object");
-                dataUrlArray[index] = file.thumbUrl; // Or handle the error as needed
-                return;
+        if (file.status === "removed") {
+            const removedPath = String(file.uid);
+            if (existingImagePaths.includes(removedPath)) {
+                setRemovedExistingImagePaths((prev) => Array.from(new Set([...prev, removedPath])));
             }
-            getNewBase64(file.originFileObj as FileType, (result) => {
-                if (result) {
-                    dataUrlArray[index] = result; // Store result at the correct index
-                } else {
-                    console.error("Failed to convert file to base64.");
-                    dataUrlArray[index] = null; // Or handle the error as needed
-                }
-
-                // Increment the completed requests counter
-                completedRequests++;
-
-                // Once all requests have completed
-                if (completedRequests === fileList.length) {
-                    const finalResult = dataUrlArray.filter(Boolean).join(","); // Join non-null results with commas
-                    console.log("Final Base64 String:", finalResult);
-                }
-            });
-        });
-        setImageArray(dataUrlArray);
+        }
     };
 
     // file upload button
@@ -145,13 +114,24 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
         queryKey: ["SingleProductDetails", id],
         queryFn: async () => {
             const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/details/${id}`);
+
+            const imagesFromApi: string[] = Array.isArray(res?.data?.data?.images) ? res.data.data.images : [];
+            setExistingImagePaths(imagesFromApi);
+            setRemovedExistingImagePaths([]);
+
             // converting image url's to file type for default display
-            const imageList = res?.data?.data?.images.map((imageUrl: string, index: number) => ({
-                uid: String(index), // Unique identifier for each file
-                name: `image-${index}`, // Name of the image
-                status: "done", // Upload status
-                thumbUrl: imageUrl, // The actual URL for the image
-            }));
+            const imageList: UploadFile[] = imagesFromApi.map((imagePath: string, index: number) => {
+                const resolved = resolveBackendAssetUrl(imagePath) || imagePath;
+                const nameFromPath = imagePath.split("/").pop() || `image-${index}`;
+                return {
+                    uid: imagePath, // keep original path so we can send it in removeImages
+                    name: nameFromPath,
+                    status: "done",
+                    url: resolved,
+                    thumbUrl: resolved,
+                };
+            });
+
             setFileList(imageList);
             return res?.data?.data;
         },
@@ -192,15 +172,26 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
             updatedFields.productId = values.productId;
         }
 
-        // Only send images if new ones are provided
-        if (Array.isArray(imageArray) && imageArray.length > 0) {
-            updatedFields.images = imageArray as any; // safely cast if needed
-        }
+        const newFiles = (fileList || []).filter((f) => !!f.originFileObj);
+        const addImages = await Promise.all(
+            newFiles.map((f) => fileToBase64(f.originFileObj as File))
+        );
+        const removeImages = removedExistingImagePaths;
+
+        const payload: Partial<SingleProductDetails> & {
+            addImages?: string[];
+            removeImages?: string[];
+        } = {
+            ...updatedFields,
+        };
+
+        if (addImages.length > 0) payload.addImages = addImages;
+        if (removeImages.length > 0) payload.removeImages = removeImages;
 
         try {
             const { data } = await axios.patch(
                 `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/update-product/${id}`,
-                updatedFields,
+                payload,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -432,7 +423,13 @@ const UpdateProduct = ({ params }: { params: { slug: string } }) => {
                             valuePropName="fileList"
                             name="images"
                         >
-                            <Upload multiple listType="picture-card" fileList={fileList} onChange={handleChange}>
+                            <Upload
+                                multiple
+                                listType="picture-card"
+                                fileList={fileList}
+                                beforeUpload={() => false}
+                                onChange={handleChange}
+                            >
                                 {fileList && fileList.length >= 5 ? null : uploadButton}
                             </Upload>
                             {previewImage && (

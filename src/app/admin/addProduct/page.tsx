@@ -36,7 +36,7 @@ type FieldType = {
     description: string;
     rating: number;
     productId: number;
-    images: JSON;
+    images: UploadFile[];
 };
 
 type CategoryType = {
@@ -54,14 +54,6 @@ const getBase64 = (file: FileType): Promise<string> =>
         reader.onerror = (error) => reject(error);
     });
 
-// base64 without promise
-const getNewBase64 = (file: FileType, callback: (result: string | null) => void) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => callback(reader.result as string);
-    reader.onerror = () => callback(null);
-};
-
 const AddProduct = () => {
     const [loading, setLoading] = useState(false);
     // check if user is logged in
@@ -76,7 +68,6 @@ const AddProduct = () => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
     const [fileList, setFileList] = useState<UploadFile[]>([]);
-    const [imageArray, setImageArray] = useState([]);
     const formRef = React.useRef<FormInstance<FieldType>>(null);
 
     // handle preview
@@ -96,29 +87,6 @@ const AddProduct = () => {
     // handle file change
     const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
         setFileList(newFileList);
-        const dataUrlArray: any = []; // Array to store the results
-        let completedRequests = 0; // To track completed requests
-
-        newFileList.forEach((file, index) => {
-            getNewBase64(file.originFileObj as FileType, (result) => {
-                if (result) {
-                    dataUrlArray[index] = result; // Store result at the correct index
-                } else {
-                    console.error("Failed to convert file to base64.");
-                    dataUrlArray[index] = null; // Or handle the error as needed
-                }
-
-                // Increment the completed requests counter
-                completedRequests++;
-
-                // Once all requests have completed
-                if (completedRequests === fileList.length) {
-                    const finalResult = dataUrlArray.filter(Boolean).join(","); // Join non-null results with commas
-                    console.log("Final Base64 String:", finalResult);
-                }
-            });
-        });
-        setImageArray(dataUrlArray);
     };
 
     // image upload button
@@ -140,7 +108,12 @@ const AddProduct = () => {
         const description = values.description;
         const rating = values.rating;
         const productId = values.productId;
-        const images = imageArray;
+        const images = await Promise.all(
+            (fileList || [])
+                .map((f) => f.originFileObj as FileType | undefined)
+                .filter(Boolean)
+                .map((f) => getBase64(f as FileType))
+        );
 
         // Extract the selected category ID
         const selectedCategoryId = allCategories?.length > 0 && allCategories?.find((cat) => cat.name === category)?.id;
@@ -403,6 +376,7 @@ const AddProduct = () => {
                                 multiple
                                 listType="picture-card"
                                 fileList={fileList}
+                                beforeUpload={() => false}
                                 onPreview={handlePreview}
                                 onChange={handleChange}
                             >

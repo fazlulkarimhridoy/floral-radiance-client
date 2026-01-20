@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Image } from "antd";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 import {
   Carousel,
@@ -31,7 +32,7 @@ const ImageDetails: React.FC<SrcType> = ({ srcList }) => {
               <Image
                 className="rounded-lg w-full"
                 alt="product"
-                src={item}
+                src={resolveBackendAssetUrl(item) || "/Images/miraz.jfif"}
               />
             </CarouselItem>
           ))}

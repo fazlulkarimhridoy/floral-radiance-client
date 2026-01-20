@@ -8,6 +8,7 @@ import CartTotal from "@/components/pages/Cart/CartTotal";
 import Image from "next/image";
 import QuantitySelector from "@/components/pages/Cart/QuantitySelector";
 import { useCart } from "@/context/CartProvider";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 interface CartItem {
     id: string;
@@ -74,7 +75,7 @@ const Cart: React.FC = () => {
                                                     <Image
                                                         width={500}
                                                         height={500}
-                                                        src={data?.image}
+                                                        src={resolveBackendAssetUrl((data as any)?.image) || "/Images/miraz.jfif"}
                                                         alt="product-image"
                                                     />
                                                 </div>

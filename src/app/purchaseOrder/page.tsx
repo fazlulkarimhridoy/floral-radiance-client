@@ -19,6 +19,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useCart } from "@/context/CartProvider";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 const Page = () => {
     const { cartData, removeFromCart, clearCart } = useCart();
@@ -180,23 +181,23 @@ const Page = () => {
                 transactionId,
             });
 
-            const mailResponse = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
-                {
-                    name,
-                    phone,
-                    email,
-                    address,
-                    deliveryDate,
-                    deliveryTime,
-                    note,
-                    transactionId,
-                    cartData,
-                    totalPrice: calculateTotal() + 150,
-                }
-            );
+            // const mailResponse = await axios.post(
+            //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/order/send-order-notification`,
+            //     {
+            //         name,
+            //         phone,
+            //         email,
+            //         address,
+            //         deliveryDate,
+            //         deliveryTime,
+            //         note,
+            //         transactionId,
+            //         cartData,
+            //         totalPrice: calculateTotal() + 150,
+            //     }
+            // );
 
-            console.log("mail response", mailResponse);
+            // console.log("mail response", mailResponse);
 
             // console.log(orderResponse);
             if (orderResponse.data.status !== "success") {
@@ -264,7 +265,10 @@ const Page = () => {
                                                                 <Image
                                                                     width={500}
                                                                     height={500}
-                                                                    src={data?.image}
+                                                                    src={
+                                                                        resolveBackendAssetUrl((data as any)?.image) ||
+                                                                        "/Images/miraz.jfif"
+                                                                    }
                                                                     alt="product-image"
                                                                 />
                                                             </div>

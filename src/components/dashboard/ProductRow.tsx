@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FaEye, FaTools, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -99,7 +100,12 @@ const ProductRow = ({
                 <div className="flex items-center gap-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <Image width={500} height={500} src={images[0]} alt="Avatar Tailwind CSS Component" />
+                            <Image
+                                width={500}
+                                height={500}
+                                src={resolveBackendAssetUrl(images?.[0]) || "/Images/miraz.jfif"}
+                                alt="Product image"
+                            />
                         </div>
                     </div>
                     <div>

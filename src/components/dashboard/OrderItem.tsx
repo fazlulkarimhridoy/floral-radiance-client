@@ -3,6 +3,7 @@ import { Spin } from "antd";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 type OrderItemType = {
     productId: number;
@@ -37,7 +38,10 @@ const OrderItem = ({ item }: { item: OrderItemType }) => {
                         className="w-[55px] h-[55px] rounded-lg"
                         width={500}
                         height={500}
-                        src={singleProductImages?.images[0] || "https://backend.floralradiancebd.com/public/photos/Cq0BpyoOPb.jpg"}
+                        src={
+                            resolveBackendAssetUrl(singleProductImages?.images?.[0]) ||
+                            "https://backend.floralradiancebd.com/public/photos/Cq0BpyoOPb.jpg"
+                        }
                         alt="item-image"
                     />
                     <div className="flex flex-col justify-center">

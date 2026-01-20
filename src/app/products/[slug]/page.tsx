@@ -1,21 +1,18 @@
 "use client";
 // import ProductImage from "@/components/pages/DetailsPage/productImage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TbCurrencyTaka } from "react-icons/tb";
-import Link from "next/link";
 import { PiFlowerFill } from "react-icons/pi";
 import { Flex, Rate } from "antd";
 import { Spin } from "antd";
 import ImageDetails from "@/components/pages/DetailsPage/ImageDetails";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
-import { MdCategory } from "react-icons/md";
 import { FaThumbsUp } from "react-icons/fa";
 import { useCart } from "@/context/CartProvider";
 import Suggetions from "@/components/pages/DetailsPage/Suggetions";
-import Carousel from "@/components/pages/DetailsPage/Carousel";
+import { resolveBackendAssetUrl } from "@/lib/assetUrl";
 
 const desc: string[] = ["terrible", "bad", "normal", "good", "wonderful"];
 
@@ -55,7 +52,7 @@ const Page = ({ params }: { params: { slug: string } }) => {
     const singleObj = {
         id: singleProduct?.id ?? 0,
         product_name: singleProduct?.product_name ?? "",
-        image: singleProduct?.images[0] ?? "",
+        image: resolveBackendAssetUrl(singleProduct?.images?.[0]) || "",
         price: singleProduct?.discount_price ?? (singleProduct?.price || 0),
     };
 
